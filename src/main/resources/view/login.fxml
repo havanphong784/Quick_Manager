@@ -18,7 +18,8 @@
 
 <AnchorPane prefHeight="600" prefWidth="900"
             style="-fx-background-color: #0f172a;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.quickmanager.controller.LoginController">
     <ImageView fitHeight="600" fitWidth="900" pickOnBounds="true" preserveRatio="false" smooth="false"
                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                AnchorPane.topAnchor="0.0">
@@ -57,19 +58,14 @@
                                style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #cbd5e1; -fx-padding: 10 12; -fx-font-size: 14;"/>
             </VBox>
 
-            <HBox alignment="CENTER_LEFT" spacing="8.0">
-                <CheckBox fx:id="rememberMeCheckBox" text="Ghi nhớ mật khẩu"
-                          style="-fx-text-fill: #334155;"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Hyperlink text="Quên mật khẩu ?" style="-fx-text-fill: #2563eb;"/>
-            </HBox>
+            <Hyperlink text="Quên mật khẩu ?" style="-fx-text-fill: #2563eb;"/>
 
             <HBox>
-                <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
+                <Button fx:id="loginButton" onAction="#handleLogin" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
                         text="Đăng nhập"
                         style="-fx-background-color: #2563eb; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button fx:id="regiterButton" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
+                <Button fx:id="registerButton" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
                         text="Đăng ký"
                         style="-fx-background-color: #2563eb; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
             </HBox>
