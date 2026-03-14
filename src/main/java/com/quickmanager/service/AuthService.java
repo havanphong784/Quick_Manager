@@ -1,6 +1,7 @@
 package com.quickmanager.service;
 
 import com.quickmanager.config.DBConnection;
+import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,8 +32,8 @@ public class AuthService {
                 }
             }
         }catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Lỗi khi đăng nhập");
+            System.out.println("Lỗi: " + e.getMessage());
+            Address.printAddress();
         }
         return null;
     }

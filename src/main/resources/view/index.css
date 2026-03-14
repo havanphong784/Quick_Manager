@@ -1,0 +1,66 @@
+* {
+    -fx-font-family: "Segoe UI", "Arial", "Tahoma", sans-serif;
+}
+
+.login-pane {
+    -fx-background-color: #0f172a;
+}
+
+.login-card {
+    -fx-background-color: rgba(250, 250, 250, 0.5);
+    -fx-background-radius: 18;
+}
+
+.title-label {
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+.subtitle-label {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14;
+}
+
+.field-label {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+.input-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #cbd5e1;
+    -fx-padding: 10 12;
+    -fx-font-size: 14;
+}
+
+.forgot-link {
+    -fx-text-fill: #2563eb;
+}
+
+.status-label {
+    -fx-text-fill: #dc2626;
+    -fx-font-size: 12;
+}
+
+.btn {
+    -fx-background-color: #12505A;
+    -fx-background-radius: 8;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+}
+
+.dashboard-split > .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0;              /* giam do day divider */
+    -fx-border-width: 0;
+}
+
+.dashboard-split > .split-pane-divider > .vertical-grabber {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+

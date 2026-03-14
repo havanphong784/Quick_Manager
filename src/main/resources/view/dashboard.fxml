@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="768" prefWidth="1366">
+    <left>
+        <BorderPane minWidth="270" prefWidth="270" prefHeight="Infinity">
+            <VBox style="-fx-background-color: #f1f5f9;">
+            </VBox>
+        </BorderPane>
+    </left>
+
+    <center>
+        <BorderPane prefWidth="Infinity">
+            <top>
+                <AnchorPane  minHeight="90" style="-fx-background-color: #1e293b;">
+
+                </AnchorPane>
+            </top>
+            <center>
+                <AnchorPane prefHeight="Infinity" style="-fx-background-color: #0f172a;">
+
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

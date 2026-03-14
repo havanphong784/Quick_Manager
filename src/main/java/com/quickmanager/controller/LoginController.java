@@ -1,5 +1,6 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
 import com.quickmanager.service.AuthService;
@@ -30,6 +31,8 @@ public class LoginController {
     private void handleLogin() {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
+        statusLabel.setStyle("-fx-text-fill: red;");
+        statusLabel.setText("");
         if (username.isEmpty() || password.isEmpty()) {
             statusLabel.setText("Vui lòng nhập đầy đủ thông tin.");
             System.out.println("Nhap thiếu thông tin.");
@@ -44,8 +47,9 @@ public class LoginController {
             Address.printAddress();
             return;
         }
-        System.out.println("Đăng nhập thành công.");
+        System.out.println("Đăng nhập thành công.\n");
         statusLabel.setStyle("-fx-text-fill: green;");
         statusLabel.setText("Đăng nhập thành công. Xin chào " + tk.getTenDangNhap());
+        Main.switchParent("/view/dashboard.fxml","Dashboard",true);
     }
 }
