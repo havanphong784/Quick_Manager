@@ -34,20 +34,55 @@
                     <fx:define>
                         <ToggleGroup fx:id="sidebarGroup"/>
                     </fx:define>
-
-                    <ToggleButton text="  Dashboard" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton text="  Trang chủ" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
-                            <ImageView fitWidth="18" fitHeight="18" preserveRatio="true">
-                                <Image url="@/images/dashboard.png"/>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/home.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton text="Messages" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
-                    <ToggleButton text="Calendar" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
-                    <ToggleButton text="Jobs" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
-                    <ToggleButton text="Candidates" styleClass="menu-btn" toggleGroup="$sidebarGroup" selected="true"/>
-                    <ToggleButton text="Referrals" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
-                    <ToggleButton text="Career Site" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
+                    <ToggleButton onAction="#switchSellPage" text="  Bán hàng" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/cart.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton text="  Nhập hàng" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/import.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton text="  Hóa đơn" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/invoice.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton text="  Quản lí sản phẩm" styleClass="menu-btn" toggleGroup="$sidebarGroup" selected="true">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/order.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton text="  Quản lí nhân viên" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/employee.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton text="  Thống kê" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/bar-chart.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
                 </VBox>
             </center>
 
@@ -57,14 +92,19 @@
     <center>
         <BorderPane styleClass="mainPane" prefWidth="Infinity">
             <top>
-                <AnchorPane minHeight="90">
+                <HBox styleClass="header" prefHeight="90" alignment="CENTER_RIGHT">
+                    <VBox alignment="CENTER_RIGHT">
+                        <Label styleClass="header__label">Admin</Label>
+                        <Label styleClass="header__label">Phongha</Label>
+                    </VBox>
+                    <ImageView smooth="false" fitWidth="50" fitHeight="50">
+                        <Image url="@/images/user-setting.png"/>
+                    </ImageView>
 
-                </AnchorPane>
+                </HBox>
             </top>
             <center>
-                <AnchorPane fx:id="contentPane" prefHeight="Infinity">
-
-                </AnchorPane>
+                <AnchorPane fx:id="contentPane"/>
             </center>
         </BorderPane>
     </center>

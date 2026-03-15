@@ -1,5 +1,5 @@
 * {
-    -fx-font-family: "Segoe UI", "Arial", "Tahoma", sans-serif;
+    -fx-font-family: "Urbanist", "Arial", "Tahoma", sans-serif;
 }
 
 .login-pane {
@@ -21,14 +21,16 @@
 }
 
 .logo {
-    -fx-text-fill: #FFF;
+    -fx-text-fill: #8d8d8d;
     -fx-font-size: 20;
     -fx-font-weight: 900;
 }
 
-.logoPane {
+.logoPane,
+.header {
     -fx-border-color: transparent transparent #272727 transparent;
     -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 30 0 30;
 }
 
 
@@ -89,30 +91,61 @@
     -fx-padding: 22 0 22 0;
 }
 
-.menu-btn {
-    -fx-max-width: Infinity;
-    -fx-pref-height: 38;
-    -fx-alignment: CENTER_LEFT;
-
-    -fx-padding: 0 0 0 38;
-    -fx-background-insets: 0 38 0 0;
-    -fx-border-insets: 0;
-
-    -fx-background-radius: 0 26 26 0;
-    -fx-border-radius: 0 26 26 0;
-
-    -fx-background-color: transparent;
-    -fx-text-fill: #8d8d8d;
-    -fx-font-size: 16px;
-    -fx-font-weight: 500;
-    -fx-cursor: hand;
-}
-
 .menu-btn:selected {
-    -fx-background-color: linear-gradient(to right, #6a35ff, #ff6a3d);
+    -fx-background-color: linear-gradient(to right,#ff6a3d,#6a70ff);
     -fx-background-radius: 0 26 26 0;
     -fx-text-fill: #ffffff;
     -fx-font-weight: 500;
 }
 
+.header__label {
+    -fx-font-size: 16px;
+    -fx-font-style: italic;
+    -fx-text-fill: white;
+    -fx-padding: 0 16 0 0;
+    -fx-text-fill: #8d8d8d;
+}
 
+<--- BUTTON---->
+.btn-red {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+}
+
+.btn-green {
+    -fx-background-color: #16a34a;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+}
+
+.btn-blue {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+    -fx-cursor: hand;
+}
+
+}
+
+.menu-btn {
+    -fx-max-width: Infinity;
+    -fx-pref-height: 38;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 18 0 18 38;
+    -fx-background-insets: 0 38 0 0;
+    -fx-border-insets: 0;
+    -fx-background-radius: 0 26 26 0;
+    -fx-border-radius: 0 26 26 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #8d8d8d;
+    -fx-font-size: 16;
+    -fx-font-weight: 500;
+    -fx-cursor: hand;
+}
