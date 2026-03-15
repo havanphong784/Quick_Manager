@@ -29,27 +29,27 @@ public class LoginController {
 
     @FXML
     private void handleLogin() {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
-        statusLabel.setStyle("-fx-text-fill: red;");
-        statusLabel.setText("");
-        if (username.isEmpty() || password.isEmpty()) {
-            statusLabel.setText("Vui lòng nhập đầy đủ thông tin.");
-            System.out.println("Nhap thiếu thông tin.");
-            Address.printAddress();
-            return;
-        }
-
-        TaiKhoan tk = AuthService.login(username, password);
-        if (tk == null) {
-            statusLabel.setText("Sai mật khẩu.");
-            System.out.println("Sai mật khẩu");
-            Address.printAddress();
-            return;
-        }
-        System.out.println("Đăng nhập thành công.\n");
-        statusLabel.setStyle("-fx-text-fill: green;");
-        statusLabel.setText("Đăng nhập thành công. Xin chào " + tk.getTenDangNhap());
+//        String username = usernameField.getText().trim();
+//        String password = passwordField.getText().trim();
+//        statusLabel.setStyle("-fx-text-fill: red;");
+//        statusLabel.setText("");
+//        if (username.isEmpty() || password.isEmpty()) {
+//            statusLabel.setText("Vui lòng nhập đầy đủ thông tin.");
+//            System.out.println("Nhap thiếu thông tin.");
+//            Address.printAddress();
+//            return;
+//        }
+//
+//        TaiKhoan tk = AuthService.login(username, password);
+//        if (tk == null) {
+//            statusLabel.setText("Sai mật khẩu.");
+//            System.out.println("Sai mật khẩu");
+//            Address.printAddress();
+//            return;
+//        }
+//        System.out.println("Đăng nhập thành công.\n");
+//        statusLabel.setStyle("-fx-text-fill: green;");
+//        statusLabel.setText("Đăng nhập thành công. Xin chào " + tk.getTenDangNhap());
         Main.switchParent("/view/dashboard.fxml","Dashboard",true);
     }
 }

@@ -6,25 +6,63 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane styleClass="dashBoard" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="768" prefWidth="1366">
+            prefHeight="768" prefWidth="1366"
+            fx:controller="com.quickmanager.controller.DashBoardController">
     <left>
-        <BorderPane minWidth="270" prefWidth="270" prefHeight="Infinity">
-            <VBox style="-fx-background-color: #f1f5f9;">
-            </VBox>
+        <BorderPane styleClass="sideBar" minWidth="270" prefWidth="270" prefHeight="Infinity">
+            <top>
+                <StackPane styleClass="logoPane" prefHeight="90" BorderPane.alignment="CENTER">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <StackPane.margin>
+                            <Insets left="38"/>
+                        </StackPane.margin>
+                        <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
+                            <Image url="@/images/logo.png"/>
+                        </ImageView>
+                        <Label styleClass="logo" text="QUICK"/>
+                    </HBox>
+                </StackPane>
+            </top>
+            <center>
+                <VBox styleClass="sidebar-menu" spacing="10">
+                    <fx:define>
+                        <ToggleGroup fx:id="sidebarGroup"/>
+                    </fx:define>
+
+                    <ToggleButton text="  Dashboard" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                        <graphic>
+                            <ImageView fitWidth="18" fitHeight="18" preserveRatio="true">
+                                <Image url="@/images/dashboard.png"/>
+                            </ImageView>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton text="Messages" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
+                    <ToggleButton text="Calendar" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
+                    <ToggleButton text="Jobs" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
+                    <ToggleButton text="Candidates" styleClass="menu-btn" toggleGroup="$sidebarGroup" selected="true"/>
+                    <ToggleButton text="Referrals" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
+                    <ToggleButton text="Career Site" styleClass="menu-btn" toggleGroup="$sidebarGroup"/>
+                </VBox>
+            </center>
+
         </BorderPane>
     </left>
 
     <center>
-        <BorderPane prefWidth="Infinity">
+        <BorderPane styleClass="mainPane" prefWidth="Infinity">
             <top>
-                <AnchorPane  minHeight="90" style="-fx-background-color: #1e293b;">
+                <AnchorPane minHeight="90">
 
                 </AnchorPane>
             </top>
             <center>
-                <AnchorPane prefHeight="Infinity" style="-fx-background-color: #0f172a;">
+                <AnchorPane fx:id="contentPane" prefHeight="Infinity">
 
                 </AnchorPane>
             </center>
