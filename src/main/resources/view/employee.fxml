@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane styleClass="sell-page"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.rightAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0">
+
+        <top>
+            <VBox spacing="10" styleClass="sell-topbar">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Quản lí nhân viên" styleClass="sell-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Mã NV" styleClass="sell-meta-label"/>
+                    <TextField fx:id="txtMaNhanVien" promptText="Nhập mã nhân viên" styleClass="qm-input"/>
+                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <TextField fx:id="txtTuKhoa" promptText="Tìm theo tên/sđt/email..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
+                    <ComboBox fx:id="cbChucVu" promptText="Chức vụ" styleClass="qm-combo"/>
+                    <ComboBox fx:id="cbTrangThai" promptText="Trạng thái" styleClass="qm-combo"/>
+                    <Button fx:id="btnLamMoi" text="Làm mới" styleClass="qm-btn"/>
+                </HBox>
+            </VBox>
+        </top>
+
+        <center>
+            <SplitPane dividerPositions="0.62" styleClass="sell-center-pane">
+                <VBox spacing="10" styleClass="sell-panel sell-panel-left">
+                    <Label text="Danh sách nhân viên" styleClass="sell-section-title"/>
+
+                    <TableView fx:id="tblNhanVien" styleClass="sell-table" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMaNV" text="Mã NV" prefWidth="90"/>
+                            <TableColumn fx:id="colHoTen" text="Họ tên"/>
+                            <TableColumn fx:id="colSdt" text="SĐT" prefWidth="110"/>
+                            <TableColumn fx:id="colEmail" text="Email" prefWidth="170"/>
+                            <TableColumn fx:id="colChucVu" text="Chức vụ" prefWidth="120"/>
+                            <TableColumn fx:id="colTrangThai" text="Trạng thái" prefWidth="110"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Button fx:id="btnDatLaiMatKhau" text="Đặt lại mật khẩu" styleClass="qm-btn"/>
+                        <Button fx:id="btnKhoaTaiKhoan" text="Khóa tài khoản" styleClass="btn-red"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTongNhanVien" text="Tổng nhân viên: 0" styleClass="sell-summary-label"/>
+                    </HBox>
+                </VBox>
+
+                <Region prefWidth="20" minWidth="20" maxWidth="20"/>
+
+                <VBox spacing="10" styleClass="sell-panel sell-panel-right">
+                    <Label text="Thông tin nhân viên" styleClass="sell-section-title"/>
+
+                    <GridPane hgap="10" vgap="8" styleClass="sell-summary-pane">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="NEVER" minWidth="95"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <Label text="Mã nhân viên" styleClass="sell-summary-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtFormMaNV" promptText="VD: NV001" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Họ tên" styleClass="sell-summary-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtFormHoTen" promptText="Nhập họ tên" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Số điện thoại" styleClass="sell-summary-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtFormSdt" promptText="Nhập số điện thoại" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Email" styleClass="sell-summary-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtFormEmail" promptText="Nhập email" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Địa chỉ" styleClass="sell-summary-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtFormDiaChi" promptText="Nhập địa chỉ" styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label text="Chức vụ" styleClass="sell-summary-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="cbFormChucVu" promptText="Chọn chức vụ" styleClass="qm-combo" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                        <Label text="Trạng thái" styleClass="sell-summary-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="cbFormTrangThai" promptText="Đang làm việc" styleClass="qm-combo" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                        <HBox spacing="8" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                            <Button fx:id="btnThem" text="Thêm" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnXoa" text="Xóa" styleClass="btn-red" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </GridPane>
+                </VBox>
+            </SplitPane>
+        </center>
+    </BorderPane>
+</AnchorPane>
+

@@ -40,21 +40,21 @@
 
             <VBox spacing="8.0">
                 <Label text="Tài khoản" styleClass="field-label"/>
-                <TextField fx:id="usernameField" promptText="Nhập tên đăng nhập" styleClass="input-field"/>
+                <TextField fx:id="usernameField" promptText="Nhập tên đăng nhập" styleClass="input-field qm-input"/>
             </VBox>
 
             <VBox spacing="8.0">
                 <Label text="Mật khẩu" styleClass="field-label"/>
-                <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" styleClass="input-field"/>
+                <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" styleClass="input-field qm-input"/>
             </VBox>
 
             <Hyperlink text="Quên mật khẩu ?" styleClass="forgot-link"/>
 
             <HBox>
-                <Button styleClass="btn" fx:id="loginButton" onAction="#handleLogin" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
+                <Button styleClass="btn qm-btn" fx:id="loginButton" onAction="#handleLogin" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
                         text="Đăng nhập"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button styleClass="btn" fx:id="registerButton" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
+                <Button styleClass="btn qm-btn" fx:id="registerButton" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
                         text="Đăng ký"/>
             </HBox>
 

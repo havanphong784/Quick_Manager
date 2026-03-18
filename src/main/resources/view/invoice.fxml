@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane styleClass="sell-page"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.rightAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0">
+
+        <!-- TOP: Search and Filter -->
+        <top>
+            <VBox spacing="10" styleClass="sell-topbar">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Hóa đơn" styleClass="sell-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Mã HĐ" styleClass="sell-meta-label"/>
+                    <TextField fx:id="txtMaHoaDon" promptText="Tìm mã hóa đơn..." styleClass="qm-input"/>
+                    <Label text="Từ ngày" styleClass="sell-meta-label"/>
+                    <DatePicker fx:id="dpTuNgay" styleClass="qm-combo"/>
+                    <Label text="Đến ngày" styleClass="sell-meta-label"/>
+                    <DatePicker fx:id="dpDenNgay" styleClass="qm-combo"/>
+                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <TextField fx:id="txtTimKhachHang" promptText="Tìm khách hàng..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
+                    <ComboBox fx:id="cbTrangThai" promptText="Trạng thái" styleClass="qm-combo"/>
+                    <Button fx:id="btnLamMoi" text="Làm mới" styleClass="qm-btn"/>
+                </HBox>
+            </VBox>
+        </top>
+
+        <!-- CENTER: Main content with SplitPane -->
+        <center>
+            <SplitPane dividerPositions="0.55" styleClass="sell-center-pane">
+                <!-- LEFT: Invoice list -->
+                <VBox spacing="10" styleClass="sell-panel sell-panel-left">
+                    <Label text="Danh sách hóa đơn" styleClass="sell-section-title"/>
+                    <TableView fx:id="tblHoaDon" styleClass="sell-table" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMaHD" text="Mã HĐ" prefWidth="90"/>
+                            <TableColumn fx:id="colNgayHD" text="Ngày HĐ" prefWidth="100"/>
+                            <TableColumn fx:id="colKhachHang" text="Khách hàng"/>
+                            <TableColumn fx:id="colTongTien" text="Tổng tiền" prefWidth="120"/>
+                            <TableColumn fx:id="colTrangThai" text="Trạng thái" prefWidth="100"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+
+                    <HBox spacing="8">
+                        <Button fx:id="btnXoaHD" text="Xóa" styleClass="qm-btn"/>
+                        <Button fx:id="btnInHD" text="In" styleClass="qm-btn"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTongSo" text="Tổng: 0" styleClass="sell-summary-label"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Spacer: 20px gap between panels -->
+                <Region prefWidth="20" minWidth="20" maxWidth="20"/>
+
+                <!-- RIGHT: Invoice details + form -->
+                <VBox spacing="10" styleClass="sell-panel sell-panel-right">
+                    <Label text="Chi tiết hóa đơn" styleClass="sell-section-title"/>
+
+                    <!-- Invoice details table -->
+                    <TableView fx:id="tblChiTietHD" styleClass="sell-table" VBox.vgrow="ALWAYS" prefHeight="200">
+                        <columns>
+                            <TableColumn fx:id="colSTT" text="STT" prefWidth="50"/>
+                            <TableColumn fx:id="colSanPham" text="Sản phẩm"/>
+                            <TableColumn fx:id="colDonVi" text="ĐVT" prefWidth="60"/>
+                            <TableColumn fx:id="colSoLuong" text="Số lượng" prefWidth="80"/>
+                            <TableColumn fx:id="colGiaBan" text="Giá bán" prefWidth="100"/>
+                            <TableColumn fx:id="colThanhTien" text="Thành tiền" prefWidth="120"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+
+                    <!-- Invoice summary form -->
+                    <GridPane hgap="10" vgap="8" styleClass="sell-summary-pane">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="NEVER" minWidth="90"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <!-- Customer Info -->
+                        <Label text="Khách hàng" styleClass="sell-summary-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtKhachHang" editable="false" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Địa chỉ" styleClass="sell-summary-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtDiaChiKH" editable="false" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="SĐT" styleClass="sell-summary-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtSoDienThoai" editable="false" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <!-- Pricing Summary -->
+                        <Label text="Tạm tính" styleClass="sell-summary-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="sell-summary-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Giảm giá" styleClass="sell-summary-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblGiamGia" text="0 VNĐ" styleClass="sell-summary-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label text="TỔNG CỘNG" styleClass="sell-total-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTongCong" text="0 VNĐ" styleClass="sell-total-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                        <!-- Payment Info -->
+                        <Label text="Đã thanh toán" styleClass="sell-summary-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblDaThanhToan" text="0 VNĐ" styleClass="sell-summary-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                        <Label text="Còn lại" styleClass="sell-summary-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblConLai" text="0 VNĐ" styleClass="sell-change-value" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                        <!-- Notes -->
+                        <Label text="Ghi chú" styleClass="sell-summary-label" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtGhiChu" editable="false" styleClass="qm-input" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                        <!-- Buttons -->
+                        <HBox spacing="8" GridPane.rowIndex="9" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                            <Button fx:id="btnCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnInPhieu" text="In phiếu" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnHuyHD" text="Hủy HĐ" styleClass="btn-red" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </GridPane>
+                </VBox>
+            </SplitPane>
+        </center>
+    </BorderPane>
+</AnchorPane>
+

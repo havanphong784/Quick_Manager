@@ -12,6 +12,12 @@ import java.util.Objects;
 public class DashBoardController {
     @FXML
     private AnchorPane contentPane;
+
+    @FXML
+    public void initialize() {
+        setPage("home.fxml");
+    }
+
     public void setPage(String path) {
         try {
             Parent children = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/"+path)));
@@ -25,7 +31,11 @@ public class DashBoardController {
             Address.printAddress();
         }
     }
-    public void switchSellPage() {
-        setPage("sell.fxml");
-    }
+    public void switchHomePage() { setPage("home.fxml"); }
+    public void switchSellPage() {setPage("sell.fxml");}
+    public void switchImportPage() { setPage("import.fxml"); }
+    public void switchInvoicePage() { setPage("invoice.fxml"); }
+    public void switchProductPage() { setPage("product.fxml"); }
+    public void switchEmployeePage() { setPage("employee.fxml"); }
+    public void switchStatisticsPage() { setPage("statistics.fxml"); }
 }
