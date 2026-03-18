@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-    <BorderPane styleClass="sell-page"
+    <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0"
@@ -13,18 +13,18 @@
 
         <!-- TOP: Form nhập thông tin phiếu nhập -->
         <top>
-            <VBox spacing="10" styleClass="sell-topbar">
+            <VBox spacing="10" styleClass="qm-topbar">
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Nhập hàng" styleClass="sell-title"/>
+                    <Label text="Nhập hàng" styleClass="qm-page-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Label text="Mã phiếu" styleClass="sell-meta-label"/>
+                    <Label text="Mã phiếu" styleClass="qm-label-muted"/>
                     <TextField fx:id="txtMaPhieuNhap" editable="false" text="PN-TAM-0001" styleClass="qm-input"/>
-                    <Label text="Ngày nhập" styleClass="sell-meta-label"/>
+                    <Label text="Ngày nhập" styleClass="qm-label-muted"/>
                     <DatePicker fx:id="dpNgayNhap" styleClass="qm-combo"/>
                 </HBox>
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Nhà cung cấp" styleClass="sell-meta-label"/>
+                    <Label text="Nhà cung cấp" styleClass="qm-label-muted"/>
                     <ComboBox fx:id="cbNhaCungCap" promptText="Chọn nhà cung cấp" HBox.hgrow="ALWAYS" styleClass="qm-combo"/>
                     <Button fx:id="btnLamMoi" text="Làm mới" styleClass="qm-btn"/>
                 </HBox>
@@ -33,24 +33,24 @@
 
         <!-- CENTER: Main content -->
         <center>
-            <VBox spacing="15" styleClass="sell-center-pane">
+            <VBox spacing="15" styleClass="qm-content">
                 <!-- SECTION 1: Thêm mặt hàng -->
-                <VBox spacing="8" styleClass="sell-panel sell-panel-left">
-                    <Label text="Thêm mặt hàng" styleClass="sell-section-title"/>
+                <VBox spacing="8" styleClass="qm-panel qm-panel-left">
+                    <Label text="Thêm mặt hàng" styleClass="qm-section-title"/>
                     <HBox spacing="10" alignment="CENTER_LEFT">
                         <TextField fx:id="txtTimSanPham" promptText="Tìm tên/mã sản phẩm..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
-                        <Label text="Số lượng" styleClass="sell-meta-label"/>
+                        <Label text="Số lượng" styleClass="qm-label-muted"/>
                         <TextField fx:id="txtSoLuongNhap" promptText="0" prefWidth="80" styleClass="qm-input"/>
-                        <Label text="Đơn giá" styleClass="sell-meta-label"/>
+                        <Label text="Đơn giá" styleClass="qm-label-muted"/>
                         <TextField fx:id="txtDonGiaNhap" promptText="0" prefWidth="100" styleClass="qm-input"/>
                         <Button fx:id="btnThemMH" text="Thêm" styleClass="qm-btn"/>
                     </HBox>
                 </VBox>
 
                 <!-- SECTION 2: Danh sách mặt hàng đã thêm -->
-                <VBox spacing="8" styleClass="sell-panel">
-                    <Label text="Danh sách mặt hàng đã thêm" styleClass="sell-section-title"/>
-                    <TableView fx:id="tblChiTietNhap" styleClass="sell-table" VBox.vgrow="ALWAYS" prefHeight="250">
+                <VBox spacing="8" styleClass="qm-panel">
+                    <Label text="Danh sách mặt hàng đã thêm" styleClass="qm-section-title"/>
+                    <TableView fx:id="tblChiTietNhap" styleClass="qm-table" VBox.vgrow="ALWAYS" prefHeight="250">
                         <columns>
                             <TableColumn fx:id="colMaSP" text="Mã SP" prefWidth="80"/>
                             <TableColumn fx:id="colTenSP" text="Tên sản phẩm"/>
@@ -68,15 +68,15 @@
                         <Button fx:id="btnXoaDong" text="Xóa dòng" styleClass="qm-btn"/>
                         <Button fx:id="btnXoaDon" text="Xóa đơn" styleClass="qm-btn"/>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="lblTongSL" text="Tổng SL: 0" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblTongTien" text="Tổng tiền: 0 VNĐ" styleClass="sell-total-value"/>
+                        <Label fx:id="lblTongSL" text="Tổng SL: 0" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblTongTien" text="Tổng tiền: 0 VNĐ" styleClass="qm-total-value"/>
                     </HBox>
                 </VBox>
 
                 <!-- SECTION 3: Form nhập thông tin chi tiết -->
-                <VBox spacing="8" styleClass="sell-panel sell-panel-right">
-                    <Label text="Thông tin nhập hàng" styleClass="sell-section-title"/>
-                    <GridPane hgap="15" vgap="10" styleClass="sell-summary-pane">
+                <VBox spacing="8" styleClass="qm-panel qm-panel-right">
+                    <Label text="Thông tin nhập hàng" styleClass="qm-section-title"/>
+                    <GridPane hgap="15" vgap="10" styleClass="qm-form">
                         <columnConstraints>
                             <ColumnConstraints hgrow="NEVER" minWidth="100"/>
                             <ColumnConstraints hgrow="ALWAYS"/>
@@ -85,30 +85,30 @@
                         </columnConstraints>
 
                         <!-- Row 1 -->
-                        <Label text="Tên NCC" styleClass="sell-summary-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label text="Tên NCC" styleClass="qm-label-muted" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtTenNCC" promptText="Tên nhà cung cấp" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                        <Label text="Liên hệ" styleClass="sell-summary-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                        <Label text="Liên hệ" styleClass="qm-label-muted" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
                         <TextField fx:id="txtLienHeNCC" promptText="Số điện thoại" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
                         <!-- Row 2 -->
-                        <Label text="Địa chỉ" styleClass="sell-summary-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label text="Địa chỉ" styleClass="qm-label-muted" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtDiaChiNCC" promptText="Địa chỉ NCC" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
 
                         <!-- Row 3 -->
-                        <Label text="VAT %" styleClass="sell-summary-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label text="VAT %" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtVAT" text="0" prefWidth="80" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                        <Label text="Ghi chú" styleClass="sell-summary-label" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                        <Label text="Ghi chú" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
                         <TextField fx:id="txtGhiChu" promptText="Ghi chú thêm..." styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
                         <!-- Row 4: Summary -->
-                        <Label text="Tạm tính" styleClass="sell-summary-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="sell-summary-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                        <Label text="Tiền VAT" styleClass="sell-summary-label" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
-                        <Label fx:id="lblTienVAT" text="0 VNĐ" styleClass="sell-summary-value" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                        <Label text="Tạm tính" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <Label text="Tiền VAT" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                        <Label fx:id="lblTienVAT" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
 
                         <!-- Row 5: Total -->
-                        <Label text="TỔNG CỘNG" styleClass="sell-total-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblTongCong" text="0 VNĐ" styleClass="sell-total-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <Label text="TỔNG CỘNG" styleClass="qm-total-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTongCong" text="0 VNĐ" styleClass="qm-total-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
                     </GridPane>
                 </VBox>
 

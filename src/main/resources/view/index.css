@@ -125,7 +125,7 @@
 
 .dashBoard,
 .mainPane,
-.sell-page {
+.qm-page {
     -fx-background-color: -qm-bg-app;
 }
 
@@ -238,50 +238,49 @@
 }
 
 .dashboard-split > .split-pane-divider,
-.sell-center-pane > .split-pane-divider {
+.qm-content > .split-pane-divider {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-width: 0;
 }
 
 .dashboard-split > .split-pane-divider > .vertical-grabber,
-.sell-center-pane > .split-pane-divider > .vertical-grabber {
+.qm-content > .split-pane-divider > .vertical-grabber {
     -fx-padding: 0;
     -fx-background-color: transparent;
 }
 
-.sell-topbar {
+.qm-topbar {
     -fx-padding: 14 16;
     -fx-border-color: transparent transparent -qm-border-soft transparent;
     -fx-border-width: 0 0 1 0;
 }
 
-.sell-title {
+.qm-page-title {
     -fx-text-fill: -qm-text-primary;
     -fx-font-size: -qm-font-lg;
     -fx-font-weight: 700;
 }
 
-.sell-meta-label,
-.sell-summary-label {
+.qm-label-muted {
     -fx-text-fill: -qm-text-muted;
 }
 
-.sell-center-pane {
+.qm-content {
     -fx-padding: 12 16;
 }
 
-.sell-center-pane,
-.sell-center-pane > .split-pane-content {
+.qm-content,
+.qm-content > .split-pane-content {
     -fx-background-color: -qm-bg-app;
 }
 
-.sell-page .split-pane > .split-pane-content {
+.qm-page .split-pane > .split-pane-content {
     -fx-background-color: -qm-bg-app;
 }
 
-.sell-panel,
-.sell-summary-pane {
+.qm-panel,
+.qm-form {
     -fx-padding: 12;
     -fx-background-color: -qm-bg-pane;
     -fx-background-radius: 10;
@@ -290,23 +289,23 @@
     -fx-border-width: 1;
 }
 
-.sell-panel-left {
+.qm-panel-left {
     -fx-border-color: -qm-accent-left -qm-border-soft -qm-border-soft -qm-border-soft;
     -fx-border-width: 3 1 1 1;
 }
 
-.sell-panel-right {
+.qm-panel-right {
     -fx-border-color: -qm-accent-right -qm-border-soft -qm-border-soft -qm-border-soft;
     -fx-border-width: 3 1 1 1;
 }
 
-.sell-section-title {
+.qm-section-title {
     -fx-text-fill: -qm-text-primary;
     -fx-font-size: -qm-font-md;
     -fx-font-weight: 600;
 }
 
-.sell-table {
+.qm-table {
     -fx-background-color: -qm-bg-control;
     -fx-control-inner-background: -qm-bg-row;
     -fx-background-insets: 0;
@@ -315,83 +314,83 @@
     -fx-background-radius: 8;
 }
 
-.sell-table .virtual-flow,
-.sell-table .clipped-container,
-.sell-table .corner,
-.sell-table .placeholder {
+.qm-table .virtual-flow,
+.qm-table .clipped-container,
+.qm-table .corner,
+.qm-table .placeholder {
     -fx-background-color: -qm-bg-row;
 }
 
-.sell-table .column-header-background,
-.sell-table .filler,
-.sell-table .column-header {
+.qm-table .column-header-background,
+.qm-table .filler,
+.qm-table .column-header {
     -fx-background-color: -qm-bg-control;
 }
 
-.sell-table .column-header {
+.qm-table .column-header {
     -fx-border-color: transparent -qm-border-soft transparent transparent;
 }
 
-.sell-table .column-header .label {
+.qm-table .column-header .label {
     -fx-text-fill: -qm-text-secondary;
     -fx-font-weight: 600;
 }
 
-.sell-table .table-row-cell {
+.qm-table .table-row-cell {
     -fx-background-color: -qm-bg-row;
     -fx-border-color: transparent transparent -qm-bg-elevated transparent;
 }
 
-.sell-table .table-row-cell:odd {
+.qm-table .table-row-cell:odd {
     -fx-background-color: -qm-bg-row-alt;
 }
 
-.sell-table .table-row-cell:selected {
+.qm-table .table-row-cell:selected {
     -fx-background-color: -qm-bg-selected;
 }
 
-.sell-table .table-cell {
+.qm-table .table-cell {
     -fx-text-fill: -qm-text-secondary;
     -fx-border-color: transparent;
 }
 
-.sell-table .placeholder .label,
-.sell-hint-label {
+.qm-table .placeholder .label,
+.qm-hint {
     -fx-text-fill: -qm-text-subtle;
 }
 
-.sell-hint-label {
+.qm-hint {
     -fx-font-size: -qm-font-sm;
 }
 
-.sell-summary-pane {
+.qm-form {
     -fx-padding: 10;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
 }
 
-.sell-summary-value {
+.qm-value {
     -fx-text-fill: -qm-text-secondary;
 }
 
-.sell-total-label {
+.qm-total-label {
     -fx-text-fill: -qm-text-primary;
     -fx-font-weight: 700;
 }
 
-.sell-total-value {
+.qm-total-value {
     -fx-text-fill: -qm-accent-success;
     -fx-font-size: -qm-font-md;
     -fx-font-weight: 700;
 }
 
-.sell-change-value {
+.qm-warning-value {
     -fx-text-fill: -qm-accent-warning;
     -fx-font-weight: 700;
 }
 
 .qm-input,
-.sell-summary-pane .text-field {
+.qm-form .text-field {
     -fx-background-color: -qm-bg-elevated;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
@@ -401,32 +400,32 @@
 }
 
 .qm-input:focused,
-.sell-summary-pane .text-field:focused {
+.qm-form .text-field:focused {
     -fx-border-color: -qm-accent-primary;
 }
 
 .qm-combo,
-.sell-page .combo-box,
-.sell-page .date-picker {
+.qm-page .combo-box,
+.qm-page .date-picker {
     -fx-background-color: -qm-bg-elevated;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
     -fx-border-color: -qm-border-light;
 }
 
-.sell-page .combo-box .list-cell,
-.sell-page .date-picker .text-field {
+.qm-page .combo-box .list-cell,
+.qm-page .date-picker .text-field {
     -fx-background-color: transparent;
     -fx-text-fill: -qm-text-secondary;
 }
 
-.sell-page .combo-box:focused,
-.sell-page .date-picker:focused {
+.qm-page .combo-box:focused,
+.qm-page .date-picker:focused {
     -fx-border-color: -qm-accent-primary;
 }
 
-.sell-page .combo-box-popup .list-view,
-.sell-page .date-picker-popup {
+.qm-page .combo-box-popup .list-view,
+.qm-page .date-picker-popup {
     -fx-background-color: -qm-bg-pane;
 }
 

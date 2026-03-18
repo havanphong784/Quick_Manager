@@ -4,18 +4,18 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-    <BorderPane styleClass="sell-page"
+    <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0">
 
         <top>
-            <VBox spacing="10" styleClass="sell-topbar">
+            <VBox spacing="10" styleClass="qm-topbar">
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Trang chủ" styleClass="sell-title"/>
+                    <Label text="Trang chủ" styleClass="qm-page-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Label text="Hôm nay" styleClass="sell-meta-label"/>
+                    <Label text="Hôm nay" styleClass="qm-label-muted"/>
                     <DatePicker fx:id="dpHomNay" styleClass="qm-combo"/>
                     <Button fx:id="btnTaiLai" text="Tải lại" styleClass="qm-btn"/>
                 </HBox>
@@ -23,26 +23,26 @@
         </top>
 
         <center>
-            <VBox spacing="10" styleClass="sell-center-pane">
+            <VBox spacing="10" styleClass="qm-content">
                 <HBox spacing="10">
-                    <VBox spacing="6" styleClass="sell-panel" HBox.hgrow="ALWAYS">
-                        <Label text="Doanh thu hôm nay" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblDoanhThuHomNay" text="0 VNĐ" styleClass="sell-total-value"/>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Doanh thu hôm nay" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblDoanhThuHomNay" text="0 VNĐ" styleClass="qm-total-value"/>
                     </VBox>
-                    <VBox spacing="6" styleClass="sell-panel" HBox.hgrow="ALWAYS">
-                        <Label text="Đơn hàng hôm nay" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblDonHangHomNay" text="0" styleClass="sell-summary-value"/>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Đơn hàng hôm nay" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblDonHangHomNay" text="0" styleClass="qm-value"/>
                     </VBox>
-                    <VBox spacing="6" styleClass="sell-panel" HBox.hgrow="ALWAYS">
-                        <Label text="Sản phẩm sắp hết" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblSanPhamSapHet" text="0" styleClass="sell-change-value"/>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Sản phẩm sắp hết" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblSanPhamSapHet" text="0" styleClass="qm-warning-value"/>
                     </VBox>
                 </HBox>
 
-                <SplitPane dividerPositions="0.55" styleClass="sell-center-pane" VBox.vgrow="ALWAYS">
-                    <VBox spacing="10" styleClass="sell-panel sell-panel-left">
-                        <Label text="Hoạt động gần đây" styleClass="sell-section-title"/>
-                        <TableView fx:id="tblHoatDongGanDay" styleClass="sell-table" VBox.vgrow="ALWAYS">
+                <SplitPane dividerPositions="0.55" styleClass="qm-content" VBox.vgrow="ALWAYS">
+                    <VBox spacing="10" styleClass="qm-panel qm-panel-left">
+                        <Label text="Hoạt động gần đây" styleClass="qm-section-title"/>
+                        <TableView fx:id="tblHoatDongGanDay" styleClass="qm-table" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="colThoiGian" text="Thời gian" prefWidth="150"/>
                                 <TableColumn fx:id="colNguoiThucHien" text="Nhân viên" prefWidth="130"/>
@@ -57,9 +57,9 @@
 
                     <Region prefWidth="20" minWidth="20" maxWidth="20"/>
 
-                    <VBox spacing="10" styleClass="sell-panel sell-panel-right">
-                        <Label text="Tác vụ nhanh" styleClass="sell-section-title"/>
-                        <GridPane hgap="10" vgap="10" styleClass="sell-summary-pane" VBox.vgrow="ALWAYS">
+                    <VBox spacing="10" styleClass="qm-panel qm-panel-right">
+                        <Label text="Tác vụ nhanh" styleClass="qm-section-title"/>
+                        <GridPane hgap="10" vgap="10" styleClass="qm-form" VBox.vgrow="ALWAYS">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="ALWAYS"/>
                                 <ColumnConstraints hgrow="ALWAYS"/>

@@ -4,20 +4,20 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-    <BorderPane styleClass="sell-page"
+    <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0">
 
         <top>
-            <VBox spacing="10" styleClass="sell-topbar">
+            <VBox spacing="10" styleClass="qm-topbar">
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Thống kê" styleClass="sell-title"/>
+                    <Label text="Thống kê" styleClass="qm-page-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Label text="Từ ngày" styleClass="sell-meta-label"/>
+                    <Label text="Từ ngày" styleClass="qm-label-muted"/>
                     <DatePicker fx:id="dpTuNgay" styleClass="qm-combo"/>
-                    <Label text="Đến ngày" styleClass="sell-meta-label"/>
+                    <Label text="Đến ngày" styleClass="qm-label-muted"/>
                     <DatePicker fx:id="dpDenNgay" styleClass="qm-combo"/>
                     <ComboBox fx:id="cbKieuThongKe" promptText="Loại thống kê" styleClass="qm-combo"/>
                     <Button fx:id="btnThongKe" text="Thống kê" styleClass="qm-btn"/>
@@ -26,26 +26,26 @@
         </top>
 
         <center>
-            <VBox spacing="10" styleClass="sell-center-pane">
+            <VBox spacing="10" styleClass="qm-content">
                 <HBox spacing="10">
-                    <VBox spacing="6" styleClass="sell-panel" HBox.hgrow="ALWAYS">
-                        <Label text="Doanh thu" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblDoanhThu" text="0 VNĐ" styleClass="sell-total-value"/>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Doanh thu" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblDoanhThu" text="0 VNĐ" styleClass="qm-total-value"/>
                     </VBox>
-                    <VBox spacing="6" styleClass="sell-panel" HBox.hgrow="ALWAYS">
-                        <Label text="Số hóa đơn" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblSoHoaDon" text="0" styleClass="sell-summary-value"/>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Số hóa đơn" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblSoHoaDon" text="0" styleClass="qm-value"/>
                     </VBox>
-                    <VBox spacing="6" styleClass="sell-panel" HBox.hgrow="ALWAYS">
-                        <Label text="Sản phẩm bán ra" styleClass="sell-summary-label"/>
-                        <Label fx:id="lblSanPhamBan" text="0" styleClass="sell-summary-value"/>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Sản phẩm bán ra" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblSanPhamBan" text="0" styleClass="qm-value"/>
                     </VBox>
                 </HBox>
 
-                <SplitPane dividerPositions="0.5" styleClass="sell-center-pane" VBox.vgrow="ALWAYS">
-                    <VBox spacing="10" styleClass="sell-panel sell-panel-left">
-                        <Label text="Doanh thu theo ngày" styleClass="sell-section-title"/>
-                        <TableView fx:id="tblDoanhThuNgay" styleClass="sell-table" VBox.vgrow="ALWAYS">
+                <SplitPane dividerPositions="0.5" styleClass="qm-content" VBox.vgrow="ALWAYS">
+                    <VBox spacing="10" styleClass="qm-panel qm-panel-left">
+                        <Label text="Doanh thu theo ngày" styleClass="qm-section-title"/>
+                        <TableView fx:id="tblDoanhThuNgay" styleClass="qm-table" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="colNgay" text="Ngày" prefWidth="120"/>
                                 <TableColumn fx:id="colSoHoaDonNgay" text="Số hóa đơn" prefWidth="120"/>
@@ -59,9 +59,9 @@
 
                     <Region prefWidth="20" minWidth="20" maxWidth="20"/>
 
-                    <VBox spacing="10" styleClass="sell-panel sell-panel-right">
-                        <Label text="Top sản phẩm bán chạy" styleClass="sell-section-title"/>
-                        <TableView fx:id="tblTopSanPham" styleClass="sell-table" VBox.vgrow="ALWAYS">
+                    <VBox spacing="10" styleClass="qm-panel qm-panel-right">
+                        <Label text="Top sản phẩm bán chạy" styleClass="qm-section-title"/>
+                        <TableView fx:id="tblTopSanPham" styleClass="qm-table" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="colTopTenSP" text="Sản phẩm"/>
                                 <TableColumn fx:id="colTopSoLuong" text="Số lượng" prefWidth="110"/>
@@ -74,9 +74,9 @@
                     </VBox>
                 </SplitPane>
 
-                <VBox spacing="10" styleClass="sell-panel">
-                    <Label text="Cảnh báo tồn kho thấp" styleClass="sell-section-title"/>
-                    <TableView fx:id="tblTonKhoThap" styleClass="sell-table" prefHeight="180">
+                <VBox spacing="10" styleClass="qm-panel">
+                    <Label text="Cảnh báo tồn kho thấp" styleClass="qm-section-title"/>
+                    <TableView fx:id="tblTonKhoThap" styleClass="qm-table" prefHeight="180">
                         <columns>
                             <TableColumn fx:id="colCanhBaoMaSP" text="Mã SP" prefWidth="120"/>
                             <TableColumn fx:id="colCanhBaoTenSP" text="Tên sản phẩm"/>
