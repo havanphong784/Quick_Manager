@@ -5,12 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Main extends Application {
     public static Stage stage;
+    public static LocalDateTime time;
 
     public static void main(String[] args) {
         System.out.println("App bắt đầu chạy.\n");

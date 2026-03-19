@@ -10,7 +10,7 @@
     /* Nen dong table */
     -qm-bg-row: #262626;
     /* Nen dong xen ke table */
-    -qm-bg-row-alt: #1e293b;
+    -qm-bg-row-alt: #2e2e2e;
     /* Nen dong duoc chon */
     -qm-bg-selected: #334155;
 
@@ -55,13 +55,6 @@
     /* Gradient nut menu - mau ket thuc */
     -qm-gradient-menu-end: #2f8cd8;
 
-    /* Co chu nho */
-    -qm-font-sm: 12;
-    /* Co chu trung binh */
-    -qm-font-md: 16;
-    /* Co chu lon */
-    -qm-font-lg: 22;
-
     /* Nen trang dang nhap */
     -qm-login-bg: #0f172a;
     /* Nen the dang nhap */
@@ -91,17 +84,17 @@
 
 .title-label {
     -fx-text-fill: -qm-login-title;
-    -fx-font-size: -qm-font-lg;
+    -fx-font-size: 22;
     -fx-font-weight: bold;
 }
 
 .subtitle-label {
     -fx-text-fill: -qm-login-subtitle;
-    -fx-font-size: -qm-font-sm;
+    -fx-font-size: 12;
 }
 
 .field-label {
-    -fx-font-size: -qm-font-sm;
+    -fx-font-size: 12;
     -fx-font-weight: bold;
     -fx-text-fill: -qm-login-label;
 }
@@ -111,7 +104,7 @@
     -fx-border-radius: 10;
     -fx-border-color: -qm-login-input-border;
     -fx-padding: 10 12;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
 }
 
 .forgot-link {
@@ -120,7 +113,7 @@
 
 .status-label {
     -fx-text-fill: -qm-accent-red;
-    -fx-font-size: -qm-font-sm;
+    -fx-font-size: 12;
 }
 
 .dashBoard,
@@ -144,14 +137,24 @@
 .header {
     -fx-border-color: transparent transparent -qm-border transparent;
     -fx-border-width: 0 0 1 0;
-    -fx-padding: 0 30 0 30;
+    -fx-padding: 0 24 0 24;
+    -fx-background-color: -qm-bg-app;
 }
 
-.header__label {
-    -fx-font-size: 16px;
-    -fx-font-style: italic;
-    -fx-padding: 0 16 0 0;
-    -fx-text-fill: -qm-text-sidebar;
+.header-label {
+    -fx-font-size: 16;
+    -fx-font-weight: 700;
+    -fx-text-fill: -qm-text-primary;
+}
+
+.header-search {
+    -fx-pref-height: 38;
+    -fx-min-width: 260;
+}
+
+.header-action-btn {
+    -fx-pref-height: 38;
+    -fx-padding: 0 14 0 14;
 }
 
 .sidebar-menu {
@@ -188,7 +191,7 @@
     -fx-border-radius: 8;
     -fx-background-radius: 8;
     -fx-text-fill: -qm-text-primary;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
     -fx-font-weight: bold;
 }
 
@@ -212,13 +215,13 @@
     -fx-text-fill: -qm-text-primary;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
 }
 
 .btn-green {
     -fx-background-color: -qm-accent-green;
     -fx-text-fill: -qm-text-primary;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
 }
@@ -228,12 +231,12 @@
     -fx-text-fill: -qm-text-primary;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
     -fx-cursor: hand;
 }
 
 .titlePage {
-    -fx-font-size: -qm-font-lg;
+    -fx-font-size: 22;
     -fx-text-fill: -qm-text-primary;
 }
 
@@ -258,7 +261,7 @@
 
 .qm-page-title {
     -fx-text-fill: -qm-text-primary;
-    -fx-font-size: -qm-font-lg;
+    -fx-font-size: 22;
     -fx-font-weight: 700;
 }
 
@@ -301,7 +304,7 @@
 
 .qm-section-title {
     -fx-text-fill: -qm-text-primary;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
     -fx-font-weight: 600;
 }
 
@@ -360,7 +363,7 @@
 }
 
 .qm-hint {
-    -fx-font-size: -qm-font-sm;
+    -fx-font-size: 12;
 }
 
 .qm-form {
@@ -380,7 +383,7 @@
 
 .qm-total-value {
     -fx-text-fill: -qm-accent-success;
-    -fx-font-size: -qm-font-md;
+    -fx-font-size: 16;
     -fx-font-weight: 700;
 }
 

@@ -2,19 +2,31 @@ package com.quickmanager.controller;
 
 import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
+import com.quickmanager.model.TaiKhoan;
+import com.quickmanager.service.SeccionService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 
 import java.util.Objects;
 
 public class DashBoardController {
     @FXML
     private AnchorPane contentPane;
+    
+    @FXML
+    private Label accountLabel;
+    
+    @FXML
+    private Label roleLabel;
 
     @FXML
     public void initialize() {
+        TaiKhoan tk = SeccionService.getUser();
+        accountLabel.setText(tk.getTenDangNhap());
+        accountLabel.setText(tk.getVaiTro());
         setPage("home.fxml");
     }
 

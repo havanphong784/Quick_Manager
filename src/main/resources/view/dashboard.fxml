@@ -92,16 +92,20 @@
     <center>
         <BorderPane styleClass="mainPane" prefWidth="Infinity">
             <top>
-                <HBox styleClass="header" prefHeight="90" alignment="CENTER_RIGHT">
-                    <VBox alignment="CENTER_RIGHT">
-                        <Label styleClass="header__label">Admin</Label>
-                        <Label styleClass="header__label">Phongha</Label>
+                <HBox styleClass="header" prefHeight="90" alignment="CENTER" spacing="12">
+                    <VBox spacing="2" alignment="CENTER_LEFT">
+                        <Label text="Chào mừng đến QuickManager" styleClass="qm-page-title"/>
+                        <Label text="Quản lý bán hàng nhanh và hiệu quả" styleClass="qm-label-muted"/>
                     </VBox>
-                    <ImageView smooth="false" fitWidth="50" fitHeight="50">
-                        <Image url="@/images/user-setting.png"/>
-                    </ImageView>
 
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <VBox spacing="2" alignment="CENTER_RIGHT">
+                        <Label fx:id="accountLabel" styleClass="header-label" text="Phongha"/>
+                        <Label fx:id="roleLabel" styleClass="qm-label-muted" text="Admin"/>
+                    </VBox>
                 </HBox>
+                
             </top>
             <center>
                 <AnchorPane fx:id="contentPane"/>
