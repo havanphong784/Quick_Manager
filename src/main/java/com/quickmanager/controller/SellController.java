@@ -1,18 +1,21 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.model.GioHangItem;
 import com.quickmanager.model.SanPham;
 import com.quickmanager.service.ProductService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SellController {
+
+    // SP
     @FXML private TableView<SanPham> tbvSanPham;
     @FXML private TableColumn<SanPham, Integer> colMaSP;
     @FXML private TableColumn<SanPham, String> colTenSP;
@@ -22,13 +25,33 @@ public class SellController {
     @FXML private TextField txtTimSanPham;
     private static final ObservableList<SanPham> dataSanPham = FXCollections.observableArrayList();
 
+    // GH
+    @FXML private TableView<GioHangItem> tbvGioHang;
+    @FXML private TableColumn<GioHangItem, String> colSanPhamGH;
+    @FXML private TableColumn<GioHangItem, Integer> colSoLuongGH;
+    @FXML private TableColumn<GioHangItem, BigDecimal> colDonGiaGH;
+    @FXML private TableColumn<GioHangItem, BigDecimal> colThanhTienGH;
+    private static final ObservableList<GioHangItem> dataGioHang = FXCollections.observableArrayList();
+    private static final List<GioHangItem> mangGioHang = new ArrayList<>();
+    @FXML private Button btnThemGio;
+    @FXML private TextField txtSoLuongNhanh;
+    @FXML private Label labelThemGio;
+
+    // DM
+    @FXML private ComboBox<String> cbDanhMuc;
+    private static String stringDanhMuc= "";
+
+    // Khỏi tạo
     @FXML
     public void initialize() {
         initTable();
+        initTableGH();
+        loadDanhMuc();
         tbvSanPham.setItems(dataSanPham);
         loadSanPham();
     }
 
+    // SP
     public void initTable() {
         colMaSP.setCellValueFactory(new PropertyValueFactory<>("maSanPham"));
         colTenSP.setCellValueFactory(new PropertyValueFactory<>("tenSanPham"));
@@ -38,11 +61,59 @@ public class SellController {
     }
 
     public void loadSanPham() {
-        dataSanPham.setAll(ProductService.getProduct(txtTimSanPham.getText()));
+        dataSanPham.setAll(ProductService.getProduct(txtTimSanPham.getText(),stringDanhMuc));
     }
 
     public void handleSearch() {
         loadSanPham();
     }
 
+    // DM
+    public void loadDanhMuc() {
+        cbDanhMuc.getItems().addAll(ProductService.getDanhMuc());
+    }
+
+    public void handleComboBox() {
+        String selected = cbDanhMuc.getValue();
+        stringDanhMuc = (selected == null) ? "" : selected;
+        loadSanPham();
+    }
+
+    // GH
+    public void initTableGH() {
+        colSanPhamGH.setCellValueFactory(new PropertyValueFactory<>("tenSanPham"));
+        colDonGiaGH.setCellValueFactory(new PropertyValueFactory<>("giaBan"));
+        colSoLuongGH.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        colThanhTienGH.setCellValueFactory(new PropertyValueFactory<>("thanhTien"));
+        tbvGioHang.setItems(dataGioHang);
+    }
+
+    public void handleThemGio() {
+        SanPham sp = tbvSanPham.getSelectionModel().getSelectedItem();
+        String stringSL = txtSoLuongNhanh.getText().trim();
+        int sl = 1;
+        if (stringSL != null) {
+            try {
+                sl = Integer.parseInt(stringSL);
+            }catch (NumberFormatException e){
+                labelThemGio.setText("Vui long nhap so.");
+                return;
+            }
+        }
+
+
+        if (sp != null && sp.getSoLuongTon() >= sl) {
+            GioHangItem gh = new GioHangItem(sp.getMaSanPham(),sp.getTenSanPham(),sl,sp.getGiaBan());
+            for (GioHangItem it : mangGioHang) {
+                if (gh.getMaSanPham() == it.getMaSanPham()) {
+                    labelThemGio.setText("Đã tồn tại trong giỏ.");
+                    gh = null;
+                    return;
+                }
+            }
+            mangGioHang.add(gh);
+            dataGioHang.setAll(mangGioHang);
+            labelThemGio.setText("");
+        }
+    }
 }
