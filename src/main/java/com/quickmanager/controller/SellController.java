@@ -36,6 +36,7 @@ public class SellController {
     @FXML private Button btnThemGio;
     @FXML private TextField txtSoLuongNhanh;
     @FXML private Label labelThemGio;
+    @FXML private Label labelXoaGio;
 
     // DM
     @FXML private ComboBox<String> cbDanhMuc;
@@ -107,7 +108,6 @@ public class SellController {
             for (GioHangItem it : mangGioHang) {
                 if (gh.getMaSanPham() == it.getMaSanPham()) {
                     labelThemGio.setText("Đã tồn tại trong giỏ.");
-                    gh = null;
                     return;
                 }
             }
@@ -115,5 +115,21 @@ public class SellController {
             dataGioHang.setAll(mangGioHang);
             labelThemGio.setText("");
         }
+    }
+
+    public void handleXoaDong() {
+        GioHangItem selected = tbvGioHang.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            labelXoaGio.setText("Chọn dòng để xóa.");
+            System.out.println("Đã xóa.");
+        }else {
+            mangGioHang.removeIf(it -> it.getMaSanPham() == selected.getMaSanPham());
+            dataGioHang.setAll(mangGioHang);
+        }
+    }
+
+    public void handleXoaGio() {
+        mangGioHang.clear();
+        dataGioHang.setAll(mangGioHang);
     }
 }

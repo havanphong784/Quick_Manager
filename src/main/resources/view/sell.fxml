@@ -73,10 +73,10 @@
                     </TableView>
 
                     <HBox spacing="8">
-                        <Button fx:id="btnXoaDong" text="Xóa dòng" styleClass="qm-btn"/>
-                        <Button fx:id="btnXoaGio" text="Xóa giỏ" styleClass="qm-btn"/>
+                        <Button fx:id="btnXoaDong" onAction="#handleXoaDong" text="Xóa dòng" styleClass="qm-btn"/>
+                        <Button fx:id="btnXoaGio" onAction="#handleXoaGio" text="Xóa giỏ" styleClass="qm-btn"/>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="btnLuuTam" text="Lưu tạm" styleClass="qm-btn"/>
+                        <Label fx:id="labelXoaGio" text="" styleClass="qm-hint"/>
                     </HBox>
 
                     <GridPane hgap="10" vgap="8" styleClass="qm-form">
