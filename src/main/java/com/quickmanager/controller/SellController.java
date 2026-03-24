@@ -137,17 +137,17 @@ public class SellController {
         GioHangItem selected = tbvGioHang.getSelectionModel().getSelectedItem();
         if (selected == null) {
             labelXoaGio.setText("Chọn dòng để xóa.");
-            System.out.println("Đã xóa.");
-            handleTinhTien();   // goi lai pt tinh tien
         }else {
             mangGioHang.removeIf(it -> it.getMaSanPham() == selected.getMaSanPham());
             dataGioHang.setAll(mangGioHang);
+            handleTinhTien();   // goi lai pt tinh tien
         }
     }
 
     public void handleXoaGio() {
         mangGioHang.clear();
         dataGioHang.setAll(mangGioHang);
+        handleTinhTien();
     }
 
 
@@ -169,17 +169,14 @@ public class SellController {
             tamTinh = tamTinh.add(it.getThanhTien());
         }
         lblTamTinh.setText(tamTinh.toString());
-        BigDecimal tongTien = BigDecimal.ZERO;
         String strGiamGia = txtGiamGia.getText().trim();
-        tongTien = strGiamGia.equals("") ? tamTinh : tamTinh.subtract(BigDecimal.valueOf(Double.parseDouble(strGiamGia)));
+        BigDecimal giamGia = (strGiamGia.equals("")) ? BigDecimal.ZERO : (BigDecimal.valueOf(Double.parseDouble(strGiamGia)));
+        BigDecimal tongTien = tamTinh.subtract(giamGia);
         lblTongTien.setText(tongTien.toString());
         String strKhachDua = txtKhachDua.getText().trim();
-        BigDecimal tienThoi = strKhachDua.equals("") ? BigDecimal.ZERO.subtract(tongTien)  : BigDecimal.valueOf(Double.parseDouble(txtKhachDua.getText().trim()));
-        if (tienThoi.compareTo(tongTien) < 0) {
-            lblTienThoi.setText("Đưa thiếu: " + tienThoi.toString());
-        }else {
-            lblTienThoi.setText(tienThoi.toString());
-        }
+        BigDecimal khachDua = (strKhachDua.equals("")) ? BigDecimal.ZERO : BigDecimal.valueOf(Double.parseDouble(strKhachDua));
+        BigDecimal tienThoi = khachDua.subtract(tongTien);
+        lblTienThoi.setText(tienThoi.toString());
     }
 
 }

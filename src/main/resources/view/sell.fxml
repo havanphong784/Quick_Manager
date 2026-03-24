@@ -95,13 +95,13 @@
                         <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
                         <Label text="Giảm giá" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtGiamGia" promptText="0" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtGiamGia" onAction="#handleTinhTien" promptText="0" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
                         <Label text="Tổng tiền" styleClass="qm-total-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                         <Label fx:id="lblTongTien" text="0 VNĐ" styleClass="qm-total-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
                         <Label text="Khách đưa" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtKhachDua" promptText="Nhập tiền khách đưa" styleClass="qm-input" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtKhachDua" onAction="#handleTinhTien" promptText="Nhập tiền khách đưa" styleClass="qm-input" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
                         <Label text="Tiền thối" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
                         <Label fx:id="lblTienThoi" text="0 VNĐ" styleClass="qm-warning-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
