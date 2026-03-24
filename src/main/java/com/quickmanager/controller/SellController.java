@@ -116,7 +116,6 @@ public class SellController {
             }
         }
 
-
         if (sp != null && sp.getSoLuongTon() >= sl) {
             GioHangItem gh = new GioHangItem(sp.getMaSanPham(),sp.getTenSanPham(),sl,sp.getGiaBan());
             for (GioHangItem it : mangGioHang) {
@@ -128,6 +127,9 @@ public class SellController {
             mangGioHang.add(gh);
             dataGioHang.setAll(mangGioHang);
             labelThemGio.setText("");
+            handleTinhTien();   // goi lai pt tinh tien
+        }else {
+            labelThemGio.setText("Vươt quá số lượng tồn kho.");
         }
     }
 
@@ -136,6 +138,7 @@ public class SellController {
         if (selected == null) {
             labelXoaGio.setText("Chọn dòng để xóa.");
             System.out.println("Đã xóa.");
+            handleTinhTien();   // goi lai pt tinh tien
         }else {
             mangGioHang.removeIf(it -> it.getMaSanPham() == selected.getMaSanPham());
             dataGioHang.setAll(mangGioHang);
@@ -160,5 +163,23 @@ public class SellController {
             txtKhachHang.setText(kh.getTenKhachHang());
     }
 
+    public void handleTinhTien() {
+        BigDecimal tamTinh = BigDecimal.ZERO;
+        for (GioHangItem it : mangGioHang) {
+            tamTinh = tamTinh.add(it.getThanhTien());
+        }
+        lblTamTinh.setText(tamTinh.toString());
+        BigDecimal tongTien = BigDecimal.ZERO;
+        String strGiamGia = txtGiamGia.getText().trim();
+        tongTien = strGiamGia.equals("") ? tamTinh : tamTinh.subtract(BigDecimal.valueOf(Double.parseDouble(strGiamGia)));
+        lblTongTien.setText(tongTien.toString());
+        String strKhachDua = txtKhachDua.getText().trim();
+        BigDecimal tienThoi = strKhachDua.equals("") ? BigDecimal.ZERO.subtract(tongTien)  : BigDecimal.valueOf(Double.parseDouble(txtKhachDua.getText().trim()));
+        if (tienThoi.compareTo(tongTien) < 0) {
+            lblTienThoi.setText("Đưa thiếu: " + tienThoi.toString());
+        }else {
+            lblTienThoi.setText(tienThoi.toString());
+        }
+    }
 
 }
