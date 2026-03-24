@@ -1,7 +1,9 @@
 package com.quickmanager.controller;
 
 import com.quickmanager.model.GioHangItem;
+import com.quickmanager.model.KhachHang;
 import com.quickmanager.model.SanPham;
+import com.quickmanager.service.CustomerService;
 import com.quickmanager.service.ProductService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +44,16 @@ public class SellController {
     @FXML private ComboBox<String> cbDanhMuc;
     private static String stringDanhMuc= "";
 
+    // KH
+    @FXML private ComboBox<KhachHang> cbKhachHang;
+    @FXML private TextField txtKhachDua;
+    @FXML private TextField txtSDT;
+    @FXML private TextField txtKhachHang;
+    @FXML private TextField txtGiamGia;
+    @FXML private Label lblTongTien;
+    @FXML private Label lblTamTinh;
+    @FXML private Label lblTienThoi;
+
     // Khỏi tạo
     @FXML
     public void initialize() {
@@ -50,6 +62,7 @@ public class SellController {
         loadDanhMuc();
         tbvSanPham.setItems(dataSanPham);
         loadSanPham();
+        initKhachHang();
     }
 
     // SP
@@ -72,9 +85,10 @@ public class SellController {
     // DM
     public void loadDanhMuc() {
         cbDanhMuc.getItems().addAll(ProductService.getDanhMuc());
+        cbDanhMuc.getItems().addFirst("");
     }
 
-    public void handleComboBox() {
+    public void handleSelectDM() {
         String selected = cbDanhMuc.getValue();
         stringDanhMuc = (selected == null) ? "" : selected;
         loadSanPham();
@@ -132,4 +146,19 @@ public class SellController {
         mangGioHang.clear();
         dataGioHang.setAll(mangGioHang);
     }
+
+
+    // KH
+    public void initKhachHang() {
+        cbKhachHang.getItems().setAll(CustomerService.loadCustomer());
+        cbKhachHang.getItems().addFirst(new KhachHang(0,"","","","",0,""));
+    }
+
+    public void handleSelectKH() {
+            KhachHang kh = cbKhachHang.getValue();
+            txtSDT.setText(kh.getSoDienThoai());
+            txtKhachHang.setText(kh.getTenKhachHang());
+    }
+
+
 }

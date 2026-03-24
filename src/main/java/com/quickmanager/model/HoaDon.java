@@ -6,6 +6,7 @@ public class HoaDon {
 
     private int maHoaDon;
     private int maNhanVien;
+    private Integer maKhachHang;
     private Date ngayLap;
     private double tongTien;
     private double tienKhachDua;
@@ -18,8 +19,15 @@ public class HoaDon {
     public HoaDon(int maHoaDon, int maNhanVien, Date ngayLap,
                   double tongTien, double tienKhachDua,
                   double tienThoi, String trangThai) {
+        this(maHoaDon, maNhanVien, null, ngayLap, tongTien, tienKhachDua, tienThoi, trangThai);
+    }
+
+    public HoaDon(int maHoaDon, int maNhanVien, Integer maKhachHang, Date ngayLap,
+                  double tongTien, double tienKhachDua,
+                  double tienThoi, String trangThai) {
         this.maHoaDon = maHoaDon;
         this.maNhanVien = maNhanVien;
+        this.maKhachHang = maKhachHang;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
         this.tienKhachDua = tienKhachDua;
@@ -32,6 +40,9 @@ public class HoaDon {
 
     public int getMaNhanVien() { return maNhanVien; }
     public void setMaNhanVien(int maNhanVien) { this.maNhanVien = maNhanVien; }
+
+    public Integer getMaKhachHang() { return maKhachHang; }
+    public void setMaKhachHang(Integer maKhachHang) { this.maKhachHang = maKhachHang; }
 
     public Date getNgayLap() { return ngayLap; }
     public void setNgayLap(Date ngayLap) { this.ngayLap = ngayLap; }
