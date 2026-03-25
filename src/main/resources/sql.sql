@@ -85,7 +85,7 @@ GO
 CREATE TABLE TAI_KHOAN (
     TenDangNhap VARCHAR(50) PRIMARY KEY,
     MatKhau VARCHAR(100) NOT NULL,
-    MaNhanVien INT UNIQUE,
+    MaNhanVien INT,
     VaiTro NVARCHAR(50),
     TrangThai NVARCHAR(50),
     CONSTRAINT FK_TK_NV FOREIGN KEY (MaNhanVien)

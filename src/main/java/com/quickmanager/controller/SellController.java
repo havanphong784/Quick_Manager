@@ -54,6 +54,10 @@ public class SellController {
     @FXML private Label lblTamTinh;
     @FXML private Label lblTienThoi;
 
+    // TT
+    @FXML private Button btnThanhToan;
+    @FXML private Button btnInHoaDon;
+
     // Khỏi tạo
     @FXML
     public void initialize() {
@@ -154,7 +158,7 @@ public class SellController {
     // KH
     public void initKhachHang() {
         cbKhachHang.getItems().setAll(CustomerService.loadCustomer());
-        cbKhachHang.getItems().addFirst(new KhachHang(0,"","","","",0,""));
+        cbKhachHang.getItems().addFirst(null);
     }
 
     public void handleSelectKH() {
@@ -177,6 +181,23 @@ public class SellController {
         BigDecimal khachDua = (strKhachDua.equals("")) ? BigDecimal.ZERO : BigDecimal.valueOf(Double.parseDouble(strKhachDua));
         BigDecimal tienThoi = khachDua.subtract(tongTien);
         lblTienThoi.setText(tienThoi.toString());
+    }
+
+
+    // TT
+    public void handleThanhToan() {
+        if (mangGioHang.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Giỏ hàng trống");
+            alert.setContentText("Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.");
+            alert.showAndWait();
+            return;
+        }
+        if (cbDanhMuc.getSelectionModel().getSelectedItem() == null) {
+            if (txtKhachHang.getText().trim().isEmpty() || txtSDT.getText().trim().isEmpty()) {
+
+            }
+        }
     }
 
 }

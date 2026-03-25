@@ -108,7 +108,7 @@
 
                         <HBox spacing="8" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2">
                             <Button fx:id="btnInHoaDon" text="In hóa đơn" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnThanhToan" text="Thanh toán" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnThanhToan" onAction="#handleThanhToan" text="Thanh toán" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                             <HBox.hgrow/>
                             <ComboBox fx:id="cbKhachHang" onAction="#handleSelectKH" promptText="Chọn khách hàng" styleClass="qm-combo"/>
                         </HBox>

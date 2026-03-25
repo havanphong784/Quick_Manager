@@ -1,5 +1,6 @@
 package com.quickmanager.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class HoaDon {
@@ -8,23 +9,23 @@ public class HoaDon {
     private int maNhanVien;
     private Integer maKhachHang;
     private Date ngayLap;
-    private double tongTien;
-    private double tienKhachDua;
-    private double tienThoi;
+    private BigDecimal tongTien;
+    private BigDecimal tienKhachDua;
+    private BigDecimal tienThoi;
     private String trangThai;
 
     public HoaDon() {
     }
 
     public HoaDon(int maHoaDon, int maNhanVien, Date ngayLap,
-                  double tongTien, double tienKhachDua,
-                  double tienThoi, String trangThai) {
+                  BigDecimal tongTien, BigDecimal tienKhachDua,
+                  BigDecimal tienThoi, String trangThai) {
         this(maHoaDon, maNhanVien, null, ngayLap, tongTien, tienKhachDua, tienThoi, trangThai);
     }
 
     public HoaDon(int maHoaDon, int maNhanVien, Integer maKhachHang, Date ngayLap,
-                  double tongTien, double tienKhachDua,
-                  double tienThoi, String trangThai) {
+                  BigDecimal tongTien, BigDecimal tienKhachDua,
+                  BigDecimal tienThoi, String trangThai) {
         this.maHoaDon = maHoaDon;
         this.maNhanVien = maNhanVien;
         this.maKhachHang = maKhachHang;
@@ -47,14 +48,14 @@ public class HoaDon {
     public Date getNgayLap() { return ngayLap; }
     public void setNgayLap(Date ngayLap) { this.ngayLap = ngayLap; }
 
-    public double getTongTien() { return tongTien; }
-    public void setTongTien(double tongTien) { this.tongTien = tongTien; }
+    public BigDecimal getTongTien() { return tongTien; }
+    public void setTongTien(BigDecimal tongTien) { this.tongTien = tongTien; }
 
-    public double getTienKhachDua() { return tienKhachDua; }
-    public void setTienKhachDua(double tienKhachDua) { this.tienKhachDua = tienKhachDua; }
+    public BigDecimal getTienKhachDua() { return tienKhachDua; }
+    public void setTienKhachDua(BigDecimal tienKhachDua) { this.tienKhachDua = tienKhachDua; }
 
-    public double getTienThoi() { return tienThoi; }
-    public void setTienThoi(double tienThoi) { this.tienThoi = tienThoi; }
+    public BigDecimal getTienThoi() { return tienThoi; }
+    public void setTienThoi(BigDecimal tienThoi) { this.tienThoi = tienThoi; }
 
     public String getTrangThai() { return trangThai; }
     public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
