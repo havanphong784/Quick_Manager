@@ -13,7 +13,7 @@ public class CT_HoaDon {
     public CT_HoaDon() {
     }
 
-    public CT_HoaDon(int maHoaDon, int maSanPham, int soLuong, BigDecimal donGia, BigDecimal thanhTien) {
+    public CT_HoaDon( int maSanPham, int soLuong, BigDecimal donGia, BigDecimal thanhTien) {
         this.maHoaDon = maHoaDon;
         this.maSanPham = maSanPham;
         this.soLuong = soLuong;

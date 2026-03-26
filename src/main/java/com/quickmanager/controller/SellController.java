@@ -1,10 +1,10 @@
 package com.quickmanager.controller;
 
-import com.quickmanager.model.GioHangItem;
-import com.quickmanager.model.KhachHang;
-import com.quickmanager.model.SanPham;
+import com.quickmanager.model.*;
 import com.quickmanager.service.CustomerService;
+import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
+import com.quickmanager.service.SeccionService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SellController {
@@ -56,7 +57,6 @@ public class SellController {
 
     // TT
     @FXML private Button btnThanhToan;
-    @FXML private Button btnInHoaDon;
 
     // Khỏi tạo
     @FXML
@@ -186,6 +186,7 @@ public class SellController {
 
     // TT
     public void handleThanhToan() {
+        handleTinhTien();
         if (mangGioHang.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Giỏ hàng trống");
@@ -193,11 +194,67 @@ public class SellController {
             alert.showAndWait();
             return;
         }
-        if (cbDanhMuc.getSelectionModel().getSelectedItem() == null) {
-            if (txtKhachHang.getText().trim().isEmpty() || txtSDT.getText().trim().isEmpty()) {
 
+        // KH
+        KhachHang kh = cbKhachHang.getValue();
+        if (kh == null) {
+            String nameKH = txtKhachHang.getText().trim();
+            String sdtKH = txtSDT.getText().trim();
+            if (!nameKH.isEmpty() && !sdtKH.isEmpty()) {
+                kh = CustomerService.themKhachHang(nameKH, sdtKH);
             }
         }
+
+        // LHD
+        List<CT_HoaDon> listHD = new LinkedList<>();
+        BigDecimal tamTinh = BigDecimal.ZERO;
+        for (GioHangItem item : dataGioHang) {
+            CT_HoaDon a = new CT_HoaDon(item.getMaSanPham(), item.getSoLuong(), item.getGiaBan(), item.getThanhTien());
+            tamTinh = tamTinh.add(item.getThanhTien());
+            listHD.add(a);
+        }
+        String strGiamGia = txtGiamGia.getText().trim();
+        BigDecimal giamGia = (strGiamGia.equals("")) ? BigDecimal.ZERO : (BigDecimal.valueOf(Double.parseDouble(strGiamGia)));
+        BigDecimal tongTien = tamTinh.subtract(giamGia);
+        String strKhachDua = txtKhachDua.getText().trim();
+        BigDecimal khachDua = (strKhachDua.equals("")) ? BigDecimal.ZERO : BigDecimal.valueOf(Double.parseDouble(strKhachDua));
+        BigDecimal tienThoi = khachDua.subtract(tongTien);
+
+        HoaDon hd = new HoaDon(SeccionService.getUser().getMaNhanVien(),(kh == null) ? null :kh.getMaKhachHang(),tongTien,giamGia,khachDua,tienThoi);
+        try {
+            int maHD = InvoiceService.taoHoaDonNKH(hd, listHD);
+            if (maHD >0) {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Thanh toán thành công");
+                a.setContentText("Mã hóa đơn: " + maHD);
+                a.showAndWait();
+                reset();
+                loadSanPham();
+            }
+        }catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi thanh toán");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
+
+    private void reset() {
+        dataGioHang.clear();
+        tbvGioHang.getSelectionModel().clearSelection();
+        cbKhachHang.getSelectionModel().clearSelection();
+        txtKhachHang.clear();
+        txtSDT.clear();
+        txtGiamGia.clear();
+        txtKhachDua.clear();
+        lblTamTinh.setText("0");
+        lblTongTien.setText("0");
+        lblTienThoi.setText("0");
+        txtSoLuongNhanh.clear();
+        labelThemGio.setText("");
+        labelXoaGio.setText("");
+        tbvSanPham.getSelectionModel().clearSelection();
+    }
+
 
 }

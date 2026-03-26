@@ -13,6 +13,11 @@ public class KhachHang {
     public KhachHang() {
     }
 
+    public KhachHang(String tenKhachHang,String Sdt) {
+        this.tenKhachHang = tenKhachHang;
+        this.soDienThoai = Sdt;
+    }
+
     public KhachHang(int maKhachHang, String tenKhachHang, String soDienThoai,
                      String email, String diaChi, int diemTichLuy, String trangThai) {
         this.maKhachHang = maKhachHang;

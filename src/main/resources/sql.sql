@@ -108,18 +108,23 @@ CREATE TABLE PHIEU_NHAP (
 GO
 
 CREATE TABLE HOA_DON (
-    MaHoaDon INT IDENTITY(1,1) PRIMARY KEY,
-    MaNhanVien INT,
-    MaKhachHang INT NULL,
-    NgayLap DATETIME DEFAULT GETDATE(),
-    TongTien DECIMAL(14,2),
-    TienKhachDua DECIMAL(14,2),
-    TienThoi DECIMAL(14,2),
-    TrangThai NVARCHAR(50),
-    CONSTRAINT FK_HD_NV FOREIGN KEY (MaNhanVien)
-        REFERENCES NHAN_VIEN(MaNhanVien),
-    CONSTRAINT FK_HD_KH FOREIGN KEY (MaKhachHang)
-        REFERENCES KHACH_HANG(MaKhachHang)
+     MaHoaDon INT IDENTITY(1,1) PRIMARY KEY,
+     MaNhanVien INT,
+     MaKhachHang INT NULL,
+     NgayLap DATETIME DEFAULT GETDATE(),
+     TongTien DECIMAL(14,2) NOT NULL CONSTRAINT DF_HD_TongTien DEFAULT (0),
+     GiamGia DECIMAL(14,2) NOT NULL CONSTRAINT DF_HD_GiamGia DEFAULT (0),
+     TienKhachDua DECIMAL(14,2) NULL,
+     TienThoi DECIMAL(14,2) NULL,
+     TrangThai NVARCHAR(50),
+     CONSTRAINT FK_HD_NV FOREIGN KEY (MaNhanVien)
+         REFERENCES NHAN_VIEN(MaNhanVien),
+     CONSTRAINT FK_HD_KH FOREIGN KEY (MaKhachHang)
+         REFERENCES KHACH_HANG(MaKhachHang),
+     CONSTRAINT CK_HD_TongTien_NonNegative CHECK (TongTien >= 0),
+     CONSTRAINT CK_HD_GiamGia_NonNegative CHECK (GiamGia >= 0),
+     CONSTRAINT CK_HD_TienKhachDua_NonNegative CHECK (TienKhachDua IS NULL OR TienKhachDua >= 0),
+     CONSTRAINT CK_HD_TienThoi_NonNegative CHECK (TienThoi IS NULL OR TienThoi >= 0)
 );
 GO
 

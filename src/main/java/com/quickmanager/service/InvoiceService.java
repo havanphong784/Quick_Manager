@@ -10,8 +10,8 @@ import java.util.List;
 
 public class InvoiceService {
     public static final String sqlInsertHD = """
-    Insert Into HOA_DON ( MaNhanVien,MaKhachHang,TongTien,TienKhachDua,TienThoi)
-    Values(?,?,?,?,?);
+    Insert Into HOA_DON ( MaNhanVien,MaKhachHang,TongTien,GiamGia,TienKhachDua,TienThoi)
+    Values(?,?,?,?,?,?);
     """;
     private static final String sqlInsertCTHD =
             "INSERT INTO CT_HOA_DON (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (?, ?, ?, ?, ?)";
@@ -20,7 +20,7 @@ public class InvoiceService {
             "UPDATE SAN_PHAM SET SoLuongTon = SoLuongTon - ? " +
                     "WHERE MaSanPham = ? AND SoLuongTon >= ?";
 
-    public int taoHoaDonNKH(HoaDon hd, List<CT_HoaDon> ds) throws SQLException {
+    public static int taoHoaDonNKH(HoaDon hd, List<CT_HoaDon> ds) throws SQLException {
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
             try  (PreparedStatement psHD = con.prepareStatement(sqlInsertHD, Statement.RETURN_GENERATED_KEYS);
@@ -32,8 +32,9 @@ public class InvoiceService {
                 if (hd.getMaKhachHang() == null) psHD.setNull(2, Types.INTEGER);
                 else psHD.setInt(2, hd.getMaKhachHang());
                 psHD.setBigDecimal(3, hd.getTongTien());
-                psHD.setBigDecimal(4, hd.getTienKhachDua());
-                psHD.setBigDecimal(5, hd.getTienThoi());
+                psHD.setBigDecimal(4, hd.getGiamGia());
+                psHD.setBigDecimal(5, hd.getTienKhachDua());
+                psHD.setBigDecimal(6, hd.getTienThoi());
 
                 int ktHD = psHD.executeUpdate();
                 if (ktHD == 0) throw new SQLException("Tạo hóa đơn thất bại");
