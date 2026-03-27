@@ -1,6 +1,3 @@
--- ========================================
--- TẠO LẠI DATABASE TỪ ĐẦU
--- ========================================
 USE master;
 GO
 
@@ -17,9 +14,6 @@ GO
 USE QL_SIEU_THI;
 GO
 
--- ========================================
--- BẢNG GỐC (CHƯA PHỤ THUỘC FK)
--- ========================================
 CREATE TABLE NHAN_VIEN (
     MaNhanVien INT IDENTITY(1,1) PRIMARY KEY,
     TenNhanVien NVARCHAR(100) NOT NULL,
@@ -79,9 +73,6 @@ CREATE TABLE SAN_PHAM (
 );
 GO
 
--- ========================================
--- BẢNG PHỤ THUỘC FK
--- ========================================
 CREATE TABLE TAI_KHOAN (
     TenDangNhap VARCHAR(50) PRIMARY KEY,
     MatKhau VARCHAR(100) NOT NULL,

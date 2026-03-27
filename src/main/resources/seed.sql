@@ -6,7 +6,6 @@ GO
 BEGIN TRY
     BEGIN TRAN;
 
-    -- 1) Clear old data (child -> parent)
     DELETE FROM CT_HOA_DON;
     DELETE FROM HOA_DON;
     DELETE FROM KHACH_HANG;
@@ -18,11 +17,6 @@ BEGIN TRY
     DELETE FROM NHA_CUNG_CAP;
     DELETE FROM NHAN_VIEN;
 
-    -- 2) Dùng IDENTITY_INSERT để seed với ID cố định, tránh lệch khóa ngoại
-
-    -- =========================
-    -- NHAN_VIEN (10)
-    -- =========================
     SET IDENTITY_INSERT NHAN_VIEN ON;
     INSERT INTO NHAN_VIEN (MaNhanVien, TenNhanVien, NgaySinh, GioiTinh, SoDienThoai, Email, DiaChi, ChucVu, Luong, TrangThai) VALUES
     (1, N'Nguyễn Văn Minh', '1989-04-12', N'Nam', '0912345601', 'minh.nguyen@quickmart.vn', N'Quận 1, TP.HCM', N'Quản lý', 25000000, N'Đang làm'),
@@ -37,9 +31,6 @@ BEGIN TRY
     (10, N'Phan Mỹ Linh', '1993-08-19', N'Nữ', '0912345610', 'linh.phan@quickmart.vn', N'Bình Tân, TP.HCM', N'Bán hàng', 9500000, N'Nghỉ việc');
     SET IDENTITY_INSERT NHAN_VIEN OFF;
 
-    -- =========================
-    -- TAI_KHOAN (10)
-    -- =========================
     INSERT INTO TAI_KHOAN (TenDangNhap, MatKhau, MaNhanVien, VaiTro, TrangThai) VALUES
     ('admin',      'Admin@123', 1, N'ADMIN',    N'Hoạt động'),
     ('ketoan.lan', 'Lan@123',   2, N'KETOAN',   N'Hoạt động'),
@@ -52,9 +43,6 @@ BEGIN TRY
     ('giamsat.huy','Huy@123',   9, N'GIAMSAT',  N'Hoạt động'),
     ('linh.old',   'Linh@123', 10, N'BANHANG',  N'Ngừng sử dụng');
 
-    -- =========================
-    -- DANH_MUC (8)
-    -- =========================u
     SET IDENTITY_INSERT DANH_MUC ON;
     INSERT INTO DANH_MUC (MaDanhMuc, TenDanhMuc, MoTa, TrangThai) VALUES
     (1, N'Đồ uống', N'Nước ngọt, nước suối, trà đóng chai', N'Hoạt động'),
@@ -67,9 +55,6 @@ BEGIN TRY
     (8, N'Đông lạnh', N'Xúc xích, chả giò, hải sản đông lạnh', N'Hoạt động');
     SET IDENTITY_INSERT DANH_MUC OFF;
 
-    -- =========================
-    -- NHA_CUNG_CAP (6)
-    -- =========================
     SET IDENTITY_INSERT NHA_CUNG_CAP ON;
     INSERT INTO NHA_CUNG_CAP (MaNCC, TenNCC, SoDienThoai, Email, DiaChi, TrangThai) VALUES
     (1, N'Công ty TNHH FMCG Việt', '02873001111', 'sales@fmcgviet.vn', N'KCN Tân Bình, TP.HCM', N'Hợp tác'),
@@ -80,9 +65,6 @@ BEGIN TRY
     (6, N'Vina Cold Chain', '02873006666', 'support@vinacold.vn', N'Củ Chi, TP.HCM', N'Hợp tác');
     SET IDENTITY_INSERT NHA_CUNG_CAP OFF;
 
-    -- =========================
-    -- KHACH_HANG (10)
-    -- =========================
     SET IDENTITY_INSERT KHACH_HANG ON;
     INSERT INTO KHACH_HANG (MaKhachHang, TenKhachHang, SoDienThoai, Email, DiaChi, DiemTichLuy, TrangThai) VALUES
     (1, N'Nguyễn Thành Đạt', '0901112201', 'dat.nguyen@gmail.com', N'Quận 1, TP.HCM', 120, N'Hoạt động'),
@@ -97,9 +79,6 @@ BEGIN TRY
     (10, N'Phan Đức Long', '0901112210', 'long.phan@gmail.com', N'Nhà Bè, TP.HCM', 10, N'Hoạt động');
     SET IDENTITY_INSERT KHACH_HANG OFF;
 
-    -- =========================
-    -- SAN_PHAM (24)
-    -- =========================
     SET IDENTITY_INSERT SAN_PHAM ON;
     INSERT INTO SAN_PHAM (MaSanPham, TenSanPham, MaDanhMuc, GiaNhap, GiaBan, SoLuongTon, DonViTinh, NgaySanXuat, HanSuDung, TrangThai) VALUES
     (1, N'Nước suối Lavie 500ml', 1, 8500, 12000, 280, N'Chai', '2025-12-01', '2027-12-01', N'Đang bán'),
@@ -128,14 +107,10 @@ BEGIN TRY
     (24, N'Xúc xích tiệt trùng 500g', 8, 68000, 99000, 35, N'Gói', '2025-12-01', '2026-05-01', N'Đang bán');
     SET IDENTITY_INSERT SAN_PHAM OFF;
 
-    -- Ví dụ trường hợp biên sản phẩm
     UPDATE SAN_PHAM SET TrangThai = N'Ngừng kinh doanh' WHERE MaSanPham = 8;   -- phô mai
     UPDATE SAN_PHAM SET SoLuongTon = 0, TrangThai = N'Hết hàng' WHERE MaSanPham = 18; -- cà chua
     UPDATE SAN_PHAM SET HanSuDung = '2026-02-28', TrangThai = N'Hết hạn' WHERE MaSanPham = 17; -- rau cải xanh
 
-    -- =========================
-    -- PHIEU_NHAP (8)
-    -- =========================
     SET IDENTITY_INSERT PHIEU_NHAP ON;
     INSERT INTO PHIEU_NHAP (MaPhieuNhap, MaNhanVien, MaNCC, NgayNhap, TongTien, TrangThai) VALUES
     (1, 3, 1, '2026-01-10 08:45:00', 3210000, N'Đã nhập'),
@@ -148,7 +123,6 @@ BEGIN TRY
     (8, 9, 6, '2026-03-08 15:20:00', 5780000, N'Đã nhập');
     SET IDENTITY_INSERT PHIEU_NHAP OFF;
 
-    -- CT_PHIEU_NHAP
     INSERT INTO CT_PHIEU_NHAP (MaPhieuNhap, MaSanPham, SoLuong, GiaNhap, ThanhTien) VALUES
     (1, 1, 100, 8500, 850000),
     (1, 2, 80, 12000, 960000),
@@ -182,9 +156,6 @@ BEGIN TRY
     (8,20, 80, 27000, 2160000),
     (8,24, 40, 68000, 2720000);
 
-    -- =========================
-    -- HOA_DON (15)
-    -- =========================
     SET IDENTITY_INSERT HOA_DON ON;
     INSERT INTO HOA_DON (MaHoaDon, MaNhanVien, MaKhachHang, NgayLap, TongTien, TienKhachDua, TienThoi, TrangThai) VALUES
     (1, 4, 1, '2026-03-10 08:15:00', 108000, 200000, 92000, N'Đã thanh toán'),
@@ -204,7 +175,6 @@ BEGIN TRY
     (15, 4, 2, '2026-03-13 18:05:00', 493000, 500000, 7000, N'Đã thanh toán');
     SET IDENTITY_INSERT HOA_DON OFF;
 
-    -- CT_HOA_DON
     INSERT INTO CT_HOA_DON (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES
     (1, 1, 4, 12000, 48000), (1, 2, 2, 16500, 33000), (1,14, 3, 9000, 27000),
     (2, 5, 1, 39000, 39000), (2, 6, 2, 32000, 64000),
