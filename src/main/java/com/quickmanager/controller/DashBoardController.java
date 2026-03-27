@@ -25,7 +25,7 @@ public class DashBoardController {
     public void initialize() {
         TaiKhoan tk = SessionService.getUser();
         accountLabel.setText(tk.getTenDangNhap());
-        accountLabel.setText(tk.getVaiTro());
+        roleLabel.setText(tk.getVaiTro());
         setPage("home.fxml");
     }
 
