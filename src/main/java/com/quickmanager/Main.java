@@ -32,7 +32,6 @@ public class Main extends Application {
             Parent p = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(path)));
             Scene scene = new Scene(p);
             scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("/view/index.css")).toExternalForm());
-            scene.setRoot(p);
             stage.setScene(scene);
             stage.setTitle(title);
             stage.centerOnScreen();

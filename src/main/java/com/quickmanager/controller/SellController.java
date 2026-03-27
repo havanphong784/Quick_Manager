@@ -66,6 +66,7 @@ public class SellController {
         tbvSanPham.setItems(dataSanPham);
         loadSanPham();
         initKhachHang();
+        btnThanhToan.setDisable(true);
     }
 
     // SP
@@ -209,8 +210,10 @@ public class SellController {
         if (khachDua.compareTo(tongTien) > 0) {
             BigDecimal tienThoi = khachDua.subtract(tongTien);
             lblTienThoi.setText(tienThoi.toString());
+            btnThanhToan.setDisable(false);
         }else {
             lblTienThoi.setText("Tiền khách đưa không đủ.");
+            btnThanhToan.setDisable(true);
         }
     }
 
