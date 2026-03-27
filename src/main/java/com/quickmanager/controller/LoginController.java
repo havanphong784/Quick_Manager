@@ -4,7 +4,7 @@ import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
 import com.quickmanager.service.AuthService;
-import com.quickmanager.service.SeccionService;
+import com.quickmanager.service.SessionService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,7 +49,7 @@ public class LoginController {
             return;
         }
         System.out.println("Đăng nhập thành công.\n");
-        SeccionService.setUser(tk);
+        SessionService.setUser(tk);
         statusLabel.setStyle("-fx-text-fill: green;");
         statusLabel.setText("Đăng nhập thành công. Xin chào " + tk.getTenDangNhap());
         Main.switchParent("/view/dashboard.fxml","Dashboard",true);

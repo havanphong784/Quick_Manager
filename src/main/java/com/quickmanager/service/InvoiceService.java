@@ -3,8 +3,6 @@ package com.quickmanager.service;
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.HoaDon;
-
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class InvoiceService {
     public static int taoHoaDonNKH(HoaDon hd, List<CT_HoaDon> ds) throws SQLException {
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
-            try  (PreparedStatement psHD = con.prepareStatement(sqlInsertHD, Statement.RETURN_GENERATED_KEYS);
+            try (PreparedStatement psHD = con.prepareStatement(sqlInsertHD, Statement.RETURN_GENERATED_KEYS);
                 PreparedStatement psCTHD = con.prepareStatement(sqlInsertCTHD);
                 PreparedStatement psUDSP =  con.prepareStatement(sqlUpdateSP)) {
 

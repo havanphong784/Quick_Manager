@@ -1,10 +1,12 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.Address;
+import com.quickmanager.debug.Alerts;
 import com.quickmanager.model.*;
 import com.quickmanager.service.CustomerService;
 import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
-import com.quickmanager.service.SeccionService;
+import com.quickmanager.service.SessionService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,7 +28,7 @@ public class SellController {
     @FXML private TableColumn<SanPham, Integer> colTonKho;
     @FXML private TableColumn<SanPham, BigDecimal> colGiaBan;
     @FXML private TextField txtTimSanPham;
-    private static final ObservableList<SanPham> dataSanPham = FXCollections.observableArrayList();
+    private final ObservableList<SanPham> dataSanPham = FXCollections.observableArrayList();
 
     // GH
     @FXML private TableView<GioHangItem> tbvGioHang;
@@ -34,12 +36,9 @@ public class SellController {
     @FXML private TableColumn<GioHangItem, Integer> colSoLuongGH;
     @FXML private TableColumn<GioHangItem, BigDecimal> colDonGiaGH;
     @FXML private TableColumn<GioHangItem, BigDecimal> colThanhTienGH;
-    private static final ObservableList<GioHangItem> dataGioHang = FXCollections.observableArrayList();
-    private static final List<GioHangItem> mangGioHang = new ArrayList<>();
-    @FXML private Button btnThemGio;
+    private final ObservableList<GioHangItem> dataGioHang = FXCollections.observableArrayList();
+    private final List<GioHangItem> mangGioHang = new ArrayList<>();
     @FXML private TextField txtSoLuongNhanh;
-    @FXML private Label labelThemGio;
-    @FXML private Label labelXoaGio;
 
     // DM
     @FXML private ComboBox<String> cbDanhMuc;
@@ -88,7 +87,7 @@ public class SellController {
 
     // DM
     public void loadDanhMuc() {
-        cbDanhMuc.getItems().addAll(ProductService.getDanhMuc());
+        cbDanhMuc.getItems().setAll(ProductService.getDanhMuc());
         cbDanhMuc.getItems().addFirst("");
     }
 
@@ -109,38 +108,38 @@ public class SellController {
 
     public void handleThemGio() {
         SanPham sp = tbvSanPham.getSelectionModel().getSelectedItem();
-        String stringSL = txtSoLuongNhanh.getText().trim();
-        int sl = 1;
-        if (stringSL != null) {
-            try {
-                sl = Integer.parseInt(stringSL);
-            }catch (NumberFormatException e){
-                labelThemGio.setText("Vui long nhap so.");
-                return;
-            }
+        if (sp ==  null) {
+            Alerts.thongBao("Chưa chọn sản phẩm.","Vui lòng chọn sản phẩm cần thêm vào giỏ hàng.");
+            return;
         }
-
-        if (sp != null && sp.getSoLuongTon() >= sl) {
-            GioHangItem gh = new GioHangItem(sp.getMaSanPham(),sp.getTenSanPham(),sl,sp.getGiaBan());
-            for (GioHangItem it : mangGioHang) {
-                if (gh.getMaSanPham() == it.getMaSanPham()) {
-                    labelThemGio.setText("Đã tồn tại trong giỏ.");
-                    return;
+        String stringSL = txtSoLuongNhanh.getText().trim();
+        int sl;
+        try {
+            sl = Integer.parseInt(stringSL);
+            if (sl > 0 && sp.getSoLuongTon() >= sl) {
+                GioHangItem gh = new GioHangItem(sp.getMaSanPham(),sp.getTenSanPham(),sl,sp.getGiaBan());
+                for (GioHangItem it : mangGioHang) {
+                    if (gh.getMaSanPham() == it.getMaSanPham()) {
+                        Alerts.thongBao("Đã tồn tại sản phẩm trong giỏ hàng.","Vui lòng chỉnh sửa số lượng trong giỏ hàng.");
+                        return;
+                    }
                 }
+                mangGioHang.add(gh);
+                dataGioHang.setAll(mangGioHang);
+                handleTinhTien();   // goi lai pt tinh tien
+            }else {
+                Alerts.thongBao("Không thể thêm sản phẩm.","Vượt quá số lượng tồn kho.");
             }
-            mangGioHang.add(gh);
-            dataGioHang.setAll(mangGioHang);
-            labelThemGio.setText("");
-            handleTinhTien();   // goi lai pt tinh tien
-        }else {
-            labelThemGio.setText("Vươt quá số lượng tồn kho.");
+        }catch (NumberFormatException e) {
+            Alerts.thongBao("Số lượng không hợp lệ.","Vui lòng nhập số nguyên dương.");
+            return;
         }
     }
 
     public void handleXoaDong() {
         GioHangItem selected = tbvGioHang.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            labelXoaGio.setText("Chọn dòng để xóa.");
+            Alerts.thongBao("Chưa chọn sản phẩm.","Vui lòng chọn sản phẩm cần xóa.");
         }else {
             mangGioHang.removeIf(it -> it.getMaSanPham() == selected.getMaSanPham());
             dataGioHang.setAll(mangGioHang);
@@ -163,8 +162,17 @@ public class SellController {
 
     public void handleSelectKH() {
             KhachHang kh = cbKhachHang.getValue();
-            txtSDT.setText(kh.getSoDienThoai());
-            txtKhachHang.setText(kh.getTenKhachHang());
+            if (kh != null) {
+                txtSDT.setText(kh.getSoDienThoai());
+                txtSDT.setDisable(true);
+                txtKhachHang.setText(kh.getTenKhachHang());
+                txtKhachHang.setDisable(true);
+            }else {
+                txtSDT.clear();
+                txtSDT.setDisable(false);
+                txtKhachHang.clear();
+                txtKhachHang.setDisable(false);
+            }
     }
 
     public void handleTinhTien() {
@@ -173,25 +181,50 @@ public class SellController {
             tamTinh = tamTinh.add(it.getThanhTien());
         }
         lblTamTinh.setText(tamTinh.toString());
-        String strGiamGia = txtGiamGia.getText().trim();
-        BigDecimal giamGia = (strGiamGia.equals("")) ? BigDecimal.ZERO : (BigDecimal.valueOf(Double.parseDouble(strGiamGia)));
+
+        BigDecimal giamGia;
+        try {
+            String strGiamGia = txtGiamGia.getText().trim();
+            giamGia = (strGiamGia.isEmpty()) ? BigDecimal.ZERO : (new BigDecimal(strGiamGia));
+        }catch (NumberFormatException e) {
+            txtGiamGia.clear();
+            giamGia = BigDecimal.ZERO;
+        }
+        if (giamGia.compareTo(tamTinh) > 0 || giamGia.compareTo(BigDecimal.ZERO) < 0) {
+            txtGiamGia.clear();
+            giamGia = BigDecimal.ZERO;
+        }
+
         BigDecimal tongTien = tamTinh.subtract(giamGia);
         lblTongTien.setText(tongTien.toString());
-        String strKhachDua = txtKhachDua.getText().trim();
-        BigDecimal khachDua = (strKhachDua.equals("")) ? BigDecimal.ZERO : BigDecimal.valueOf(Double.parseDouble(strKhachDua));
-        BigDecimal tienThoi = khachDua.subtract(tongTien);
-        lblTienThoi.setText(tienThoi.toString());
+
+        BigDecimal khachDua;
+        try {
+            String strKhachDua = txtKhachDua.getText().trim();
+            khachDua = new BigDecimal(strKhachDua);
+        }catch (NumberFormatException e) {
+            txtKhachDua.clear();
+            khachDua = BigDecimal.ZERO;
+        }
+        if (khachDua.compareTo(tongTien) > 0) {
+            BigDecimal tienThoi = khachDua.subtract(tongTien);
+            lblTienThoi.setText(tienThoi.toString());
+        }else {
+            lblTienThoi.setText("Tiền khách đưa không đủ.");
+        }
     }
 
 
     // TT
     public void handleThanhToan() {
+        btnThanhToan.setDisable(true);
         handleTinhTien();
         if (mangGioHang.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Giỏ hàng trống");
             alert.setContentText("Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.");
             alert.showAndWait();
+            btnThanhToan.setDisable(false);
             return;
         }
 
@@ -214,32 +247,32 @@ public class SellController {
             listHD.add(a);
         }
         String strGiamGia = txtGiamGia.getText().trim();
-        BigDecimal giamGia = (strGiamGia.equals("")) ? BigDecimal.ZERO : (BigDecimal.valueOf(Double.parseDouble(strGiamGia)));
+        BigDecimal giamGia = (strGiamGia.isEmpty()) ? BigDecimal.ZERO : (new BigDecimal(strGiamGia));
         BigDecimal tongTien = tamTinh.subtract(giamGia);
         String strKhachDua = txtKhachDua.getText().trim();
-        BigDecimal khachDua = (strKhachDua.equals("")) ? BigDecimal.ZERO : BigDecimal.valueOf(Double.parseDouble(strKhachDua));
+        BigDecimal khachDua = (strKhachDua.isEmpty()) ? BigDecimal.ZERO : new BigDecimal(strKhachDua);
         BigDecimal tienThoi = khachDua.subtract(tongTien);
 
-        HoaDon hd = new HoaDon(SeccionService.getUser().getMaNhanVien(),(kh == null) ? null :kh.getMaKhachHang(),tongTien,giamGia,khachDua,tienThoi);
+        HoaDon hd = new HoaDon(SessionService.getUser().getMaNhanVien(),(kh == null) ? null :kh.getMaKhachHang(),tongTien,giamGia,khachDua,tienThoi);
         try {
             int maHD = InvoiceService.taoHoaDonNKH(hd, listHD);
             if (maHD >0) {
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setTitle("Thanh toán thành công");
-                a.setContentText("Mã hóa đơn: " + maHD);
-                a.showAndWait();
+                Alerts.thongBao("Thanh toán thành công.","Mã hóa đơn: " + maHD);
                 reset();
                 loadSanPham();
+            }else {
+                Alerts.thongBao("Lỗi thanh toán.","Không thể tạo hóa đơn. Vui lòng thử lại.");
             }
         }catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi thanh toán");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            Alerts.thongBao("Lỗi thanh toán.","Không thể tạo hóa đơn. Vui lòng thử lại.");
+            Address.printAddress();
+        }finally {
+            btnThanhToan.setDisable(false);
         }
     }
 
     private void reset() {
+        mangGioHang.clear();
         dataGioHang.clear();
         tbvGioHang.getSelectionModel().clearSelection();
         cbKhachHang.getSelectionModel().clearSelection();
@@ -250,9 +283,7 @@ public class SellController {
         lblTamTinh.setText("0");
         lblTongTien.setText("0");
         lblTienThoi.setText("0");
-        txtSoLuongNhanh.clear();
-        labelThemGio.setText("");
-        labelXoaGio.setText("");
+        txtSoLuongNhanh.setText("1");
         tbvSanPham.getSelectionModel().clearSelection();
     }
 

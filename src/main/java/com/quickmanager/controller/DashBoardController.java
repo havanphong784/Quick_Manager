@@ -1,9 +1,8 @@
 package com.quickmanager.controller;
 
-import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
-import com.quickmanager.service.SeccionService;
+import com.quickmanager.service.SessionService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +23,7 @@ public class DashBoardController {
 
     @FXML
     public void initialize() {
-        TaiKhoan tk = SeccionService.getUser();
+        TaiKhoan tk = SessionService.getUser();
         accountLabel.setText(tk.getTenDangNhap());
         accountLabel.setText(tk.getVaiTro());
         setPage("home.fxml");

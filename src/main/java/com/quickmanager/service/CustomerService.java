@@ -4,10 +4,7 @@ import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.KhachHang;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,17 +44,15 @@ public class CustomerService {
 
     public static KhachHang themKhachHang(String name , String sdt) {
         try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlInsertKH);
+            PreparedStatement ps = con.prepareStatement(sqlInsertKH, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             ps.setString(2, sdt);
-            try (ResultSet rs = ps.executeQuery();){
-                if (rs.next()) {
-                    return new KhachHang(
-                            rs.getString("TenKhachHang"),
-                            rs.getString("SoDienThoai"));
-                } else {
-                    return null;
-                }
+            int kt = ps.executeUpdate();
+            if (kt == 0) throw new SQLException("Tạo khách hàng thất bại");
+            try (ResultSet key = ps.getGeneratedKeys()) {
+                if (key.next()) {
+                    return new KhachHang(key.getString("TenKhachHang"),key.getString("SoDienThoai"));
+                } else throw new SQLException("Lấy mã khách hàng thất bại");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

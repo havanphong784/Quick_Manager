@@ -2,7 +2,7 @@ package com.quickmanager.service;
 
 import com.quickmanager.model.TaiKhoan;
 
-public class SeccionService {
+public class SessionService {
     private static TaiKhoan taiKhoan;
 
     public static TaiKhoan getUser() {

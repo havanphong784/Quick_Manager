@@ -45,9 +45,8 @@
                     </TableView>
 
                     <HBox spacing="8" alignment="CENTER_LEFT">
-                        <TextField fx:id="txtSoLuongNhanh" promptText="SL" styleClass="qm-input"/>
+                        <TextField fx:id="txtSoLuongNhanh" promptText="SL" text="1" styleClass="qm-input"/>
                         <Button fx:id="btnThemGio" onAction="#handleThemGio" text="Thêm vào giỏ" styleClass="qm-btn"/>
-                        <Label fx:id="labelThemGio" styleClass="qm-hint"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label text="Chọn sản phẩm và thêm nhanh" styleClass="qm-hint"/>
                     </HBox>
@@ -76,7 +75,6 @@
                         <Button fx:id="btnXoaDong" onAction="#handleXoaDong" text="Xóa dòng" styleClass="qm-btn"/>
                         <Button fx:id="btnXoaGio" onAction="#handleXoaGio" text="Xóa giỏ" styleClass="qm-btn"/>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="labelXoaGio" text="" styleClass="qm-hint"/>
                     </HBox>
 
                     <GridPane hgap="10" vgap="8" styleClass="qm-form">
