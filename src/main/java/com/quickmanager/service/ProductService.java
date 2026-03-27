@@ -69,8 +69,8 @@ public class ProductService {
     public static List<String> getDanhMuc() {
         List<String> ds = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
-            Statement st = conn.createStatement();
-            try (ResultSet rs = st.executeQuery(getDanhMuc)) {
+            try (PreparedStatement st = conn.prepareStatement(getDanhMuc);
+                 ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     ds.add(rs.getString("TenDanhMuc"));
                 }

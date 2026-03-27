@@ -43,15 +43,24 @@ public class CustomerService {
     }
 
     public static KhachHang themKhachHang(String name , String sdt) {
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlInsertKH, Statement.RETURN_GENERATED_KEYS);
+        try (Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sqlInsertKH, Statement.RETURN_GENERATED_KEYS);)
+            {
             ps.setString(1, name);
             ps.setString(2, sdt);
             int kt = ps.executeUpdate();
             if (kt == 0) throw new SQLException("Tạo khách hàng thất bại");
             try (ResultSet key = ps.getGeneratedKeys()) {
                 if (key.next()) {
-                    return new KhachHang(key.getString("TenKhachHang"),key.getString("SoDienThoai"));
+                    return new KhachHang(
+                            key.getInt(1),
+                            name,
+                            sdt,
+                            null,
+                            null,
+                            0,
+                            "Hoạt động"
+                    );
                 } else throw new SQLException("Lấy mã khách hàng thất bại");
             }
         } catch (SQLException e) {
