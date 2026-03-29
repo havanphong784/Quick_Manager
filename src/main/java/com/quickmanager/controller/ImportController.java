@@ -2,16 +2,14 @@ package com.quickmanager.controller;
 
 import com.quickmanager.debug.Alerts;
 import com.quickmanager.model.CT_PhieuNhap;
+import com.quickmanager.model.NhaCungCap;
 import com.quickmanager.model.SanPham;
 import com.quickmanager.service.ProductService;
+import com.quickmanager.service.SupplierController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +37,15 @@ public class ImportController {
     @FXML private TableColumn<CT_PhieuNhap, BigDecimal> colGiaNhap;
     @FXML private TableColumn<CT_PhieuNhap, BigDecimal> colSLNhap;
     private List<CT_PhieuNhap> mangMHDT = new ArrayList<>();
+    @FXML private Label lblTongTien;
+
+    // TT
+    @FXML private Button btnXacNhan;
+    @FXML private ComboBox<NhaCungCap> cbNCC;
 
     public void initialize() {
         loadTbMHDT();
+        loadCbNCC();
     };
 
     // MH
@@ -75,7 +79,7 @@ public class ImportController {
             Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập","");
         }
         loadTbMHDT();
-
+        loadTongTien();
     }
 
     // MHDT
@@ -94,6 +98,7 @@ public class ImportController {
         }else {
             mangMHDT.removeIf(ct -> ct.getMaSanPham() == ctPH.getMaSanPham());
             loadTbMHDT();
+            loadTongTien();
         }
     }
 
@@ -103,7 +108,22 @@ public class ImportController {
         }else {
             mangMHDT.clear();
             loadTbMHDT();
+            loadTongTien();
         }
+    }
+
+    public void loadTongTien() {
+        BigDecimal tongTien = BigDecimal.ZERO;
+        for (CT_PhieuNhap ct : mangMHDT) {
+            tongTien = tongTien.add(ct.getThanhTien());
+        }
+        lblTongTien.setText("Tổng tiền: " + tongTien.toString());
+    }
+
+    public void loadCbNCC() {
+        List<NhaCungCap> dsNCC = SupplierController.getNCC();
+        cbNCC.setItems(FXCollections.observableArrayList(dsNCC));
+        cbNCC.getItems().addFirst(null);
     }
 
 

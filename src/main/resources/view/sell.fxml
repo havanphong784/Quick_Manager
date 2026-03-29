@@ -105,9 +105,9 @@
                         <Label fx:id="lblTienThoi" text="0 VNĐ" styleClass="qm-warning-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
                         <HBox spacing="8" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2">
-                            <Button fx:id="btnThanhToan" onAction="#handleThanhToan" text="Thanh toán" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <HBox.hgrow/>
                             <ComboBox fx:id="cbKhachHang" onAction="#handleSelectKH" promptText="Chọn khách hàng" styleClass="qm-combo"/>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button fx:id="btnThanhToan" onAction="#handleThanhToan" text="Thanh toán" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </GridPane>
                 </VBox>
