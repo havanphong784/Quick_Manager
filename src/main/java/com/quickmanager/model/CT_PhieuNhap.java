@@ -1,17 +1,19 @@
 package com.quickmanager.model;
 
+import java.math.BigDecimal;
+
 public class CT_PhieuNhap {
 
     private int maPhieuNhap;
     private int maSanPham;
     private int soLuong;
-    private double giaNhap;
-    private double thanhTien;
+    private BigDecimal giaNhap;
+    private BigDecimal thanhTien;
 
     public CT_PhieuNhap() {
     }
 
-    public CT_PhieuNhap(int maPhieuNhap, int maSanPham, int soLuong, double giaNhap, double thanhTien) {
+    public CT_PhieuNhap(int maPhieuNhap, int maSanPham, int soLuong, BigDecimal giaNhap, BigDecimal thanhTien) {
         this.maPhieuNhap = maPhieuNhap;
         this.maSanPham = maSanPham;
         this.soLuong = soLuong;
@@ -28,9 +30,9 @@ public class CT_PhieuNhap {
     public int getSoLuong() { return soLuong; }
     public void setSoLuong(int soLuong) { this.soLuong = soLuong; }
 
-    public double getGiaNhap() { return giaNhap; }
-    public void setGiaNhap(double giaNhap) { this.giaNhap = giaNhap; }
+    public BigDecimal getGiaNhap() { return giaNhap; }
+    public void setGiaNhap(BigDecimal giaNhap) { this.giaNhap = giaNhap; }
 
-    public double getThanhTien() { return thanhTien; }
-    public void setThanhTien(double thanhTien) { this.thanhTien = thanhTien; }
+    public BigDecimal getThanhTien() { return thanhTien; }
+    public void setThanhTien(BigDecimal thanhTien) { this.thanhTien = thanhTien; }
 }

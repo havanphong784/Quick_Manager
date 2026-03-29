@@ -36,6 +36,17 @@ public class ProductService {
             Select [TenDanhMuc] From DANH_MUC;
             """;
 
+    public static final String sqlSearchProducts = """
+        Select sp.MaSanPham,
+               sp.TenSanPham,
+               sp.DonViTinh,
+               sp.SoLuongTon,
+               sp.GiaNhap
+        From SAN_PHAM sp
+        Where sp.TenSanPham Like ?
+            Or sp.MaSanPham like ?
+        """;
+
     public static List<SanPham> getProduct(String key,String danhMuc) {
         List<SanPham> ds = new ArrayList<>();
         String string = "%" + ( key == null ? "" : key.trim()) + "%";
@@ -75,6 +86,33 @@ public class ProductService {
                     ds.add(rs.getString("TenDanhMuc"));
                 }
             }catch (Exception e) {
+                System.out.println(e.getMessage());
+                Address.printAddress();
+            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            Address.printAddress();
+        }
+        return ds;
+    }
+
+    public static List<SanPham> searchProducts(String key) {
+        List<SanPham> ds = new ArrayList<SanPham>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sqlSearchProducts);
+            ps.setString(1,(key == null) ? "" : "%"+key+"%");
+            ps.setString(2,(key == null) ? "" : "%"+key+"%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    SanPham sp = new SanPham();
+                    sp.setTenSanPham(rs.getString("TenSanPham"));
+                    sp.setMaSanPham(rs.getInt("MaSanPham"));
+                    sp.setDonViTinh(rs.getString("DonVitinh"));
+                    sp.setGiaNhap(rs.getBigDecimal("GiaNhap"));
+                    sp.setSoLuongTon(rs.getInt("SoLuongton"));
+                    ds.add(sp);
+                }
+            }catch(Exception e) {
                 System.out.println(e.getMessage());
                 Address.printAddress();
             }
