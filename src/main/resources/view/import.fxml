@@ -72,8 +72,8 @@
                     </TableView>
 
                     <HBox spacing="8">
-                        <Button fx:id="btnXoaDong" text="Xóa dòng" styleClass="qm-btn"/>
-                        <Button fx:id="btnXoaDon" text="Xóa đơn" styleClass="qm-btn"/>
+                        <Button fx:id="btnXoaDong" onAction="#xoaDong" text="Xóa dòng" styleClass="qm-btn"/>
+                        <Button fx:id="btnXoaDon" onAction="#xoaHet" text="Xóa đơn" styleClass="qm-btn"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="lblTongTien" text="Tổng tiền: 0 VNĐ" styleClass="qm-total-value"/>
                     </HBox>

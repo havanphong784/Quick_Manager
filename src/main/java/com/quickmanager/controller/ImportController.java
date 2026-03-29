@@ -87,6 +87,24 @@ public class ImportController {
         tbSanPhamDT.setItems(FXCollections.observableArrayList(mangMHDT));
     }
 
+    public void xoaDong() {
+        CT_PhieuNhap ctPH = tbSanPhamDT.getSelectionModel().getSelectedItem();
+        if (ctPH == null) {
+            Alerts.thongBao("Vui lòng chọn sản phẩm để xóa khỏi phiếu nhập","");
+        }else {
+            mangMHDT.removeIf(ct -> ct.getMaSanPham() == ctPH.getMaSanPham());
+            loadTbMHDT();
+        }
+    }
+
+    public void xoaHet() {
+        if (mangMHDT.isEmpty()) {
+            Alerts.thongBao("Không có sản phẩm nào trong phiếu nhập để xóa","");
+        }else {
+            mangMHDT.clear();
+            loadTbMHDT();
+        }
+    }
 
 
 }
