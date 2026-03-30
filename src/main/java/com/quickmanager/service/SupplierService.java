@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierController {
+public class SupplierService {
     public static final String sqlGetNCC = """
             Select * From NHA_CUNG_CAP
             """;

@@ -5,7 +5,7 @@ import com.quickmanager.model.CT_PhieuNhap;
 import com.quickmanager.model.NhaCungCap;
 import com.quickmanager.model.SanPham;
 import com.quickmanager.service.ProductService;
-import com.quickmanager.service.SupplierController;
+import com.quickmanager.service.SupplierService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -42,6 +42,11 @@ public class ImportController {
     // TT
     @FXML private Button btnXacNhan;
     @FXML private ComboBox<NhaCungCap> cbNCC;
+    @FXML private TextField txtDiaChiNCC;
+    @FXML private TextField txtLienHeNCC;
+    @FXML private TextField txtTenNCC;
+    @FXML private TextField txtEmail;
+    @FXML private Label lblTongCong;
 
     public void initialize() {
         loadTbMHDT();
@@ -118,13 +123,32 @@ public class ImportController {
             tongTien = tongTien.add(ct.getThanhTien());
         }
         lblTongTien.setText("Tổng tiền: " + tongTien.toString());
+        lblTongCong.setText(tongTien.toString() + " VNĐ");
     }
 
     public void loadCbNCC() {
-        List<NhaCungCap> dsNCC = SupplierController.getNCC();
+        List<NhaCungCap> dsNCC = SupplierService.getNCC();
         cbNCC.setItems(FXCollections.observableArrayList(dsNCC));
         cbNCC.getItems().addFirst(null);
     }
 
+    public void setLockTF(Boolean look) {
+        txtDiaChiNCC.setDisable(look);
+        txtTenNCC.setDisable(look);
+        txtLienHeNCC.setDisable(look);
+        txtEmail.setDisable(look);
+    }
 
+    public void handleCbNCC() {
+        NhaCungCap ncc = cbNCC.getSelectionModel().getSelectedItem();
+        if (ncc == null) {
+            setLockTF(false);
+        }else {
+            txtLienHeNCC.setText(ncc.getSoDienThoai());
+            txtDiaChiNCC.setText(ncc.getDiaChi());
+            txtTenNCC.setText(ncc.getTenNCC());
+            txtEmail.setText(ncc.getEmail());
+            setLockTF(true);
+        }
+    }
 }

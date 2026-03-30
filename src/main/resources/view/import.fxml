@@ -93,17 +93,8 @@
                         <Label text="Địa chỉ" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtDiaChiNCC" promptText="Địa chỉ NCC" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                        <Label text="VAT %" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtVAT" text="0" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                        <Label text="Ghi chú" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtGhiChu" promptText="Ghi chú thêm..." styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                        <Label text="Tạm tính" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                        <Label text="Tiền VAT" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblTienVAT" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                        <Label text="Email" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtEmail" promptText="Ghi chú thêm..." styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
                         <Label text="TỔNG CỘNG" styleClass="qm-total-label" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
                         <Label fx:id="lblTongCong" text="0 VNĐ" styleClass="qm-total-value" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
@@ -111,7 +102,7 @@
 
 
                     <HBox spacing="8">
-                        <ComboBox fx:id="cbNCC" promptText="Chọn nhà cung cấp" styleClass="qm-combo"/>
+                        <ComboBox fx:id="cbNCC" onAction="#handleCbNCC" promptText="Chọn nhà cung cấp" styleClass="qm-combo"/>
                         <Region HBox.hgrow="ALWAYS" />
                         <Button fx:id="btnXacNhan" text="Xác nhận nhập" styleClass="qm-btn"/>
                     </HBox>
