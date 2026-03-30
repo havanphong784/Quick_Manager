@@ -1,5 +1,6 @@
 package com.quickmanager.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class PhieuNhap {
@@ -8,13 +9,13 @@ public class PhieuNhap {
     private int maNhanVien;
     private int maNCC;
     private Date ngayNhap;
-    private double tongTien;
+    private BigDecimal tongTien;
     private String trangThai;
 
     public PhieuNhap() {
     }
 
-    public PhieuNhap(int maPhieuNhap, int maNhanVien, int maNCC, Date ngayNhap, double tongTien, String trangThai) {
+    public PhieuNhap(int maPhieuNhap, int maNhanVien, int maNCC, Date ngayNhap, BigDecimal tongTien, String trangThai) {
         this.maPhieuNhap = maPhieuNhap;
         this.maNhanVien = maNhanVien;
         this.maNCC = maNCC;
@@ -35,8 +36,8 @@ public class PhieuNhap {
     public Date getNgayNhap() { return ngayNhap; }
     public void setNgayNhap(Date ngayNhap) { this.ngayNhap = ngayNhap; }
 
-    public double getTongTien() { return tongTien; }
-    public void setTongTien(double tongTien) { this.tongTien = tongTien; }
+    public BigDecimal getTongTien() { return tongTien; }
+    public void setTongTien(BigDecimal tongTien) { this.tongTien = tongTien; }
 
     public String getTrangThai() { return trangThai; }
     public void setTrangThai(String trangThai) { this.trangThai = trangThai; }

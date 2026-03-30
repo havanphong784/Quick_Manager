@@ -142,6 +142,10 @@ public class ImportController {
     public void handleCbNCC() {
         NhaCungCap ncc = cbNCC.getSelectionModel().getSelectedItem();
         if (ncc == null) {
+            txtDiaChiNCC.clear();
+            txtTenNCC.clear();
+            txtLienHeNCC.clear();
+            txtEmail.clear();
             setLockTF(false);
         }else {
             txtLienHeNCC.setText(ncc.getSoDienThoai());
