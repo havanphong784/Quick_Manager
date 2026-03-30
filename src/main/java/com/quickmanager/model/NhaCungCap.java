@@ -12,13 +12,12 @@ public class NhaCungCap {
     public NhaCungCap() {
     }
 
-    public NhaCungCap(int maNCC, String tenNCC, String soDienThoai, String email, String diaChi, String trangThai) {
+    public NhaCungCap(int maNCC, String tenNCC, String soDienThoai, String email, String diaChi) {
         this.maNCC = maNCC;
         this.tenNCC = tenNCC;
         this.soDienThoai = soDienThoai;
         this.email = email;
         this.diaChi = diaChi;
-        this.trangThai = trangThai;
     }
 
     public int getMaNCC() { return maNCC; }

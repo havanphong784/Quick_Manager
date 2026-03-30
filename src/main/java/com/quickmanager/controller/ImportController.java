@@ -1,8 +1,10 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.Address;
 import com.quickmanager.debug.Alerts;
 import com.quickmanager.model.CT_PhieuNhap;
 import com.quickmanager.model.NhaCungCap;
+import com.quickmanager.model.PhieuNhap;
 import com.quickmanager.model.SanPham;
 import com.quickmanager.service.ProductService;
 import com.quickmanager.service.SupplierService;
@@ -14,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImportController {
+public class        ImportController {
 
     //MH
     @FXML private TextField txtTimSanPham;
@@ -154,5 +156,55 @@ public class ImportController {
             txtEmail.setText(ncc.getEmail());
             setLockTF(true);
         }
+    }
+
+    public void handleXacNhan() {
+        NhaCungCap ncc = cbNCC.getSelectionModel().getSelectedItem();
+        if (ncc == null) {
+            String tenNCC = txtTenNCC.getText().trim();
+            String sdt = txtLienHeNCC.getText().trim();
+            String diaChi = txtDiaChiNCC.getText().trim();
+            String email = txtEmail.getText().trim();
+            if (!tenNCC.isEmpty() && !sdt.isEmpty() && !diaChi.isEmpty() && !email.isEmpty()) {
+                try {
+                    ncc = SupplierService.taoNCC(tenNCC, sdt, email, diaChi);
+                    if (ncc == null) {
+                        Alerts.thongBao("Tạo nhà cung cấp thất bại", "");
+                        return;
+                    }
+                }catch (Exception e) {
+                    Alerts.thongBao("Tạo nhà cung cấp thất bại", "");
+                    return;
+                }
+            }else {
+                Alerts.thongBao("Vui lòng nhập đầy đủ thông tin nhà cung cấp", "");
+                return;
+            }
+        }
+
+        PhieuNhap pn = new PhieuNhap();
+        pn.setMaNCC(ncc.getMaNCC());
+        pn.setTongTien(new BigDecimal(lblTongCong.getText().replace(" VNĐ","")));
+        int maPhieuNhap;
+        try {
+            maPhieuNhap = SupplierService.taoPhieuNhap(pn,mangMHDT);
+        }catch (Exception e) {
+            Alerts.thongBao("Tạo phiếu nhập thất bại", "");
+            Address.printAddress();
+            return;
+        }
+        Alerts.thongBao("Tạo phiếu nhập thành công", "Mã phiếu nhập: " + maPhieuNhap);
+        clearAll();
+    }
+
+    public void clearAll() {
+        txtDiaChiNCC.clear();
+        txtTenNCC.clear();
+        txtLienHeNCC.clear();
+        txtEmail.clear();
+        setLockTF(false);
+        mangMHDT.clear();
+        loadTbMHDT();
+        loadTongTien();
     }
 }

@@ -104,7 +104,7 @@
                     <HBox spacing="8">
                         <ComboBox fx:id="cbNCC" onAction="#handleCbNCC" promptText="Chọn nhà cung cấp" styleClass="qm-combo"/>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button fx:id="btnXacNhan" text="Xác nhận nhập" styleClass="qm-btn"/>
+                        <Button fx:id="btnXacNhan" onAction="#handleXacNhan" text="Xác nhận nhập" styleClass="qm-btn"/>
                     </HBox>
                 </VBox>
             </SplitPane>

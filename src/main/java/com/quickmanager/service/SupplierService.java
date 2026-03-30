@@ -15,8 +15,8 @@ public class SupplierService {
             """;
 
     public static final String sqlPhieuNhap = """
-           Insert into PHIEU_NHAP (MaPhieuNhap,MaNCC, TongTien, MaNhanVien)
-           Values(?,?,?,?)
+           Insert into PHIEU_NHAP (MaNCC, TongTien, MaNhanVien)
+           Values(?,?,?)
            """;
 
     public static final String sqlCTPhieuNhap = """
@@ -29,10 +29,39 @@ public class SupplierService {
            Where MaSanPham = ?
            """;
 
+    public static final String sqlTaoNCC = """
+           Insert into NHA_CUNG_CAP (TenNCC, SoDienThoai, Email, DiaChi)
+           Values(?,?,?,?)
+           """;
+
+    public static NhaCungCap taoNCC(String name,String sdt,String email,String diaChi) throws SQLException {
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement psTaoNCC = con.prepareStatement(sqlTaoNCC, Statement.RETURN_GENERATED_KEYS);
+            psTaoNCC.setString(1, name);
+            psTaoNCC.setString(2, sdt);
+            psTaoNCC.setString(3, email);
+            psTaoNCC.setString(4, diaChi);
+            int kt = psTaoNCC.executeUpdate();
+            if (kt == 0) throw new SQLException("Tạo nhà cung cấp thất bại");
+            try (ResultSet rs = psTaoNCC.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return new NhaCungCap(
+                            rs.getInt(1),
+                            name,
+                            sdt,
+                            email,
+                            diaChi
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
     public static List<NhaCungCap> getNCC() {
         List<NhaCungCap> ds = new ArrayList<NhaCungCap>();
          try (Connection con = DBConnection.getConnection();
-              PreparedStatement ps = con.prepareStatement(sqlGetNCC);
+              PreparedStatement ps = con.prepareStatement(sqlGetNCC)
          ) {
              try {
                  ResultSet rs = ps.executeQuery();
@@ -42,8 +71,7 @@ public class SupplierService {
                              rs.getString("TenNCC"),
                              rs.getString("SoDienThoai"),
                              rs.getString("Email"),
-                             rs.getString("DiaChi"),
-                             rs.getString("TrangThai")
+                             rs.getString("DiaChi")
                      );
                      ds.add(ncc);
                  }
@@ -66,10 +94,9 @@ public class SupplierService {
                  PreparedStatement psUDSP = con.prepareStatement(sqlUpdateSP)) {
 
                 // PN
-                psPN.setInt(1, pn.getMaPhieuNhap());
-                psPN.setInt(2, pn.getMaNCC());
-                psPN.setBigDecimal(3, pn.getTongTien());
-                psPN.setInt(4, pn.getMaNhanVien());
+                psPN.setInt(1, pn.getMaNCC());
+                psPN.setBigDecimal(2, pn.getTongTien());
+                psPN.setInt(3, SessionService.getUser().getMaNhanVien());
 
                 int ktPN = psPN.executeUpdate();
                 if (ktPN == 0) throw new SQLException("Tạo phiếu nhập thất bại");
