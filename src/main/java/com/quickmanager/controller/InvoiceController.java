@@ -50,4 +50,8 @@ public class InvoiceController {
         mangHoaDon = InvoiceService.getHoaDon(tenKH, maHD,ldTN, ldDN);
         tbHoaDon.setItems(FXCollections.observableArrayList(mangHoaDon));
     }
+
+    public void handleTimKiem() {
+        loadTbHoaDon();
+    }
 }

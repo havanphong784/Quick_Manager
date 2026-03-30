@@ -28,7 +28,7 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="txtTimKhachHang" promptText="Tìm khách hàng..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
-                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
+                    <Button fx:id="btnTimKiem" onAction="#handleTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
                 </HBox>
             </VBox>
         </top>
