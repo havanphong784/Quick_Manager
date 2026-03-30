@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.quickmanager.controller.InvoiceController">
     <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
@@ -22,14 +23,12 @@
                     <Label text="Từ ngày" styleClass="qm-label-muted"/>
                     <DatePicker fx:id="dpTuNgay" styleClass="qm-combo"/>
                     <Label text="Đến ngày" styleClass="qm-label-muted"/>
-                    <DatePicker fx:id="dpDenNgay" styleClass="qm-combo"/>
-                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
+                    <DatePicker fx:id="dpDenNgay" styleClass=   "qm-combo"/>
                 </HBox>
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="txtTimKhachHang" promptText="Tìm khách hàng..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
-                    <ComboBox fx:id="cbTrangThai" promptText="Trạng thái" styleClass="qm-combo"/>
-                    <Button fx:id="btnLamMoi" text="Làm mới" styleClass="qm-btn"/>
+                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
                 </HBox>
             </VBox>
         </top>
@@ -40,13 +39,13 @@
                 <!-- LEFT: Invoice list -->
                 <VBox spacing="10" styleClass="qm-panel qm-panel-left">
                     <Label text="Danh sách hóa đơn" styleClass="qm-section-title"/>
-                    <TableView fx:id="tblHoaDon" styleClass="qm-table" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tbHoaDon" styleClass="qm-table" VBox.vgrow="ALWAYS">
                         <columns>
                             <TableColumn fx:id="colMaHD" text="Mã HĐ" prefWidth="90"/>
-                            <TableColumn fx:id="colNgayHD" text="Ngày HĐ" prefWidth="100"/>
-                            <TableColumn fx:id="colKhachHang" text="Khách hàng"/>
+                            <TableColumn fx:id="colTenKH" text="Khách hàng"/>
+                            <TableColumn fx:id="colNgayLap" text="Ngày lập;" prefWidth="100"/>
                             <TableColumn fx:id="colTongTien" text="Tổng tiền" prefWidth="120"/>
-                            <TableColumn fx:id="colTrangThai" text="Trạng thái" prefWidth="100"/>
+                            <TableColumn fx:id="colGiamGia" text="Giảm Giá" prefWidth="100"/>
                         </columns>
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

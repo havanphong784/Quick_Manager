@@ -1,6 +1,7 @@
 package com.quickmanager.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class HoaDon {
@@ -8,23 +9,20 @@ public class HoaDon {
     private int maHoaDon;
     private int maNhanVien;
     private Integer maKhachHang;
-    private Date ngayLap;
+    private LocalDate ngayLap;
     private BigDecimal tongTien;
     private BigDecimal giamGia;
     private BigDecimal tienKhachDua;
     private BigDecimal tienThoi;
     private String trangThai;
+    private String tenKhachHang;
 
-    public HoaDon(int maHoaDon, int maNhanVien, Integer maKhachHang, Date ngayLap, BigDecimal tongTien, BigDecimal giamGia, BigDecimal tienKhachDua, BigDecimal tienThoi, String trangThai) {
+    public HoaDon(int maHoaDon, String tenKhachHang, LocalDate ngayLap, BigDecimal tongTien, BigDecimal giamGia) {
         this.maHoaDon = maHoaDon;
-        this.maNhanVien = maNhanVien;
-        this.maKhachHang = maKhachHang;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
         this.giamGia = giamGia;
-        this.tienKhachDua = tienKhachDua;
-        this.tienThoi = tienThoi;
-        this.trangThai = trangThai;
+        this.tenKhachHang = tenKhachHang;
     }
 
     public HoaDon(int maNhanVien, Integer maKhachHang, BigDecimal tongTien, BigDecimal giamGia, BigDecimal tienKhachDua, BigDecimal tienThoi) {
@@ -60,11 +58,11 @@ public class HoaDon {
         this.maKhachHang = maKhachHang;
     }
 
-    public Date getNgayLap() {
+    public LocalDate getNgayLap() {
         return ngayLap;
     }
 
-    public void setNgayLap(Date ngayLap) {
+    public void setNgayLap(LocalDate ngayLap) {
         this.ngayLap = ngayLap;
     }
 
@@ -106,5 +104,13 @@ public class HoaDon {
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public String getTenKhachHang() {
+        return tenKhachHang;
+    }
+
+    public void setTenKhachHang(String tenKhachHang) {
+        this.tenKhachHang = tenKhachHang;
     }
 }

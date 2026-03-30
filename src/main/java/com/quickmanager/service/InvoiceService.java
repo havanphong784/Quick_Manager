@@ -1,9 +1,12 @@
 package com.quickmanager.service;
 
 import com.quickmanager.config.DBConnection;
+import com.quickmanager.debug.Address;
 import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.HoaDon;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceService {
@@ -67,6 +70,45 @@ public class InvoiceService {
 
         }
     }
+
+    public static final String sqlGetHoaDon = """
+        Select *
+        From HOA_DON as hd
+        Left Join KHACH_HANG as kh on kh.MaKhachHang = hd.MaKhachHang
+        Where hd.NgayLap >= ? and hd.NgayLap < ?
+        And (kh.TenKhachHang Like ? or kh.TenKhachHang is null)
+        And CAST(hd.MaHoaDon AS VARCHAR(20)) Like ?
+        """;
+
+    public static List<HoaDon> getHoaDon(String nameKH, String maHD, LocalDate start, LocalDate end) {
+        List<HoaDon> ds = new ArrayList<>();
+        LocalDate fromDate = (start != null) ? start : LocalDate.of(2020, 1, 1);
+        LocalDate toDateExclusive = ((end != null) ? end : LocalDate.now()).plusDays(1);
+        String nameFilter = (nameKH == null || nameKH.isBlank()) ? "%" : "%" + nameKH.trim() + "%";
+        String maHdFilter = (maHD == null || maHD.isBlank()) ? "%" : "%" + maHD.trim() + "%";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlGetHoaDon)) {
+            ps.setDate(1, Date.valueOf(fromDate));
+            ps.setDate(2, Date.valueOf(toDateExclusive));
+            ps.setString(3, nameFilter);
+            ps.setString(4, maHdFilter);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ds.add(new HoaDon(
+                            rs.getInt("MaHoaDon"),
+                            rs.getString("TenKhachHang"),
+                            rs.getDate("NgayLap").toLocalDate(),
+                            rs.getBigDecimal("TongTien"),
+                            rs.getBigDecimal("GiamGia")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Address.printAddress();
+        }
+        return ds;
+    }
+
 }
 
 
