@@ -109,6 +109,45 @@ public class InvoiceService {
         return ds;
     }
 
+    public static final String sqlGetCTHD = """
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY sp.MaSanPham) AS STT,
+            hd.*,
+            sp.*
+        FROM CT_HOA_DON AS hd
+        JOIN SAN_PHAM AS sp 
+            ON hd.MaSanPham = sp.MaSanPham
+        WHERE hd.MaHoaDon = ?
+        """;
+    public static List<CT_HoaDon> getCTHD(int maHD) {
+        List<CT_HoaDon> ds = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sqlGetCTHD);
+            ps.setInt(1, maHD);
+            try {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    ds.add(new CT_HoaDon(
+                            rs.getInt("STT"),
+                            rs.getString("TenSanPham"),
+                            rs.getString("DonViTinh"),
+                            rs.getInt("SoLuong"),
+                            rs.getBigDecimal("DonGia"),
+                            rs.getBigDecimal("ThanhTien")
+                    ));
+                }
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+                Address.printAddress();
+            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            Address.printAddress();
+        }
+        return ds;
+    }
+
+
 }
 
 

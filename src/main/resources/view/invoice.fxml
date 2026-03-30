@@ -68,7 +68,7 @@
                     <Label text="Chi tiết hóa đơn" styleClass="qm-section-title"/>
 
                     <!-- Invoice details table -->
-                    <TableView fx:id="tblChiTietHD" styleClass="qm-table" VBox.vgrow="ALWAYS" prefHeight="200">
+                    <TableView fx:id="tbCTHD" styleClass="qm-table" VBox.vgrow="ALWAYS" prefHeight="200">
                         <columns>
                             <TableColumn fx:id="colSTT" text="STT" prefWidth="50"/>
                             <TableColumn fx:id="colSanPham" text="Sản phẩm"/>

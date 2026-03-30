@@ -1,5 +1,6 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.HoaDon;
 import com.quickmanager.service.InvoiceService;
 import javafx.collections.FXCollections;
@@ -32,6 +33,10 @@ public class InvoiceController {
     public void initialize() {
         initTbHoaDon();
         loadTbHoaDon();
+        intTbCTHD();
+        tbHoaDon.getSelectionModel().selectedItemProperty().addListener((obs,hdc,hdm) -> {
+            handleSelectTbHD();
+        });
     }
 
     public void initTbHoaDon() {
@@ -53,5 +58,34 @@ public class InvoiceController {
 
     public void handleTimKiem() {
         loadTbHoaDon();
+    }
+
+    //CTHD
+    @FXML private TableView<CT_HoaDon> tbCTHD;
+    @FXML private TableColumn<CT_HoaDon,Integer> colSTT;
+    @FXML private TableColumn<CT_HoaDon,String> colSanPham;
+    @FXML private TableColumn<CT_HoaDon,String> colDonVi;
+    @FXML private TableColumn<CT_HoaDon,Integer> colSoLuong;
+    @FXML private TableColumn<CT_HoaDon,BigDecimal> colGiaBan;
+    @FXML private TableColumn<CT_HoaDon,BigDecimal> colThanhTien;
+    private List<CT_HoaDon> mangCTHD = new ArrayList<>();
+
+    public void intTbCTHD() {
+        colSTT.setCellValueFactory(new PropertyValueFactory<>("stt"));
+        colDonVi.setCellValueFactory(new PropertyValueFactory<>("donViTinh"));
+        colSanPham.setCellValueFactory(new PropertyValueFactory<>("tenSanPham"));
+        colSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        colGiaBan.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+        colThanhTien.setCellValueFactory(new PropertyValueFactory<>("thanhTien"));
+    }
+
+    public void handleSelectTbHD() {
+        HoaDon hd = tbHoaDon.getSelectionModel().getSelectedItem();
+        if (hd != null) {
+            mangCTHD = InvoiceService.getCTHD(hd.getMaHoaDon());
+            tbCTHD.setItems(FXCollections.observableArrayList(mangCTHD));
+        }else {
+            tbCTHD.getItems().clear();
+        }
     }
 }
