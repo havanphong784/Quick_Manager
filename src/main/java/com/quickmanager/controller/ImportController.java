@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class        ImportController {
+public class ImportController {
 
     //MH
     @FXML private TextField txtTimSanPham;
@@ -74,6 +74,12 @@ public class        ImportController {
         }catch (NumberFormatException e) {
             Alerts.thongBao("Vui lòng nhập số lượng hợp lệ","");
             return;
+        }
+        for (CT_PhieuNhap ct : mangMHDT) {
+            if (ct.getMaSanPham() == sp.getMaSanPham()) {
+                Alerts.thongBao("Sản phẩm đã có trong phiếu nhập.","");
+                return;
+            }
         }
         if (sp != null) {
             CT_PhieuNhap ctPH = new CT_PhieuNhap();
