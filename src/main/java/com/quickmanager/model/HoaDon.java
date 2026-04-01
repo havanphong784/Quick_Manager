@@ -34,6 +34,15 @@ public class HoaDon {
         this.tienThoi = tienThoi;
     }
 
+    public HoaDon(int maHoaDon, Integer maKhachHang, String tenKhachHang, LocalDate ngayLap, BigDecimal tongTien, BigDecimal giamGia) {
+        this.maHoaDon = maHoaDon;
+        this.maKhachHang = maKhachHang;
+        this.tenKhachHang = tenKhachHang;
+        this.ngayLap = ngayLap;
+        this.tongTien = tongTien;
+        this.giamGia = giamGia;
+    }
+
     public int getMaHoaDon() {
         return maHoaDon;
     }

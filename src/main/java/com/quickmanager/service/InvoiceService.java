@@ -4,6 +4,8 @@ import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.HoaDon;
+import com.quickmanager.model.KhachHang;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -96,6 +98,7 @@ public class InvoiceService {
                 while (rs.next()) {
                     ds.add(new HoaDon(
                             rs.getInt("MaHoaDon"),
+                            rs.getInt("MaKhachHang"),
                             rs.getString("TenKhachHang"),
                             rs.getDate("NgayLap").toLocalDate(),
                             rs.getBigDecimal("TongTien"),
@@ -127,7 +130,7 @@ public class InvoiceService {
             try {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    ds.add(new CT_HoaDon(
+                    ds.add( new CT_HoaDon(
                             rs.getInt("STT"),
                             rs.getString("TenSanPham"),
                             rs.getString("DonViTinh"),
@@ -147,7 +150,35 @@ public class InvoiceService {
         return ds;
     }
 
+    public  static final String sqlKH = """
+            Select * From KHACH_HANG
+            Where MaKhachHang = ?
+            """;
 
+    public static KhachHang getInfoKH(int id) {
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sqlKH);
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new KhachHang(
+                            rs.getInt("MaKhachHang"),
+                            rs.getString("TenKhachHang"),
+                            rs.getString("SoDienThoai"),
+                            rs.getString("Email"),
+                            rs.getString("DiaChi")
+                    );
+                }
+            }catch (SQLException e) {
+                System.out.println(e.getMessage());
+                Address.printAddress();
+            }
+        }catch (SQLException e ) {
+            System.out.println(e.getMessage());
+            Address.printAddress();
+        }
+        return null;
+    }
 }
 
 

@@ -24,6 +24,14 @@ public class KhachHang {
         this.trangThai = trangThai;
     }
 
+    public KhachHang(int maKhachHang, String tenKhachHang, String soDienThoai, String email, String diaChi) {
+        this.maKhachHang = maKhachHang;
+        this.tenKhachHang = tenKhachHang;
+        this.soDienThoai = soDienThoai;
+        this.email = email;
+        this.diaChi = diaChi;
+    }
+
     public int getMaKhachHang() { return maKhachHang; }
     public void setMaKhachHang(int maKhachHang) { this.maKhachHang = maKhachHang; }
 

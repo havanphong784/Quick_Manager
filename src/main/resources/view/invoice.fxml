@@ -91,7 +91,7 @@
 
                         <!-- Customer Info -->
                         <Label text="Khách hàng" styleClass="qm-label-muted" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtKhachHang" editable="false" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtTenKH" editable="false" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                         <Label text="Địa chỉ" styleClass="qm-label-muted" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtDiaChiKH" editable="false" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
@@ -99,32 +99,24 @@
                         <Label text="SĐT" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtSoDienThoai" editable="false" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
+                        <Label text="Email" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtEmail" editable="false" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
                         <!-- Pricing Summary -->
-                        <Label text="Tạm tính" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <Label text="Tạm tính" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTamTinh" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                        <Label text="Giảm giá" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblGiamGia" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <Label text="Giảm giá" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblGiamGia" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                        <Label text="TỔNG CỘNG" styleClass="qm-total-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblTongCong" text="0 VNĐ" styleClass="qm-total-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                        <!-- Payment Info -->
-                        <Label text="Đã thanh toán" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblDaThanhToan" text="0 VNĐ" styleClass="qm-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-                        <Label text="Còn lại" styleClass="qm-label-muted" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblConLai" text="0 VNĐ" styleClass="qm-warning-value" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-                        <!-- Notes -->
-                        <Label text="Ghi chú" styleClass="qm-label-muted" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtGhiChu" editable="false" styleClass="qm-input" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                        <Label text="TỔNG CỘNG" styleClass="qm-total-label" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblTongCong" text="0 VNĐ" styleClass="qm-total-value" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
                         <!-- Buttons -->
                         <HBox spacing="8" GridPane.rowIndex="9" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                            <Region HBox.hgrow="ALWAYS"/>
                             <Button fx:id="btnCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                             <Button fx:id="btnInPhieu" text="In phiếu" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnHuyHD" text="Hủy HĐ" styleClass="btn-red" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </GridPane>
                 </VBox>

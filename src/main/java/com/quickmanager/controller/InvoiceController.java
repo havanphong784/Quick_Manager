@@ -2,6 +2,7 @@ package com.quickmanager.controller;
 
 import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.HoaDon;
+import com.quickmanager.model.KhachHang;
 import com.quickmanager.service.InvoiceService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -79,11 +80,36 @@ public class InvoiceController {
         colThanhTien.setCellValueFactory(new PropertyValueFactory<>("thanhTien"));
     }
 
+    // IFKH
+    @FXML private TextField txtTenKH;
+    @FXML private TextField txtDiaChiKH;
+    @FXML private TextField txtSoDienThoai;
+    @FXML private TextField txtEmail;
+    @FXML private Label lblTamTinh;
+    @FXML private Label lblTongCong;
+    @FXML private Label lblGiamGia;
+
+
     public void handleSelectTbHD() {
         HoaDon hd = tbHoaDon.getSelectionModel().getSelectedItem();
         if (hd != null) {
             mangCTHD = InvoiceService.getCTHD(hd.getMaHoaDon());
             tbCTHD.setItems(FXCollections.observableArrayList(mangCTHD));
+            if (hd.getMaKhachHang() == null) {
+                txtTenKH.setText("");
+                txtDiaChiKH.setText("");
+                txtEmail.setText("");
+                txtSoDienThoai.setText("");
+                System.out.println("Khach hang");
+            }else {
+                KhachHang infoKH = InvoiceService.getInfoKH(hd.getMaKhachHang());
+                if (infoKH != null) {
+                    txtTenKH.setText(infoKH.getTenKhachHang());
+                    txtDiaChiKH.setText(infoKH.getDiaChi());
+                    txtEmail.setText(infoKH.getEmail());
+                    txtSoDienThoai.setText(infoKH.getSoDienThoai());
+                }
+            }
         }else {
             tbCTHD.getItems().clear();
         }
