@@ -88,19 +88,22 @@ public class InvoiceController {
     @FXML private Label lblTamTinh;
     @FXML private Label lblTongCong;
     @FXML private Label lblGiamGia;
+    @FXML private Button btnInPhieu;
 
 
     public void handleSelectTbHD() {
         HoaDon hd = tbHoaDon.getSelectionModel().getSelectedItem();
+        lblTamTinh.setText(hd.getTongTien().add(hd.getGiamGia()).toString());
+        lblGiamGia.setText(hd.getGiamGia().toString());
+        lblTongCong.setText(hd.getTongTien().toString());
         if (hd != null) {
             mangCTHD = InvoiceService.getCTHD(hd.getMaHoaDon());
             tbCTHD.setItems(FXCollections.observableArrayList(mangCTHD));
-            if (hd.getMaKhachHang() == null) {
+            if (hd.getMaKhachHang() == 0 || hd.getMaKhachHang() == null) {
                 txtTenKH.setText("");
                 txtDiaChiKH.setText("");
                 txtEmail.setText("");
                 txtSoDienThoai.setText("");
-                System.out.println("Khach hang");
             }else {
                 KhachHang infoKH = InvoiceService.getInfoKH(hd.getMaKhachHang());
                 if (infoKH != null) {
@@ -113,5 +116,9 @@ public class InvoiceController {
         }else {
             tbCTHD.getItems().clear();
         }
+    }
+
+    public void handleInPhieu() {
+
     }
 }
