@@ -21,10 +21,11 @@ public class ProductService {
            sp.SoLuongTon,
            sp.DonViTinh,
            sp.HanSuDung,
-           sp.TrangThai
+           sp.[TrangThai]
     FROM SAN_PHAM sp
     JOIN DANH_MUC dm ON sp.MaDanhMuc = dm.MaDanhMuc
     WHERE (sp.HanSuDung IS NULL OR sp.HanSuDung >= CAST(GETDATE() AS DATE))
+        AND sp.[TrangThai] = N'Đang bán'
       AND (
             CAST(sp.MaSanPham AS VARCHAR(20)) LIKE ?
          OR sp.TenSanPham LIKE ?

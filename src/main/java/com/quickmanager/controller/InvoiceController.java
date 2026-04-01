@@ -93,12 +93,12 @@ public class InvoiceController {
 
     public void handleSelectTbHD() {
         HoaDon hd = tbHoaDon.getSelectionModel().getSelectedItem();
-        lblTamTinh.setText(hd.getTongTien().add(hd.getGiamGia()).toString());
-        lblGiamGia.setText(hd.getGiamGia().toString());
-        lblTongCong.setText(hd.getTongTien().toString());
         if (hd != null) {
             mangCTHD = InvoiceService.getCTHD(hd.getMaHoaDon());
             tbCTHD.setItems(FXCollections.observableArrayList(mangCTHD));
+            lblTamTinh.setText(hd.getTongTien().add(hd.getGiamGia()).toString());
+            lblGiamGia.setText(hd.getGiamGia().toString());
+            lblTongCong.setText(hd.getTongTien().toString());
             if (hd.getMaKhachHang() == 0 || hd.getMaKhachHang() == null) {
                 txtTenKH.setText("");
                 txtDiaChiKH.setText("");

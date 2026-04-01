@@ -67,7 +67,7 @@ CREATE TABLE SAN_PHAM (
     DonViTinh NVARCHAR(50),
     NgaySanXuat DATE,
     HanSuDung DATE,
-    TrangThai NVARCHAR(50),
+    TrangThai NVARCHAR(50) DEFAULT N'Đang bán',
     CONSTRAINT FK_SP_DM FOREIGN KEY (MaDanhMuc)
         REFERENCES DANH_MUC(MaDanhMuc)
 );
