@@ -15,6 +15,7 @@ public class SanPham {
     private Date ngaySanXuat;
     private Date hanSuDung;
     private String trangThai;
+    private String tenDanhMuc;
 
     public SanPham() {
     }
@@ -97,5 +98,13 @@ public class SanPham {
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public String getTenDanhMuc() {
+        return tenDanhMuc;
+    }
+
+    public void setTenDanhMuc(String tenDanhMuc) {
+        this.tenDanhMuc = tenDanhMuc;
     }
 }

@@ -79,7 +79,7 @@ public class SellController {
     }
 
     public void loadSanPham() {
-        dataSanPham.setAll(ProductService.getProduct(txtTimSanPham.getText(),stringDanhMuc));
+        dataSanPham.setAll(ProductService.getProduct(txtTimSanPham.getText(),stringDanhMuc,"Đang bán",true));
     }
 
     public void handleSearch() {
@@ -89,7 +89,7 @@ public class SellController {
     // DM
     public void loadDanhMuc() {
         cbDanhMuc.getItems().setAll(ProductService.getDanhMuc());
-        cbDanhMuc.getItems().addFirst("");
+        cbDanhMuc.getItems().addFirst(null);
     }
 
     public void handleSelectDM() {

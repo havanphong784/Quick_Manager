@@ -19,9 +19,16 @@ public class InvoiceService {
     private static final String sqlInsertCTHD =
             "INSERT INTO CT_HOA_DON (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (?, ?, ?, ?, ?)";
 
-    private static final String sqlUpdateSP =
-            "UPDATE SAN_PHAM SET SoLuongTon = SoLuongTon - ? " +
-                    "WHERE MaSanPham = ? AND SoLuongTon >= ?";
+    private static final String sqlUpdateSP = """
+    UPDATE SAN_PHAM
+    SET SoLuongTon = SoLuongTon - ?,
+        TrangThai = CASE
+            WHEN SoLuongTon - ? <= 0 THEN N'Ngung ban'
+            ELSE TrangThai
+        END
+    WHERE MaSanPham = ? AND SoLuongTon >= ?;
+    """;
+
 
     public static int taoHoaDonNKH(HoaDon hd, List<CT_HoaDon> ds) throws SQLException {
         try (Connection con = DBConnection.getConnection()) {
@@ -51,8 +58,9 @@ public class InvoiceService {
 
                 for (CT_HoaDon items : ds) {
                     psUDSP.setInt(1, items.getSoLuong());
-                    psUDSP.setInt(2, items.getMaSanPham());
-                    psUDSP.setInt(3, items.getSoLuong());
+                    psUDSP.setInt(2, items.getSoLuong());
+                    psUDSP.setInt(3, items.getMaSanPham());
+                    psUDSP.setInt(4, items.getSoLuong());
                     int ktUDSP = psUDSP.executeUpdate();
                     if (ktUDSP != 1) throw new SQLException("Cập nhật sản phẩm thất bại");
 

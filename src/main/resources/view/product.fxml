@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.quickmanager.controller.ProductController">
     <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
@@ -12,19 +13,12 @@
 
         <top>
             <VBox spacing="10" styleClass="qm-topbar">
-                <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Quản lí sản phẩm" styleClass="qm-page-title"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Label text="Mã SP" styleClass="qm-label-muted"/>
-                    <TextField fx:id="txtMaSP" promptText="Nhập mã sản phẩm" styleClass="qm-input"/>
-                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
-                </HBox>
-
+                <Label alignment="CENTER_LEFT" text="Quản lí sản phẩm" styleClass="qm-page-title"/>
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="txtTuKhoa" promptText="Tìm theo tên/mã/barcode..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
-                    <ComboBox fx:id="cbDanhMuc" promptText="Danh mục" styleClass="qm-combo"/>
-                    <ComboBox fx:id="cbTrangThai" promptText="Trạng thái" styleClass="qm-combo"/>
-                    <Button fx:id="btnLamMoi" text="Làm mới" styleClass="qm-btn"/>
+                    <ComboBox fx:id="cbDanhMuc" onAction="#handleTimKiem" promptText="Danh mục" styleClass="qm-combo"/>
+                    <ComboBox fx:id="cbTrangThai" onAction="#handleTimKiem" promptText="Trạng thái" styleClass="qm-combo"/>
+                    <Button fx:id="btnTimKiem" onAction="#handleTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
                 </HBox>
             </VBox>
         </top>
@@ -34,27 +28,21 @@
                 <VBox spacing="10" styleClass="qm-panel qm-panel-left">
                     <Label text="Danh sách sản phẩm" styleClass="qm-section-title"/>
 
-                    <TableView fx:id="tblSanPham" styleClass="qm-table" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tbSanPham" styleClass="qm-table" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="colMaSanPham" text="Mã SP" prefWidth="110"/>
-                            <TableColumn fx:id="colTenSanPham" text="Tên sản phẩm"/>
+                            <TableColumn fx:id="colMaSP" text="Mã SP" prefWidth="110"/>
+                            <TableColumn fx:id="colTenSP" text="Tên sản phẩm"/>
                             <TableColumn fx:id="colDanhMuc" text="Danh mục" prefWidth="120"/>
                             <TableColumn fx:id="colTonKho" text="Tồn kho" prefWidth="90"/>
                             <TableColumn fx:id="colGiaNhap" text="Giá nhập" prefWidth="110"/>
                             <TableColumn fx:id="colGiaBan" text="Giá bán" prefWidth="110"/>
-                            <TableColumn fx:id="colTrangThaiSP" text="Trạng thái" prefWidth="110"/>
+                            <TableColumn fx:id="colTrangThai" text="Trạng thái" prefWidth="110"/>
                         </columns>
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                         </columnResizePolicy>
                     </TableView>
-
-                    <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Button fx:id="btnXemChiTiet" text="Xem chi tiết" styleClass="qm-btn"/>
-                        <Button fx:id="btnNgungKinhDoanh" text="Ngừng KD" styleClass="btn-red"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="lblTongSoSP" text="Tổng sản phẩm: 0" styleClass="qm-label-muted"/>
-                    </HBox>
+                    <Label fx:id="lblTongSoSP" text="Tổng sản phẩm: 0" styleClass="qm-label-muted"/>
                 </VBox>
 
                 <Region prefWidth="20" minWidth="20" maxWidth="20"/>

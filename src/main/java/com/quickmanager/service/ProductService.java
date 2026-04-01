@@ -13,19 +13,10 @@ import java.util.List;
 
 public class ProductService {
     private static final String sqlGetProducts = """
-    SELECT sp.MaSanPham,
-           sp.TenSanPham,
-           sp.MaDanhMuc,
-           dm.TenDanhMuc,
-           sp.GiaBan,
-           sp.SoLuongTon,
-           sp.DonViTinh,
-           sp.HanSuDung,
-           sp.[TrangThai]
+    SELECT *
     FROM SAN_PHAM sp
     JOIN DANH_MUC dm ON sp.MaDanhMuc = dm.MaDanhMuc
-    WHERE (sp.HanSuDung IS NULL OR sp.HanSuDung >= CAST(GETDATE() AS DATE))
-        AND sp.[TrangThai] = N'Đang bán'
+    WHERE sp.[TrangThai] LIKE ?
       AND (
             CAST(sp.MaSanPham AS VARCHAR(20)) LIKE ?
          OR sp.TenSanPham LIKE ?
@@ -48,23 +39,30 @@ public class ProductService {
             Or sp.MaSanPham like ?
         """;
 
-    public static List<SanPham> getProduct(String key,String danhMuc) {
+    public static List<SanPham> getProduct(String key, String danhMuc, String trangThai,Boolean hh) {
+        String sql = hh ? sqlGetProducts + "AND (sp.HanSuDung IS NULL OR sp.HanSuDung >= CAST(GETDATE() AS DATE))" : sqlGetProducts;
         List<SanPham> ds = new ArrayList<>();
         String string = "%" + ( key == null ? "" : key.trim()) + "%";
         String dm =  "%" + ( danhMuc == null ? "" : danhMuc.trim()) + "%";
         try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlGetProducts);
-            ps.setString(1, string);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, trangThai == null || trangThai.isEmpty() ? "%" : trangThai);
             ps.setString(2, string);
-            ps.setString(3, dm);
+            ps.setString(3, string);
+            ps.setString(4, dm);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     SanPham sp = new SanPham();
                     sp.setMaSanPham(rs.getInt("MaSanPham"));
                     sp.setTenSanPham(rs.getString("TenSanPham"));
-                    sp.setDonViTinh(rs.getString("DonViTinh"));
-                    sp.setSoLuongTon(rs.getInt("SoLuongTon"));
+                    sp.setMaDanhMuc(rs.getInt("MaDanhMuc"));
                     sp.setGiaBan(rs.getBigDecimal("GiaBan"));
+                    sp.setGiaNhap(rs.getBigDecimal("GiaNhap"));
+                    sp.setSoLuongTon(rs.getInt("SoLuongTon"));
+                    sp.setDonViTinh(rs.getString("DonViTinh"));
+                    sp.setGiaBan(rs.getBigDecimal("GiaBan"));
+                    sp.setTenDanhMuc(rs.getString("TenDanhMuc"));
+                    sp.setTrangThai(rs.getString("TrangThai"));
                     ds.add(sp);
                 }
             }catch (Exception e) {
