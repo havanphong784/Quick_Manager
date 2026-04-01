@@ -41,7 +41,7 @@ public class SellController {
     @FXML private TextField txtSoLuongNhanh;
 
     // DM
-    @FXML private ComboBox<String> cbDanhMuc;
+    @FXML private ComboBox<DanhMuc> cbDanhMuc;
     private static String stringDanhMuc= "";
 
     // KH
@@ -93,7 +93,7 @@ public class SellController {
     }
 
     public void handleSelectDM() {
-        String selected = cbDanhMuc.getValue();
+        String selected = cbDanhMuc.getValue().getTenDanhMuc();
         stringDanhMuc = (selected == null) ? "" : selected;
         loadSanPham();
     }

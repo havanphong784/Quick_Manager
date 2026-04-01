@@ -7,7 +7,9 @@ public class DanhMuc {
     private String moTa;
     private String trangThai;
 
-    public DanhMuc() {
+    public DanhMuc(int maDanhMuc, String tenDanhMuc) {
+        this.maDanhMuc = maDanhMuc;
+        this.tenDanhMuc = tenDanhMuc;
     }
 
     public int getMaDanhMuc() {
@@ -40,5 +42,10 @@ public class DanhMuc {
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
+    }
+
+    @Override
+    public String toString() {
+        return tenDanhMuc == null ? "" : tenDanhMuc;
     }
 }

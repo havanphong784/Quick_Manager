@@ -2,6 +2,7 @@ package com.quickmanager.service;
 
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
+import com.quickmanager.model.DanhMuc;
 import com.quickmanager.model.SanPham;
 
 import java.sql.Connection;
@@ -25,7 +26,7 @@ public class ProductService {
     """;
 
     public static final String getDanhMuc = """
-            Select [TenDanhMuc] From DANH_MUC;
+            Select * From DANH_MUC;
             """;
 
     public static final String sqlSearchProducts = """
@@ -76,13 +77,13 @@ public class ProductService {
         return ds;
     }
 
-    public static List<String> getDanhMuc() {
-        List<String> ds = new ArrayList<>();
+    public static List<DanhMuc> getDanhMuc() {
+        List<DanhMuc> ds = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
             try (PreparedStatement st = conn.prepareStatement(getDanhMuc);
                  ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    ds.add(rs.getString("TenDanhMuc"));
+                    ds.add(new DanhMuc(rs.getInt("MaDanhMuc"),rs.getString("TenDanhMuc")));
                 }
             }catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -121,4 +122,38 @@ public class ProductService {
         }
         return ds;
     }
+
+    public static boolean updateProduct(SanPham sp) {
+        String sqlUpdate = """
+        UPDATE SAN_PHAM
+        SET TenSanPham = ?,
+            MaDanhMuc = ?,
+            GiaNhap = ?,
+            GiaBan = ?,
+            SoLuongTon = ?,
+            DonViTinh = ?,
+            TrangThai = ?
+        WHERE MaSanPham = ?
+        """;
+
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sqlUpdate);
+            ps.setString(1, sp.getTenSanPham());
+            ps.setInt(2, sp.getMaDanhMuc());
+            ps.setBigDecimal(3, sp.getGiaNhap());
+            ps.setBigDecimal(4, sp.getGiaBan());
+            ps.setInt(5, sp.getSoLuongTon());
+            ps.setString(6, sp.getDonViTinh());
+            ps.setString(7, sp.getTrangThai());
+            ps.setInt(8, sp.getMaSanPham());
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi cập nhật sản phẩm: " + e.getMessage());
+            Address.printAddress();
+            return false;
+        }
+    }
+
 }

@@ -60,29 +60,29 @@
                         <TextField fx:id="txtFormMaSP" disable="true" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                         <Label text="Tên sản phẩm" styleClass="qm-label-muted" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormTenSP" disable="true" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtFormTenSP" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                         <Label text="Danh mục" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormDanhMuc" disable="true" styleClass="qm-combo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <ComboBox fx:id="cbFormDanhMuc" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText=" " styleClass="qm-combo"/>
 
                         <Label text="Đơn vị tính" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormDVT" disable="true" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtFormDVT" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
                         <Label text="Tồn kho" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormTonKho" disable="true" styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtFormTonKho" styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
                         <Label text="Giá nhập" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormGiaNhap" disable="true" styleClass="qm-input" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtFormGiaNhap" styleClass="qm-input" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
                         <Label text="Giá bán" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormGiaBan" disable="true" styleClass="qm-input" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtFormGiaBan" styleClass="qm-input" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
                         <Label text="Trạng thái" styleClass="qm-label-muted" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
                         <TextField fx:id="txtFormTrangThai" disable="true" styleClass="qm-combo" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 
                         <HBox spacing="8" GridPane.rowIndex="9" GridPane.columnIndex="0" GridPane.columnSpan="2">
                             <Button fx:id="btnThem" text="Thêm" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnCapNhat" onAction="#handleCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                             <Button fx:id="btnXoa" text="Xóa" styleClass="btn-red" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </GridPane>
