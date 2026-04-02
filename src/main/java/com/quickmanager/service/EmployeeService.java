@@ -56,4 +56,85 @@ public class EmployeeService {
         }
         return ds;
     }
+
+    public static boolean updateNhanVien(NhanVien nv) {
+        String sql = """
+        UPDATE NHAN_VIEN
+        SET TenNhanVien = ?,
+            NgaySinh = ?,
+            GioiTinh = ?,
+            SoDienThoai = ?,
+            Email = ?,
+            DiaChi = ?,
+            Luong = ?,
+            TrangThai = ?
+        WHERE MaNhanVien = ?
+        """;
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nv.getTenNhanVien());
+            if (nv.getNgaySinh() != null) {
+                ps.setDate(2, nv.getNgaySinh());
+            } else {
+                ps.setNull(2, java.sql.Types.DATE);
+            }
+            ps.setString(3, nv.getGioiTinh());
+            ps.setString(4, nv.getSoDienThoai());
+            ps.setString(5, nv.getEmail());
+            ps.setString(6, nv.getDiaChi());
+            ps.setDouble(7, nv.getLuong());
+            ps.setString(8, nv.getTrangThai());
+            ps.setInt(9, nv.getMaNhanVien());
+
+            int rows = ps.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
+            System.out.println("Lỗi updateNhanVien: " + e.getMessage());
+            Address.printAddress();
+            return false;
+        }
+    }
+
+    public static boolean addNhanVien(NhanVien nv) {
+        String sql = """
+        INSERT INTO NHAN_VIEN
+            (TenNhanVien, NgaySinh, GioiTinh, SoDienThoai, Email, DiaChi, Luong, TrangThai)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, nv.getTenNhanVien());
+            if (nv.getNgaySinh() != null) {
+                ps.setDate(2, nv.getNgaySinh());
+            } else {
+                ps.setNull(2, java.sql.Types.DATE);
+            }
+            ps.setString(3, nv.getGioiTinh());
+            ps.setString(4, nv.getSoDienThoai());
+            ps.setString(5, nv.getEmail());
+            ps.setString(6, nv.getDiaChi());
+            ps.setDouble(7, nv.getLuong());
+            ps.setString(8, nv.getTrangThai());
+
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                try (ResultSet keys = ps.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        nv.setMaNhanVien(keys.getInt(1));
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    Address.printAddress();
+                }
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi addNhanVien: " + e.getMessage());
+            Address.printAddress();
+            return false;
+        }
+    }
 }

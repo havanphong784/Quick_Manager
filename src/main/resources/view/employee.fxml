@@ -40,12 +40,7 @@
                         </columnResizePolicy>
                     </TableView>
 
-                    <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Button fx:id="btnDatLaiMatKhau" text="Đặt lại mật khẩu" styleClass="qm-btn"/>
-                        <Button fx:id="btnKhoaTaiKhoan" text="Khóa tài khoản" styleClass="btn-red"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="lblTongNhanVien" text="Tổng nhân viên: 0" styleClass="qm-label-muted"/>
-                    </HBox>
+                    <Label fx:id="lblTongNhanVien" text="Tổng nhân viên: 0" styleClass="qm-label-muted"/>
                 </VBox>
 
                 <Region prefWidth="20" minWidth="20" maxWidth="20"/>
@@ -84,9 +79,10 @@
                         <ComboBox fx:id="cbFormTrangThai" styleClass="qm-combo" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
                         <HBox spacing="8" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                            <Button fx:id="btnMoi" onAction="#handleMoi" text="Mới" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                             <Region HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnThem" text="Thêm" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnThem" onAction="#handleThem" text="Thêm" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="btnCapNhat" onAction="#handleCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </GridPane>
                 </VBox>
