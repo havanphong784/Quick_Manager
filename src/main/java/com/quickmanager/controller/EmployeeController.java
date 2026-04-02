@@ -6,8 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class EmployeeController {
@@ -23,10 +26,22 @@ public class EmployeeController {
     @FXML private TableColumn<NhanVien, String> colSdt;
     private List<NhanVien> mangNhanVien = new ArrayList<>();
 
+    // TTNV
+    @FXML private TextField txtMaNV;
+    @FXML private TextField txtTenNV;
+    @FXML private DatePicker dpNgaySinh;
+    @FXML private ComboBox<String> cbGioiTinh;
+    @FXML private TextField txtSdt;
+    @FXML private TextField txtEmail;
+    @FXML private TextField txtDiaChi;
+    @FXML private ComboBox<String> cbFormTrangThai;
+
     public void initialize() {
         initTBNV();
         loadTrangThai();
         loadTBNhanVien();
+        loadGioiTinh();
+        tbNhanVien.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> handleSelectTBNV());
     }
 
     // DSNV
@@ -40,6 +55,11 @@ public class EmployeeController {
 
     public void loadTrangThai() {
         cbTrangThai.setItems(FXCollections.observableArrayList("Đang làm", "Nghỉ phép", "Nghỉ việc"));
+        cbFormTrangThai.setItems(FXCollections.observableArrayList("Đang làm", "Nghỉ phép", "Nghỉ việc"));
+    }
+
+    public void loadGioiTinh() {
+        cbGioiTinh.setItems(FXCollections.observableArrayList("Nam", "Nữ", "Khác"));
     }
 
     public void loadTBNhanVien() {
@@ -52,4 +72,32 @@ public class EmployeeController {
     public void handleTimKiem() {
         loadTBNhanVien();
     }
+
+    public void handleSelectTBNV() {
+        NhanVien nv = tbNhanVien.getSelectionModel().getSelectedItem();
+        if (nv != null) {
+            txtDiaChi.setText(nv.getDiaChi());
+            txtEmail.setText(nv.getEmail());
+            txtMaNV.setText(String.valueOf(nv.getMaNhanVien()));
+            txtSdt.setText(nv.getSoDienThoai());
+            txtTenNV.setText(nv.getTenNhanVien());
+            cbFormTrangThai.setValue(nv.getTrangThai());
+            cbGioiTinh.setValue(nv.getGioiTinh());
+            java.sql.Date sqlDate = nv.getNgaySinh();
+            if (sqlDate != null) {
+                dpNgaySinh.setValue(sqlDate.toLocalDate());
+            } else {
+                dpNgaySinh.setValue(null);
+            }
+        } else {
+            txtDiaChi.clear();
+            txtEmail.clear();
+            txtSdt.clear();
+            txtTenNV.clear();
+            cbFormTrangThai.getSelectionModel().clearSelection();
+            cbGioiTinh.getSelectionModel().clearSelection();
+            dpNgaySinh.setValue(null);
+        }
+    }
+
 }

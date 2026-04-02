@@ -60,30 +60,33 @@
                         </columnConstraints>
 
                         <Label text="Mã nhân viên" styleClass="qm-label-muted" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormMaNV" promptText="VD: NV001" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtMaNV" disable="true" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                         <Label text="Họ tên" styleClass="qm-label-muted" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormHoTen" promptText="Nhập họ tên" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtTenNV" promptText="Nhập họ tên" styleClass="qm-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                        <Label text="Số điện thoại" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormSdt" promptText="Nhập số điện thoại" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <Label text="Ngày sinh" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="dpNgaySinh" promptText="Ngày sinh" styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                        <Label text="Email" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormEmail" promptText="Nhập email" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <Label text="Giới Tính" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="cbGioiTinh" promptText="Giới Tính" styleClass="qm-combo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                        <Label text="Địa chỉ" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormDiaChi" promptText="Nhập địa chỉ" styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                        <Label text="Số điện thoại" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtSdt" promptText="Nhập số điện thoại" styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-                        <Label text="Chức vụ" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <ComboBox fx:id="cbFormChucVu" promptText="Chọn chức vụ" styleClass="qm-combo" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                        <Label text="Email" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtEmail" promptText="Nhập email" styleClass="qm-input" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-                        <Label text="Trạng thái" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                        <ComboBox fx:id="cbFormTrangThai" promptText="Đang làm việc" styleClass="qm-combo" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                        <Label text="Địa chỉ" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtDiaChi" promptText="Nhập địa chỉ" styleClass="qm-input" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
-                        <HBox spacing="8" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                        <Label text="Trạng thái" styleClass="qm-label-muted" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="cbFormTrangThai" styleClass="qm-combo" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                        <HBox spacing="8" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                            <Region HBox.hgrow="ALWAYS"/>
                             <Button fx:id="btnThem" text="Thêm" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
                             <Button fx:id="btnCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnXoa" text="Xóa" styleClass="btn-red" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </GridPane>
                 </VBox>

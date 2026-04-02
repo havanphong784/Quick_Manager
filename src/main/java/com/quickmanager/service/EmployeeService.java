@@ -43,6 +43,7 @@ public class EmployeeService {
                     nv.setSoDienThoai(rs.getString("SoDienThoai"));
                     nv.setDiaChi(rs.getString("DiaChi"));
                     nv.setTrangThai(rs.getString("TrangThai"));
+                    nv.setNgaySinh(rs.getDate("NgaySinh"));
                     ds.add(nv);
                 }
             }catch (Exception e) {
