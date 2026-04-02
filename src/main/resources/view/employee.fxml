@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.quickmanager.controller.EmployeeController">
     <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
@@ -12,19 +13,11 @@
 
         <top>
             <VBox spacing="10" styleClass="qm-topbar">
-                <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Quản lí nhân viên" styleClass="qm-page-title"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Label text="Mã NV" styleClass="qm-label-muted"/>
-                    <TextField fx:id="txtMaNhanVien" promptText="Nhập mã nhân viên" styleClass="qm-input"/>
-                    <Button fx:id="btnTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
-                </HBox>
-
+                <Label text="Quản lí nhân viên" styleClass="qm-page-title"/>
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="txtTuKhoa" promptText="Tìm theo tên/sđt/email..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
-                    <ComboBox fx:id="cbChucVu" promptText="Chức vụ" styleClass="qm-combo"/>
-                    <ComboBox fx:id="cbTrangThai" promptText="Trạng thái" styleClass="qm-combo"/>
-                    <Button fx:id="btnLamMoi" text="Làm mới" styleClass="qm-btn"/>
+                    <ComboBox fx:id="cbTrangThai" onAction="#handleTimKiem" promptText="Trạng thái" styleClass="qm-combo"/>
+                    <Button fx:id="btnTimKiem" onAction="#handleTimKiem" text="Tìm kiếm" styleClass="qm-btn"/>
                 </HBox>
             </VBox>
         </top>
@@ -34,14 +27,13 @@
                 <VBox spacing="10" styleClass="qm-panel qm-panel-left">
                     <Label text="Danh sách nhân viên" styleClass="qm-section-title"/>
 
-                    <TableView fx:id="tblNhanVien" styleClass="qm-table" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tbNhanVien" styleClass="qm-table" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="colMaNV" text="Mã NV" prefWidth="90"/>
-                            <TableColumn fx:id="colHoTen" text="Họ tên"/>
-                            <TableColumn fx:id="colSdt" text="SĐT" prefWidth="110"/>
-                            <TableColumn fx:id="colEmail" text="Email" prefWidth="170"/>
-                            <TableColumn fx:id="colChucVu" text="Chức vụ" prefWidth="120"/>
-                            <TableColumn fx:id="colTrangThai" text="Trạng thái" prefWidth="110"/>
+                            <TableColumn fx:id="colMaNV" text="Mã NV" maxWidth="60"/>
+                            <TableColumn fx:id="colHoTen" text="Họ tên" maxWidth="400"/>
+                            <TableColumn fx:id="colSdt" text="SDT" maxWidth="200"/>
+                            <TableColumn fx:id="colDiaChi" text="Địa chỉ" maxWidth="200"/>
+                            <TableColumn fx:id="colTrangThai" text="Trạng thái" maxWidth="160"/>
                         </columns>
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

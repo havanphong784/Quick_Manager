@@ -22,7 +22,6 @@ CREATE TABLE NHAN_VIEN (
     SoDienThoai VARCHAR(15),
     Email VARCHAR(100),
     DiaChi NVARCHAR(200),
-    ChucVu NVARCHAR(50),
     Luong DECIMAL(12,2),
     TrangThai NVARCHAR(50)
 );

@@ -18,17 +18,16 @@ BEGIN TRY
     DELETE FROM NHAN_VIEN;
 
     SET IDENTITY_INSERT NHAN_VIEN ON;
-    INSERT INTO NHAN_VIEN (MaNhanVien, TenNhanVien, NgaySinh, GioiTinh, SoDienThoai, Email, DiaChi, ChucVu, Luong, TrangThai) VALUES
-    (1, N'Nguyễn Văn Minh', '1989-04-12', N'Nam', '0912345601', 'minh.nguyen@quickmart.vn', N'Quận 1, TP.HCM', N'Quản lý', 25000000, N'Đang làm'),
-    (2, N'Trần Thị Lan', '1992-09-08', N'Nữ', '0912345602', 'lan.tran@quickmart.vn', N'Quận 3, TP.HCM', N'Kế toán', 18000000, N'Đang làm'),
-    (3, N'Lê Quốc Bảo', '1995-01-20', N'Nam', '0912345603', 'bao.le@quickmart.vn', N'Quận 7, TP.HCM', N'Thủ kho', 14000000, N'Đang làm'),
-    (4, N'Phạm Thu Hà', '1998-07-14', N'Nữ', '0912345604', 'ha.pham@quickmart.vn', N'Gò Vấp, TP.HCM', N'Thu ngân', 10500000, N'Đang làm'),
-    (5, N'Đỗ Hoàng Nam', '1997-12-03', N'Nam', '0912345605', 'nam.do@quickmart.vn', N'Thủ Đức, TP.HCM', N'Thu ngân', 10300000, N'Đang làm'),
-    (6, N'Võ Ngọc Anh', '1999-03-30', N'Nữ', '0912345606', 'anh.vo@quickmart.vn', N'Bình Thạnh, TP.HCM', N'Bán hàng', 9800000, N'Đang làm'),
-    (7, N'Bùi Thanh Tùng', '1994-11-05', N'Nam', '0912345607', 'tung.bui@quickmart.vn', N'Tân Bình, TP.HCM', N'Bán hàng', 9900000, N'Nghỉ phép'),
-    (8, N'Ngô Thùy Dung', '1996-06-25', N'Nữ', '0912345608', 'dung.ngo@quickmart.vn', N'Quận 10, TP.HCM', N'CSKH', 11000000, N'Đang làm'),
-    (9, N'Huỳnh Gia Huy', '1991-02-17', N'Nam', '0912345609', 'huy.huynh@quickmart.vn', N'Quận 12, TP.HCM', N'Giám sát', 17000000, N'Đang làm'),
-    (10, N'Phan Mỹ Linh', '1993-08-19', N'Nữ', '0912345610', 'linh.phan@quickmart.vn', N'Bình Tân, TP.HCM', N'Bán hàng', 9500000, N'Nghỉ việc');
+    INSERT INTO NHAN_VIEN (MaNhanVien, TenNhanVien, NgaySinh, GioiTinh, SoDienThoai, Email, DiaChi, Luong, TrangThai) VALUES
+    (1, N'Nguyễn Văn Minh', '1989-04-12', N'Nam', '0912345601', 'minh.nguyen@quickmart.vn', N'Quận 1, TP.HCM',  25000000, N'Đang làm'),
+    (2, N'Trần Thị Lan', '1992-09-08', N'Nữ', '0912345602', 'lan.tran@quickmart.vn', N'Quận 3, TP.HCM',  18000000, N'Đang làm'),
+    (3, N'Lê Quốc Bảo', '1995-01-20', N'Nam', '0912345603', 'bao.le@quickmart.vn', N'Quận 7, TP.HCM',  14000000, N'Đang làm'),
+    (4, N'Phạm Thu Hà', '1998-07-14', N'Nữ', '0912345604', 'ha.pham@quickmart.vn', N'Gò Vấp, TP.HCM',  10500000, N'Đang làm'),
+    (5, N'Đỗ Hoàng Nam', '1997-12-03', N'Nam', '0912345605', 'nam.do@quickmart.vn', N'Thủ Đức, TP.HCM',  10300000, N'Đang làm'),
+    (6, N'Võ Ngọc Anh', '1999-03-30', N'Nữ', '0912345606', 'anh.vo@quickmart.vn', N'Bình Thạnh, TP.HCM',  9800000, N'Đang làm'),
+    (7, N'Bùi Thanh Tùng', '1994-11-05', N'Nam', '0912345607', 'tung.bui@quickmart.vn', N'Tân Bình, TP.HCM',  9900000, N'Nghỉ phép'),
+    (8, N'Ngô Thùy Dung', '1996-06-25', N'Nữ', '0912345608', 'dung.ngo@quickmart.vn', N'Quận 10, TP.HCM', 11000000, N'Đang làm'),
+    (9, N'Huỳnh Gia Huy', '1991-02-17', N'Nam', '0912345609', 'huy.huynh@quickmart.vn', N'Quận 12, TP.HCM',  9500000, N'Nghỉ việc');
     SET IDENTITY_INSERT NHAN_VIEN OFF;
 
     INSERT INTO TAI_KHOAN (TenDangNhap, MatKhau, MaNhanVien, VaiTro, TrangThai) VALUES

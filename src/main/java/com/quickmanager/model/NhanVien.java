@@ -11,7 +11,6 @@ public class NhanVien {
     private String soDienThoai;
     private String email;
     private String diaChi;
-    private String chucVu;
     private double luong;
     private String trangThai;
 
@@ -72,14 +71,6 @@ public class NhanVien {
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
-    }
-
-    public String getChucVu() {
-        return chucVu;
-    }
-
-    public void setChucVu(String chucVu) {
-        this.chucVu = chucVu;
     }
 
     public double getLuong() {
