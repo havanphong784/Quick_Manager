@@ -15,7 +15,6 @@ import java.util.List;
 
 public class ProductController {
     // DSSP
-    @FXML private Button btnTimKiem;
     @FXML private ComboBox<DanhMuc> cbDanhMuc;
     @FXML private ComboBox<String> cbTrangThai;
     @FXML private TextField txtTuKhoa;
@@ -39,6 +38,7 @@ public class ProductController {
     @FXML private TextField txtFormGiaBan;
     @FXML private TextField txtFormTrangThai;
     @FXML private ComboBox<DanhMuc> cbFormDanhMuc;
+    @FXML private ComboBox<String> cbFormTrangThai;
 
     public void initialize() {
         loadDanhMuc();
@@ -71,6 +71,8 @@ public class ProductController {
     public void loadTrangThai() {
         cbTrangThai.getItems().setAll("Đang bán", "Ngừng kinh doanh", "Hết hạn", "Hết hàng");
         cbTrangThai.getItems().addFirst(null);
+        cbFormTrangThai.getItems().setAll("Đang bán", "Ngừng kinh doanh", "Hết hạn", "Hết hàng");
+        cbFormTrangThai.getItems().addFirst(null);
     }
 
     public void loadDSSP() {
@@ -96,10 +98,15 @@ public class ProductController {
             txtFormTonKho.setText(String.valueOf(sp.getSoLuongTon()));
             txtFormGiaNhap.setText(String.valueOf(sp.getGiaNhap()));
             txtFormGiaBan.setText(String.valueOf(sp.getGiaBan()));
-            txtFormTrangThai.setText(sp.getTrangThai());
             for (DanhMuc dm : cbFormDanhMuc.getItems()) {
                 if (dm != null && dm.getMaDanhMuc() == sp.getMaDanhMuc()) {
                     cbFormDanhMuc.getSelectionModel().select(dm);
+                    break;
+                }
+            }
+            for (String i : cbFormTrangThai.getItems()) {
+                if (i != null && i.equals(sp.getTrangThai())) {
+                    cbFormTrangThai.getSelectionModel().select(i);
                     break;
                 }
             }
@@ -109,9 +116,9 @@ public class ProductController {
             txtFormGiaNhap.clear();
             txtFormMaSP.clear();
             txtFormTenSP.clear();
-            txtFormTrangThai.clear();
             txtFormTonKho.clear();
             cbFormDanhMuc.getSelectionModel().clearSelection();
+            cbFormTrangThai.getSelectionModel().clearSelection();
         }
     }
 
@@ -128,7 +135,7 @@ public class ProductController {
             sp.setGiaNhap(new BigDecimal(txtFormGiaNhap.getText().trim()));
             sp.setGiaBan(new BigDecimal(txtFormGiaBan.getText().trim()));
             sp.setSoLuongTon(Integer.parseInt(txtFormTonKho.getText().trim()));
-            sp.setTrangThai(txtFormTrangThai.getText().trim());
+            sp.setTrangThai(cbFormTrangThai.getValue() == null ? "" : cbFormTrangThai.getValue());
 
             DanhMuc dmForm = cbFormDanhMuc.getSelectionModel().getSelectedItem();
             if (dmForm == null) {

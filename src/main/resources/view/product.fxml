@@ -78,12 +78,12 @@
                         <TextField fx:id="txtFormGiaBan" styleClass="qm-input" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
                         <Label text="Trạng thái" styleClass="qm-label-muted" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtFormTrangThai" disable="true" styleClass="qm-combo" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+                        <ComboBox fx:id="cbFormTrangThai" promptText="Trạng thái" styleClass="qm-combo" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 
                         <HBox spacing="8" GridPane.rowIndex="9" GridPane.columnIndex="0" GridPane.columnSpan="2">
-                            <Button fx:id="btnThem" text="Thêm" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
+                            <Region HBox.hgrow="ALWAYS"/>
                             <Button fx:id="btnCapNhat" onAction="#handleCapNhat" text="Cập nhật" styleClass="qm-btn" HBox.hgrow="ALWAYS"/>
-                            <Button fx:id="btnXoa" text="Xóa" styleClass="btn-red" HBox.hgrow="ALWAYS"/>
+                            <Region HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </GridPane>
                 </VBox>
