@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.chart.BarChart?>
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <BorderPane styleClass="qm-page"
                 AnchorPane.topAnchor="0.0"
@@ -15,9 +16,6 @@
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label text="Trang chủ" styleClass="qm-page-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Label text="Hôm nay" styleClass="qm-label-muted"/>
-                    <DatePicker fx:id="dpHomNay" styleClass="qm-combo"/>
-                    <Button fx:id="btnTaiLai" text="Tải lại" styleClass="qm-btn"/>
                 </HBox>
             </VBox>
         </top>
@@ -34,48 +32,24 @@
                         <Label fx:id="lblDonHangHomNay" text="0" styleClass="qm-value"/>
                     </VBox>
                     <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
+                        <Label text="Sản phẩm bán ra" styleClass="qm-label-muted"/>
+                        <Label fx:id="lblSPBanRa" text="0" styleClass="qm-value"/>
+                    </VBox>
+                    <VBox spacing="6" styleClass="qm-panel" HBox.hgrow="ALWAYS">
                         <Label text="Sản phẩm sắp hết" styleClass="qm-label-muted"/>
-                        <Label fx:id="lblSanPhamSapHet" text="0" styleClass="qm-warning-value"/>
+                        <Label fx:id="lblSPSapHet" text="0" styleClass="qm-warning-value"/>
                     </VBox>
                 </HBox>
-
-                <SplitPane dividerPositions="0.55" styleClass="qm-content" VBox.vgrow="ALWAYS">
-                    <VBox spacing="10" styleClass="qm-panel qm-panel-left">
-                        <Label text="Hoạt động gần đây" styleClass="qm-section-title"/>
-                        <TableView fx:id="tblHoatDongGanDay" styleClass="qm-table" VBox.vgrow="ALWAYS">
-                            <columns>
-                                <TableColumn fx:id="colThoiGian" text="Thời gian" prefWidth="150"/>
-                                <TableColumn fx:id="colNguoiThucHien" text="Nhân viên" prefWidth="130"/>
-                                <TableColumn fx:id="colHanhDong" text="Hành động"/>
-                                <TableColumn fx:id="colGiaTri" text="Giá trị" prefWidth="120"/>
-                            </columns>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-                            </columnResizePolicy>
-                        </TableView>
-                    </VBox>
-
-                    <Region prefWidth="20" minWidth="20" maxWidth="20"/>
-
-                    <VBox spacing="10" styleClass="qm-panel qm-panel-right">
-                        <Label text="Tác vụ nhanh" styleClass="qm-section-title"/>
-                        <GridPane hgap="10" vgap="10" styleClass="qm-form" VBox.vgrow="ALWAYS">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="ALWAYS"/>
-                                <ColumnConstraints hgrow="ALWAYS"/>
-                            </columnConstraints>
-
-                            <Button fx:id="btnBanHangNhanh" text="Bán hàng" styleClass="qm-btn" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                            <Button fx:id="btnNhapHangNhanh" text="Nhập hàng" styleClass="qm-btn" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                            <Button fx:id="btnHoaDonNhanh" text="Hóa đơn" styleClass="qm-btn" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                            <Button fx:id="btnSanPhamNhanh" text="Sản phẩm" styleClass="qm-btn" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                            <Button fx:id="btnNhanVienNhanh" text="Nhân viên" styleClass="qm-btn" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                            <Button fx:id="btnThongKeNhanh" text="Thống kê" styleClass="qm-btn" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                        </GridPane>
-                    </VBox>
-                </SplitPane>
+                <VBox spacing="10" styleClass="qm-content">
+                    <SplitPane dividerPositions="0.7" styleClass="qm-content" VBox.vgrow="ALWAYS">
+    <!--                    <BarChart/>-->
+                        <VBox/>
+                    </SplitPane>
+                    <SplitPane dividerPositions="0.3" styleClass="qm-content" VBox.vgrow="ALWAYS">
+                        <VBox/>
+    <!--                    <BarChart/>-->
+                    </SplitPane>
+                </VBox>
             </VBox>
         </center>
     </BorderPane>
