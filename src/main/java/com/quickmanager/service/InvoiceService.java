@@ -184,6 +184,26 @@ public class InvoiceService {
         return ds;
     }
 
+    public static java.util.List<com.quickmanager.model.DoanhThuNgay> getSoLuongTheoNgay(LocalDate start, LocalDate end) {
+        java.util.List<com.quickmanager.model.DoanhThuNgay> ds = new java.util.ArrayList<>();
+        String sql = "SELECT CAST(hd.NgayLap AS DATE) AS Ngay, SUM(ct.SoLuong) AS SoLuong, SUM(ct.ThanhTien) AS DoanhThu FROM CT_HOA_DON ct JOIN HOA_DON hd ON ct.MaHoaDon = hd.MaHoaDon WHERE hd.NgayLap >= ? AND hd.NgayLap < ? GROUP BY CAST(hd.NgayLap AS DATE) ORDER BY Ngay";
+        LocalDate fromDate = (start != null) ? start : LocalDate.of(2020,1,1);
+        LocalDate toDateExclusive = ((end != null) ? end : LocalDate.now()).plusDays(1);
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setDate(1, Date.valueOf(fromDate));
+            ps.setDate(2, Date.valueOf(toDateExclusive));
+            try (ResultSet rs = ps.executeQuery()){
+                while (rs.next()) {
+                    java.sql.Date d = rs.getDate("Ngay");
+                    int soLuong = rs.getInt("SoLuong");
+                    java.math.BigDecimal doanhThu = rs.getBigDecimal("DoanhThu");
+                    ds.add(new com.quickmanager.model.DoanhThuNgay(d.toLocalDate(), soLuong, doanhThu));
+                }
+            }
+        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        return ds;
+    }
+
     public static java.util.List<com.quickmanager.model.TopSanPham> getTopSanPham(LocalDate start, LocalDate end, int limit) {
         java.util.List<com.quickmanager.model.TopSanPham> ds = new java.util.ArrayList<>();
         String sql = "SELECT sp.TenSanPham, SUM(ct.SoLuong) AS SoLuong, SUM(ct.ThanhTien) AS DoanhThu FROM CT_HOA_DON ct JOIN HOA_DON hd ON ct.MaHoaDon = hd.MaHoaDon JOIN SAN_PHAM sp ON ct.MaSanPham = sp.MaSanPham WHERE hd.NgayLap >= ? AND hd.NgayLap < ? GROUP BY sp.TenSanPham ORDER BY SUM(ct.SoLuong) DESC";

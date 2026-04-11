@@ -427,8 +427,48 @@
     -fx-border-color: -qm-accent-primary;
 }
 
+
 .qm-page .combo-box-popup .list-view,
 .qm-page .date-picker-popup {
     -fx-background-color: -qm-bg-pane;
 }
+
+/* Chart theming to match app colors */
+.chart {
+    -fx-background-color: transparent;
+    -fx-padding: 6 6 6 6;
+}
+.chart-title {
+    -fx-text-fill: -qm-text-primary;
+    -fx-font-weight: 600;
+}
+.chart-legend {
+    -fx-background-color: transparent;
+}
+.chart-plot-background {
+    -fx-background-color: -qm-bg-pane; /* panel background for charts */
+    -fx-border-color: -qm-border-soft;
+    -fx-border-width: 1;
+}
+
+/* Bar colors */
+.chart-bar .default-color0.chart-bar { -fx-bar-fill: -qm-accent-primary; }
+.chart-bar .default-color1.chart-bar { -fx-bar-fill: -qm-accent-right; }
+.chart-bar .default-color2.chart-bar { -fx-bar-fill: -qm-accent-green; }
+.chart-bar .default-color3.chart-bar { -fx-bar-fill: -qm-accent-warning; }
+
+/* Line and area series */
+.chart-series-line .chart-line-symbol { -fx-background-color: -qm-accent-primary, white; }
+.chart-series-line .default-color0.chart-series-line { -fx-stroke: -qm-accent-primary; -fx-stroke-width: 2; }
+.chart-series-area .default-color0.chart-series-area { -fx-fill: derive(-qm-accent-primary, 40%); }
+
+/* Pie chart */
+.chart-pie .chart-pie-label { -fx-text-fill: -qm-text-primary; }
+.chart-pie .default-color0 { -fx-pie-color: -qm-accent-primary; }
+.chart-pie .default-color1 { -fx-pie-color: -qm-accent-right; }
+.chart-pie .default-color2 { -fx-pie-color: -qm-accent-green; }
+.chart-pie .default-color3 { -fx-pie-color: -qm-accent-warning; }
+
+/* Tooltip / labels */
+.chart .chart-plot-background .axis-label, .chart .axis .tick-label { -fx-text-fill: -qm-text-secondary; }
 
