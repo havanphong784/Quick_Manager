@@ -1,4 +1,3 @@
-USE QL_SIEU_THI;
 GO
 SET NOCOUNT ON;
 GO
@@ -27,20 +26,22 @@ BEGIN TRY
     (6, N'Võ Ngọc Anh', '1999-03-30', N'Nữ', '0912345606', 'anh.vo@quickmart.vn', N'Bình Thạnh, TP.HCM',  9800000, N'Đang làm'),
     (7, N'Bùi Thanh Tùng', '1994-11-05', N'Nam', '0912345607', 'tung.bui@quickmart.vn', N'Tân Bình, TP.HCM',  9900000, N'Nghỉ phép'),
     (8, N'Ngô Thùy Dung', '1996-06-25', N'Nữ', '0912345608', 'dung.ngo@quickmart.vn', N'Quận 10, TP.HCM', 11000000, N'Đang làm'),
-    (9, N'Huỳnh Gia Huy', '1991-02-17', N'Nam', '0912345609', 'huy.huynh@quickmart.vn', N'Quận 12, TP.HCM',  9500000, N'Nghỉ việc');
+    (9, N'Huỳnh Gia Huy', '1991-02-17', N'Nam', '0912345609', 'huy.huynh@quickmart.vn', N'Quận 12, TP.HCM',  9500000, N'Nghỉ việc'),
+    (10, N'Linh Old', '1990-10-10', N'Nữ', '0912345610', 'linh.old@quickmart.vn', N'Quận 2, TP.HCM',  8000000, N'Ngừng sử dụng');
     SET IDENTITY_INSERT NHAN_VIEN OFF;
 
+    -- Mật khẩu đã được hash bằng BCrypt (gensalt). Nếu cần thay đổi, chạy utility GenerateHashes.java để tạo hash mới.
     INSERT INTO TAI_KHOAN (TenDangNhap, MatKhau, MaNhanVien, VaiTro, TrangThai) VALUES
-    ('admin',      'Admin@123', 1, N'ADMIN',    N'Hoạt động'),
-    ('ketoan.lan', 'Lan@123',   2, N'KETOAN',   N'Hoạt động'),
-    ('thukho.bao', 'Bao@123',   3, N'THUKHO',   N'Hoạt động'),
-    ('thungan.ha', 'Ha@123',    4, N'THUNGAN',  N'Hoạt động'),
-    ('thungan.nam','Nam@123',   5, N'THUNGAN',  N'Hoạt động'),
-    ('banhang.anh','Anh@123',   6, N'BANHANG',  N'Hoạt động'),
-    ('banhang.tung','Tung@123', 7, N'BANHANG',  N'Tạm khóa'),
-    ('cskh.dung',  'Dung@123',  8, N'CSKH',     N'Hoạt động'),
-    ('giamsat.huy','Huy@123',   9, N'GIAMSAT',  N'Hoạt động'),
-    ('linh.old',   'Linh@123', 10, N'BANHANG',  N'Ngừng sử dụng');
+    ('admin',      '$2a$10$afKR7Iaf1NGCK9aRO6MNGeskMCz6pP7754taROT9EGFEY3zkAIMEC', 1, N'ADMIN',    N'Hoạt động'),
+    ('ketoan.lan', '$2a$10$7B49LxBTz6o8Yv8PvVoLuONcwF/tIYPrfBDPakY0jJEJnHNSAKjFe', 2, N'KETOAN',   N'Hoạt động'),
+    ('thukho.bao', '$2a$10$44YXpuOqyb0iaQMCOeYsMeOZJGeoF2zAWlMsL/irZCNwuSgMX3e4S', 3, N'THUKHO',   N'Hoạt động'),
+    ('thungan.ha', '$2a$10$oEsC8O7bJEwyXgIHZRZFAOw.YzmtqK2LyH99JY856v7XglCv8nWGW', 4, N'THUNGAN',  N'Hoạt động'),
+    ('thungan.nam','$2a$10$HDeAvysgu1jO.hWx3mrYPe4K4Qq5uojcMfG29NlHENVshSgdAr.cS', 5, N'THUNGAN',  N'Hoạt động'),
+    ('banhang.anh','$2a$10$Gf1tq4bn3twAk/.ZkWFiT.7PscYP9QfxVtW37JEHvX3xCz/Q2uYw.', 6, N'BANHANG',  N'Hoạt động'),
+    ('banhang.tung','$2a$10$sfQG6Y1ZB/uYtqf1uy6Oaul2HvQojH7rAqh9zeYTAodiuQ1dt0iHq', 7, N'BANHANG',  N'Tạm khóa'),
+    ('cskh.dung',  '$2a$10$my9Vime9n6NQ6bh3ejCjX.hZVWvzWm5z5HgepLMCsEpl0hVAlf3Oa', 8, N'CSKH',     N'Hoạt động'),
+    ('giamsat.huy','$2a$10$XKTA/F612W3PN7Y3sPTmzunVnLXmfFw7imbGJMywqTj5MSeQM8pgy', 9, N'GIAMSAT',  N'Hoạt động'),
+    ('linh.old',   '$2a$10$NIAQF.EYmGdlMAC71QGKm.6ERKsmNJAs8KjHTXzBw/b3Xkh7bhqzG', 10, N'BANHANG',  N'Ngừng sử dụng');
 
     SET IDENTITY_INSERT DANH_MUC ON;
     INSERT INTO DANH_MUC (MaDanhMuc, TenDanhMuc, MoTa, TrangThai) VALUES

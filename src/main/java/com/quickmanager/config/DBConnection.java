@@ -10,7 +10,7 @@ public class DBConnection {
     private static final String URL =
             "jdbc:sqlserver://localhost:1433;databaseName=QL_SIEU_THI;encrypt=true;trustServerCertificate=true";
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "123456789";
+    private static final String PASSWORD = "123456";
 
     public static Connection getConnection() {
         try {
