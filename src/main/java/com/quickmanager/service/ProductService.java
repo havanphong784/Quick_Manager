@@ -156,4 +156,19 @@ public class ProductService {
         }
     }
 
+    // low stock
+    public static java.util.List<com.quickmanager.model.CanhBaoTonKho> getLowStock(int threshold) {
+        java.util.List<com.quickmanager.model.CanhBaoTonKho> ds = new java.util.ArrayList<>();
+        String sql = "SELECT MaSanPham, TenSanPham, SoLuongTon, TrangThai FROM SAN_PHAM WHERE SoLuongTon <= ? ORDER BY SoLuongTon ASC";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setInt(1, threshold);
+            try (ResultSet rs = ps.executeQuery()){
+                while (rs.next()){
+                    ds.add(new com.quickmanager.model.CanhBaoTonKho(rs.getInt("MaSanPham"), rs.getString("TenSanPham"), rs.getInt("SoLuongTon"), threshold, rs.getString("TrangThai")));
+                }
+            }
+        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        return ds;
+    }
+
 }
