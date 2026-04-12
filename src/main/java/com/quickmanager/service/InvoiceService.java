@@ -23,7 +23,7 @@ public class InvoiceService {
     UPDATE SAN_PHAM
     SET SoLuongTon = SoLuongTon - ?,
         TrangThai = CASE
-            WHEN SoLuongTon - ? <= 0 THEN N'Ngung ban'
+            WHEN SoLuongTon - ? <= 0 THEN N'Hết hàng'
             ELSE TrangThai
         END
     WHERE MaSanPham = ? AND SoLuongTon >= ?;

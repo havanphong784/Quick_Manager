@@ -12,7 +12,7 @@ public class AuthService {
 
     public static TaiKhoan login(String username, String password) {
         String sql = """
-            SELECT TenDangNhap, MatKhau, MaNhanVien, VaiTro
+            SELECT TenDangNhap, MatKhau, MaNhanVien, VaiTro, TrangThai
             FROM TAI_KHOAN
             WHERE TenDangNhap = ?
             """;
@@ -32,11 +32,12 @@ public class AuthService {
                     return null;
                 }
 
-                TaiKhoan tk = new TaiKhoan();
-                tk.setTenDangNhap(rs.getString("TenDangNhap"));
-                tk.setMaNhanVien(rs.getInt("MaNhanVien"));
-                tk.setVaiTro(rs.getString("VaiTro"));
-                return tk;
+                return new TaiKhoan(
+                        rs.getString("TenDangNhap"),
+                        rs.getInt("MaNhanVien"),
+                        rs.getString("VaiTro"),
+                        rs.getString("TrangThai")
+                );
             }
         } catch (Exception e) {
             System.out.println("Lỗi đăng nhập: " + e.getMessage());

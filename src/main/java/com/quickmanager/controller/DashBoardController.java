@@ -24,6 +24,9 @@ public class DashBoardController {
     @FXML
     public void initialize() {
         TaiKhoan tk = SessionService.getUser();
+        if  (tk == null || !tk.getTrangThai().equals("Kích hoạt")) {
+            System.exit(0);
+        }
         accountLabel.setText(tk.getTenDangNhap());
         roleLabel.setText(tk.getVaiTro());
         setPage("home.fxml");

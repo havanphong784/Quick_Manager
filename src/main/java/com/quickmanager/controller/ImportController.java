@@ -68,6 +68,10 @@ public class ImportController {
 
     public void handleThem() {
         SanPham sp = tbSanPham.getSelectionModel().getSelectedItem();
+        if (sp == null) {
+            Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập","");
+            return;
+        }
         int sl;
         try {
             sl = Integer.parseInt(txtSoLuongNhap.getText().trim());
@@ -81,16 +85,14 @@ public class ImportController {
                 return;
             }
         }
-        if (sp != null) {
-            CT_PhieuNhap ctPH = new CT_PhieuNhap();
-            ctPH.setMaSanPham(sp.getMaSanPham());
-            ctPH.setGiaNhap(sp.getGiaNhap());
-            ctPH.setSoLuong(sl);
-            ctPH.setThanhTien(sp.getGiaNhap().multiply(BigDecimal.valueOf(sl)));
-            mangMHDT.add(ctPH);
-        }else {
-            Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập","");
-        }
+
+        CT_PhieuNhap ctPH = new CT_PhieuNhap();
+        ctPH.setMaSanPham(sp.getMaSanPham());
+        ctPH.setGiaNhap(sp.getGiaNhap());
+        ctPH.setSoLuong(sl);
+        ctPH.setThanhTien(sp.getGiaNhap().multiply(BigDecimal.valueOf(sl)));
+        mangMHDT.add(ctPH);
+
         loadTbMHDT();
         loadTongTien();
     }

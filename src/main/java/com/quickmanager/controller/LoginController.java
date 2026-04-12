@@ -43,8 +43,8 @@ public class LoginController {
 
         TaiKhoan tk = AuthService.login(username, password);
         if (tk == null) {
-            statusLabel.setText("Sai mật khẩu.");
-            System.out.println("Sai mật khẩu");
+            statusLabel.setText("Sai mật khẩu hoặc tên đăng nhập.");
+            System.out.println("Sai mật khẩu hoặc tên đăng nhập.");
             Address.printAddress();
             return;
         }

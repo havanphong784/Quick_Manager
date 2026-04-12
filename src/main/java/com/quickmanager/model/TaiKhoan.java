@@ -8,7 +8,14 @@ public class TaiKhoan {
     private String vaiTro;
     private String trangThai;
 
-    public TaiKhoan() {
+    public TaiKhoan () {};
+
+    public TaiKhoan(String tenDangNhap, int maNhanVien, String vaiTro, String trangThai) {
+        this.tenDangNhap = tenDangNhap;
+        this.matKhau = matKhau;
+        this.maNhanVien = maNhanVien;
+        this.vaiTro = vaiTro;
+        this.trangThai = trangThai;
     }
 
     public String getTenDangNhap() {
