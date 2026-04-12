@@ -25,7 +25,7 @@ public class SupplierService {
            """;
 
     public static final String sqlUpdateSP = """
-           Update SAN_PHAM Set SoLuongTon = SoLuongTon + ? 
+           Update SAN_PHAM Set SoLuongTon = SoLuongTon + ?,
                            TrangThai = N'Đang bán'
            Where MaSanPham = ?
            """;
