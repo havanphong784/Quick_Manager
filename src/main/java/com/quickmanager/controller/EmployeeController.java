@@ -94,6 +94,7 @@ public class EmployeeController {
             }
         } else {
             txtDiaChi.clear();
+            txtMaNV.clear();
             txtEmail.clear();
             txtSdt.clear();
             txtTenNV.clear();
@@ -101,7 +102,13 @@ public class EmployeeController {
             cbGioiTinh.getSelectionModel().clearSelection();
             dpNgaySinh.setValue(null);
         }
-        btnThem.setDisable(true);
+        if (nv != null) {
+            btnThem.setDisable(true);
+            btnCapNhat.setDisable(false);
+        } else {
+            btnThem.setDisable(false);
+            btnCapNhat.setDisable(true);
+        }
         btnMoi.setText("Mới");
     }
 

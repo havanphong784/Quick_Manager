@@ -10,6 +10,8 @@ import com.quickmanager.service.SessionService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.application.Platform;
+import com.quickmanager.debug.BarcodeScanner;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -69,6 +71,28 @@ public class SellController {
         btnThanhToan.setDisable(true);
     }
 
+    @FXML private Button btnScanBarcodeSell;
+
+    public void handleScanBarcodeSell() {
+        if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(true);
+        BarcodeScanner.scan(code -> {
+            Platform.runLater(() -> {
+                try {
+                    txtTimSanPham.setText(code);
+                    handleSearch();
+                    // if at least one product, select and add to cart with qty=1
+                    if (!dataSanPham.isEmpty()) {
+                        tbvSanPham.getSelectionModel().select(0);
+                        txtSoLuongNhanh.setText("1");
+                        handleThemGio();
+                    }
+                } finally {
+                    if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(false);
+                }
+            });
+        });
+    }
+
     // SP
     public void initTable() {
         colMaSP.setCellValueFactory(new PropertyValueFactory<>("maSanPham"));
@@ -93,8 +117,8 @@ public class SellController {
     }
 
     public void handleSelectDM() {
-        String selected = cbDanhMuc.getValue().getTenDanhMuc();
-        stringDanhMuc = (selected == null) ? "" : selected;
+        DanhMuc selected = cbDanhMuc.getValue();
+        stringDanhMuc = (selected == null || selected.getTenDanhMuc() == null) ? "" : selected.getTenDanhMuc();
         loadSanPham();
     }
 
@@ -207,10 +231,10 @@ public class SellController {
             txtKhachDua.clear();
             khachDua = BigDecimal.ZERO;
         }
-        if (khachDua.compareTo(tongTien) > 0) {
+        if (khachDua.compareTo(tongTien) >= 0) {
             BigDecimal tienThoi = khachDua.subtract(tongTien);
             lblTienThoi.setText(tienThoi.toString());
-            btnThanhToan.setDisable(false);
+            btnThanhToan.setDisable(mangGioHang.isEmpty());
         }else {
             lblTienThoi.setText("Tiền khách đưa không đủ.");
             btnThanhToan.setDisable(true);
@@ -280,7 +304,9 @@ public class SellController {
         tbvGioHang.getSelectionModel().clearSelection();
         cbKhachHang.getSelectionModel().clearSelection();
         txtKhachHang.clear();
+        txtKhachHang.setDisable(false);
         txtSDT.clear();
+        txtSDT.setDisable(false);
         txtGiamGia.clear();
         txtKhachDua.clear();
         lblTamTinh.setText("0");
@@ -288,6 +314,7 @@ public class SellController {
         lblTienThoi.setText("0");
         txtSoLuongNhanh.setText("1");
         tbvSanPham.getSelectionModel().clearSelection();
+        btnThanhToan.setDisable(true);
     }
 
 

@@ -15,13 +15,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
+import com.quickmanager.debug.BarcodeScanner;
 
 public class ImportController {
 
     //MH
     @FXML private TextField txtTimSanPham;
     @FXML private TextField txtSoLuongNhap;
-    @FXML private TextField txtDonGiaNhap;
     @FXML private Button btnThemMH;
     @FXML private TableView<SanPham> tbSanPham;
     @FXML private TableColumn<SanPham,Integer> clMaSP;
@@ -50,10 +51,117 @@ public class ImportController {
     @FXML private TextField txtEmail;
     @FXML private Label lblTongCong;
 
+    // Create product quick form
+    @FXML private TextField txtNewTenSP;
+    @FXML private ComboBox<com.quickmanager.model.DanhMuc> cbNewDanhMuc;
+    @FXML private TextField txtNewDVT;
+    @FXML private TextField txtNewGiaNhap;
+    @FXML private TextField txtNewGiaBan;
+    @FXML private TextField txtNewSoLuong;
+    @FXML private TextField txtNewBarcode;
+    @FXML private TextField txtNewMucToiThieu;
+    @FXML private Button btnCreateProduct;
+
     public void initialize() {
         loadTbMHDT();
         loadCbNCC();
+        loadNewProductForm();
     };
+
+    public void loadNewProductForm() {
+        cbNewDanhMuc.getItems().setAll(ProductService.getDanhMuc());
+        cbNewDanhMuc.getItems().addFirst(null);
+    }
+
+    public void handleCreateProduct() {
+        String ten = txtNewTenSP.getText().trim();
+        com.quickmanager.model.DanhMuc dm = cbNewDanhMuc.getValue();
+        String dvt = txtNewDVT.getText().trim();
+        String sGiaNhap = txtNewGiaNhap.getText().trim();
+        String sGiaBan = txtNewGiaBan.getText().trim();
+        String sSoLuong = txtNewSoLuong.getText().trim();
+        String barcode = txtNewBarcode.getText().trim();
+        String sMucToiThieu = txtNewMucToiThieu.getText().trim();
+
+        if (ten.isEmpty()) { Alerts.thongBao("Tên sản phẩm không được để trống", ""); return; }
+        if (dm == null) { Alerts.thongBao("Vui lòng chọn danh mục", ""); return; }
+        try {
+            java.math.BigDecimal giaNhap = sGiaNhap.isEmpty() ? java.math.BigDecimal.ZERO : new java.math.BigDecimal(sGiaNhap);
+            java.math.BigDecimal giaBan = sGiaBan.isEmpty() ? java.math.BigDecimal.ZERO : new java.math.BigDecimal(sGiaBan);
+            int soLuong = sSoLuong.isEmpty() ? 0 : Integer.parseInt(sSoLuong);
+            int mucToiThieu = sMucToiThieu.isEmpty() ? 0 : Integer.parseInt(sMucToiThieu);
+
+            com.quickmanager.model.SanPham sp = com.quickmanager.service.ProductService.createProduct(ten, dm.getMaDanhMuc(), giaNhap, giaBan, soLuong, dvt, barcode, mucToiThieu);
+            if (sp != null) {
+                Alerts.thongBao("Tạo sản phẩm thành công", "Mã: " + sp.getMaSanPham());
+                // refresh product search results
+                txtTimSanPham.setText(sp.getTenSanPham());
+                loadTbMH();
+                // select created product in table
+                for (int i = 0; i < mangMH.size(); i++) {
+                    if (mangMH.get(i).getMaSanPham() == sp.getMaSanPham()) {
+                        tbSanPham.getSelectionModel().select(i);
+                        break;
+                    }
+                }
+            } else {
+                Alerts.thongBao("Tạo sản phẩm thất bại", "");
+            }
+        } catch (NumberFormatException e) {
+            Alerts.thongBao("Vui lòng nhập số hợp lệ cho giá/số lượng", "");
+        } catch (Exception e) {
+            Alerts.thongBao("Lỗi khi tạo sản phẩm: " + e.getMessage(), "");
+            Address.printAddress();
+        }
+    }
+
+    @FXML private Button btnScanBarcodeImport;
+
+    public void handleScanBarcodeImport() {
+        btnScanBarcodeImport.setDisable(true);
+        BarcodeScanner.scan(code -> {
+            Platform.runLater(() -> {
+                try {
+                    // Try to find existing product by barcode
+                    com.quickmanager.model.SanPham found = ProductService.getByBarcode(code);
+                    if (found != null) {
+                        // populate create form with existing product details for quick edit/view
+                        txtNewTenSP.setText(found.getTenSanPham());
+                        // select category
+                        if (found.getMaDanhMuc() != 0) {
+                            for (com.quickmanager.model.DanhMuc dm : cbNewDanhMuc.getItems()) {
+                                if (dm != null && dm.getMaDanhMuc() == found.getMaDanhMuc()) {
+                                    cbNewDanhMuc.getSelectionModel().select(dm);
+                                    break;
+                                }
+                            }
+                        }
+                        txtNewDVT.setText(found.getDonViTinh());
+                        txtNewGiaNhap.setText(found.getGiaNhap() == null ? "0" : found.getGiaNhap().toString());
+                        txtNewGiaBan.setText(found.getGiaBan() == null ? "0" : found.getGiaBan().toString());
+                        txtNewSoLuong.setText(String.valueOf(found.getSoLuongTon()));
+                        txtNewMucToiThieu.setText(String.valueOf(found.getMucToiThieu()));
+                        txtNewBarcode.setText(found.getBarcode());
+                        // also select in product list
+                        txtTimSanPham.setText(found.getTenSanPham());
+                        loadTbMH();
+                        for (int i = 0; i < mangMH.size(); i++) {
+                            if (mangMH.get(i).getMaSanPham() == found.getMaSanPham()) {
+                                tbSanPham.getSelectionModel().select(i);
+                                break;
+                            }
+                        }
+                    } else {
+                        // not found -> prefill barcode in create form and focus name
+                        txtNewBarcode.setText(code);
+                        txtNewTenSP.requestFocus();
+                    }
+                } finally {
+                    btnScanBarcodeImport.setDisable(false);
+                }
+            });
+        });
+    }
 
     // MH
     public void loadTbMH() {
@@ -68,11 +176,17 @@ public class ImportController {
 
     public void handleThem() {
         SanPham sp = tbSanPham.getSelectionModel().getSelectedItem();
+        // Fix: kiểm tra sp null trước
+        if (sp == null) {
+            Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập","");
+            return;
+        }
         int sl;
         try {
             sl = Integer.parseInt(txtSoLuongNhap.getText().trim());
+            if (sl <= 0) throw new NumberFormatException();
         }catch (NumberFormatException e) {
-            Alerts.thongBao("Vui lòng nhập số lượng hợp lệ","");
+            Alerts.thongBao("Vui lòng nhập số lượng hợp lệ (số nguyên dương)","");
             return;
         }
         for (CT_PhieuNhap ct : mangMHDT) {
@@ -81,16 +195,14 @@ public class ImportController {
                 return;
             }
         }
-        if (sp != null) {
-            CT_PhieuNhap ctPH = new CT_PhieuNhap();
-            ctPH.setMaSanPham(sp.getMaSanPham());
-            ctPH.setGiaNhap(sp.getGiaNhap());
-            ctPH.setSoLuong(sl);
-            ctPH.setThanhTien(sp.getGiaNhap().multiply(BigDecimal.valueOf(sl)));
-            mangMHDT.add(ctPH);
-        }else {
-            Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập","");
-        }
+        // Fix: giaNhap có thể null nếu chưa nhập
+        BigDecimal giaNhap = sp.getGiaNhap() != null ? sp.getGiaNhap() : BigDecimal.ZERO;
+        CT_PhieuNhap ctPH = new CT_PhieuNhap();
+        ctPH.setMaSanPham(sp.getMaSanPham());
+        ctPH.setGiaNhap(giaNhap);
+        ctPH.setSoLuong(sl);
+        ctPH.setThanhTien(giaNhap.multiply(BigDecimal.valueOf(sl)));
+        mangMHDT.add(ctPH);
         loadTbMHDT();
         loadTongTien();
     }
@@ -165,6 +277,12 @@ public class ImportController {
     }
 
     public void handleXacNhan() {
+        // Fix: kiểm tra danh sách mặt hàng không rỗng
+        if (mangMHDT.isEmpty()) {
+            Alerts.thongBao("Phiếu nhập trống", "Vui lòng thêm ít nhất một mặt hàng vào phiếu nhập.");
+            return;
+        }
+
         NhaCungCap ncc = cbNCC.getSelectionModel().getSelectedItem();
         if (ncc == null) {
             String tenNCC = txtTenNCC.getText().trim();
@@ -188,12 +306,17 @@ public class ImportController {
             }
         }
 
+        // Fix: tính tổng tiền trực tiếp từ danh sách thay vì parse label
+        BigDecimal tongTien = BigDecimal.ZERO;
+        for (CT_PhieuNhap ct : mangMHDT) {
+            tongTien = tongTien.add(ct.getThanhTien());
+        }
         PhieuNhap pn = new PhieuNhap();
         pn.setMaNCC(ncc.getMaNCC());
-        pn.setTongTien(new BigDecimal(lblTongCong.getText().replace(" VNĐ","")));
+        pn.setTongTien(tongTien);
         int maPhieuNhap;
         try {
-            maPhieuNhap = SupplierService.taoPhieuNhap(pn,mangMHDT);
+            maPhieuNhap = SupplierService.taoPhieuNhap(pn, mangMHDT);
         }catch (Exception e) {
             Alerts.thongBao("Tạo phiếu nhập thất bại", "");
             Address.printAddress();
@@ -204,6 +327,7 @@ public class ImportController {
     }
 
     public void clearAll() {
+        cbNCC.getSelectionModel().clearSelection();
         txtDiaChiNCC.clear();
         txtTenNCC.clear();
         txtLienHeNCC.clear();

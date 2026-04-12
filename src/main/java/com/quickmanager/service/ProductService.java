@@ -37,7 +37,8 @@ public class ProductService {
                sp.GiaNhap
         From SAN_PHAM sp
         Where sp.TenSanPham Like ?
-            Or sp.MaSanPham like ?
+            Or CAST(sp.MaSanPham AS VARCHAR(50)) like ?
+            Or sp.Barcode like ?
         """;
 
     public static List<SanPham> getProduct(String key, String danhMuc, String trangThai,Boolean hh) {
@@ -100,8 +101,10 @@ public class ProductService {
         List<SanPham> ds = new ArrayList<SanPham>();
         try (Connection con = DBConnection.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sqlSearchProducts);
-            ps.setString(1,(key == null) ? "" : "%"+key+"%");
-            ps.setString(2,(key == null) ? "" : "%"+key+"%");
+            String q = (key == null) ? "" : "%"+key+"%";
+            ps.setString(1, q);
+            ps.setString(2, q);
+            ps.setString(3, q);
             try (ResultSet rs = ps.executeQuery()) {
                 while(rs.next()) {
                     SanPham sp = new SanPham();
@@ -169,6 +172,65 @@ public class ProductService {
             }
         }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
         return ds;
+    }
+
+    public static SanPham createProduct(String tenSanPham, int maDanhMuc, java.math.BigDecimal giaNhap, java.math.BigDecimal giaBan, int soLuongTon, String donViTinh, String barcode, int mucToiThieu) {
+        String sql = "INSERT INTO SAN_PHAM (TenSanPham, MaDanhMuc, GiaNhap, GiaBan, SoLuongTon, DonViTinh, TrangThai, Barcode, MucToiThieu) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+            ps.setString(1, tenSanPham);
+            ps.setInt(2, maDanhMuc);
+            ps.setBigDecimal(3, giaNhap);
+            ps.setBigDecimal(4, giaBan);
+            ps.setInt(5, soLuongTon);
+            ps.setString(6, donViTinh == null ? "" : donViTinh);
+            ps.setString(7, "Đang bán");
+            ps.setString(8, barcode == null ? null : barcode);
+            ps.setInt(9, mucToiThieu);
+            int rows = ps.executeUpdate();
+            if (rows == 0) return null;
+            try (ResultSet rs = ps.getGeneratedKeys()){
+                if (rs.next()){
+                    int id = rs.getInt(1);
+                    SanPham sp = new SanPham();
+                    sp.setMaSanPham(id);
+                    sp.setTenSanPham(tenSanPham);
+                    sp.setMaDanhMuc(maDanhMuc);
+                    sp.setGiaNhap(giaNhap);
+                    sp.setGiaBan(giaBan);
+                    sp.setSoLuongTon(soLuongTon);
+                    sp.setDonViTinh(donViTinh);
+                    sp.setTrangThai("Đang bán");
+                    sp.setBarcode(barcode);
+                    sp.setMucToiThieu(mucToiThieu);
+                    return sp;
+                }
+            }
+        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        return null;
+    }
+
+    public static SanPham getByBarcode(String code) {
+        String sql = "SELECT * FROM SAN_PHAM WHERE Barcode = ?";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
+            ps.setString(1, code);
+            try (ResultSet rs = ps.executeQuery()){
+                if (rs.next()){
+                    SanPham sp = new SanPham();
+                    sp.setMaSanPham(rs.getInt("MaSanPham"));
+                    sp.setTenSanPham(rs.getString("TenSanPham"));
+                    sp.setMaDanhMuc(rs.getInt("MaDanhMuc"));
+                    sp.setGiaNhap(rs.getBigDecimal("GiaNhap"));
+                    sp.setGiaBan(rs.getBigDecimal("GiaBan"));
+                    sp.setSoLuongTon(rs.getInt("SoLuongTon"));
+                    sp.setDonViTinh(rs.getString("DonViTinh"));
+                    sp.setTrangThai(rs.getString("TrangThai"));
+                    sp.setBarcode(rs.getString("Barcode"));
+                    try { sp.setMucToiThieu(rs.getInt("MucToiThieu")); } catch (Exception ignored) {}
+                    return sp;
+                }
+            }
+        } catch (Exception e) { System.out.println(e.getMessage()); Address.printAddress(); }
+        return null;
     }
 
 }

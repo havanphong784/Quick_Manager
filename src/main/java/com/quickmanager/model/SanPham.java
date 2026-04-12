@@ -16,6 +16,8 @@ public class SanPham {
     private Date hanSuDung;
     private String trangThai;
     private String tenDanhMuc;
+    private String barcode;
+    private int mucToiThieu;
 
     public SanPham() {
     }
@@ -107,4 +109,10 @@ public class SanPham {
     public void setTenDanhMuc(String tenDanhMuc) {
         this.tenDanhMuc = tenDanhMuc;
     }
+
+    public String getBarcode() { return barcode; }
+    public void setBarcode(String barcode) { this.barcode = barcode; }
+
+    public int getMucToiThieu() { return mucToiThieu; }
+    public void setMucToiThieu(int mucToiThieu) { this.mucToiThieu = mucToiThieu; }
 }

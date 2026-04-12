@@ -26,6 +26,7 @@
                                    onAction="#loadTbMH"
                                    promptText="Tìm tên/mã sản phẩm..."
                                    styleClass="qm-input"/>
+                        <Button fx:id="btnScanBarcodeImport" onAction="#handleScanBarcodeImport" text="Scan" styleClass="qm-btn"/>
                         <TextField fx:id="txtSoLuongNhap"
                                    promptText="SL"
                                    prefWidth="90"
@@ -35,6 +36,46 @@
                                 text="Thêm"
                                 styleClass="qm-btn"/>
                     </HBox>
+
+                    <!-- NEW: Form tạo sản phẩm nhanh -->
+                    <VBox spacing="8" styleClass="qm-form" >
+                        <Label text="Tạo sản phẩm mới" styleClass="qm-section-title" />
+                        <GridPane hgap="10" vgap="8">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="NEVER" minWidth="100" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+
+                            <Label text="Tên sản phẩm" styleClass="qm-label-muted" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewTenSP" promptText="Tên sản phẩm" styleClass="qm-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Danh mục" styleClass="qm-label-muted" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="cbNewDanhMuc" promptText="Danh mục" styleClass="qm-combo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Đơn vị" styleClass="qm-label-muted" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewDVT" promptText="Chai/Khẩu/Box..." styleClass="qm-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                            <Label text="Giá nhập" styleClass="qm-label-muted" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewGiaNhap" promptText="0" styleClass="qm-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                            <Label text="Giá bán" styleClass="qm-label-muted" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewGiaBan" promptText="0" styleClass="qm-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                            <Label text="Số lượng ban đầu" styleClass="qm-label-muted" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewSoLuong" promptText="0" styleClass="qm-input" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                            <Label text="Mã vạch / Barcode" styleClass="qm-label-muted" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewBarcode" promptText="barcode" styleClass="qm-input" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                            <Label text="Mức tối thiểu" styleClass="qm-label-muted" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                            <TextField fx:id="txtNewMucToiThieu" promptText="10" styleClass="qm-input" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                            <HBox spacing="8" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="btnCreateProduct" onAction="#handleCreateProduct" text="Tạo sản phẩm" styleClass="qm-btn"/>
+                            </HBox>
+                        </GridPane>
+                    </VBox>
 
 
                     <TableView fx:id="tbSanPham" styleClass="qm-table" VBox.vgrow="ALWAYS">

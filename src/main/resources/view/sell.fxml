@@ -17,8 +17,9 @@
             <VBox spacing="10" styleClass="qm-topbar">
                 <Label text="Bán hàng" styleClass="qm-page-title"/>
 
-                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="txtTimSanPham" text="" promptText="Tìm tên/mã sản phẩm..." HBox.hgrow="ALWAYS" styleClass="qm-input"/>
+                    <Button fx:id="btnScanBarcodeSell" onAction="#handleScanBarcodeSell" text="Scan" styleClass="qm-btn"/>
                     <ComboBox fx:id="cbDanhMuc" onAction="#handleSelectDM" promptText="Danh mục" styleClass="qm-combo"/>
                     <Button onAction="#handleSearch" text="Tìm kiếm" styleClass="qm-btn"/>
                 </HBox>

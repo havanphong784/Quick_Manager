@@ -99,7 +99,7 @@ public class InvoiceController {
             lblTamTinh.setText(hd.getTongTien().add(hd.getGiamGia()).toString());
             lblGiamGia.setText(hd.getGiamGia().toString());
             lblTongCong.setText(hd.getTongTien().toString());
-            if (hd.getMaKhachHang() == 0 || hd.getMaKhachHang() == null) {
+            if (hd.getMaKhachHang() == null || hd.getMaKhachHang() == 0) {
                 txtTenKH.setText("");
                 txtDiaChiKH.setText("");
                 txtEmail.setText("");

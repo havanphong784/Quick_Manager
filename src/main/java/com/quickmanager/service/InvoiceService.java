@@ -104,9 +104,11 @@ public class InvoiceService {
             ps.setString(4, maHdFilter);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    int maKhachHangRaw = rs.getInt("MaKhachHang");
+                    Integer maKhachHang = rs.wasNull() ? null : maKhachHangRaw;
                     ds.add(new HoaDon(
                             rs.getInt("MaHoaDon"),
-                            rs.getInt("MaKhachHang"),
+                            maKhachHang,
                             rs.getString("TenKhachHang"),
                             rs.getDate("NgayLap").toLocalDate(),
                             rs.getBigDecimal("TongTien"),
