@@ -84,13 +84,24 @@
                         </graphic>
                     </ToggleButton>
                     <Region VBox.vgrow="ALWAYS"/>
-                    <Button onAction="#handleLogout" text="Đăng xuất" styleClass="menu-btn">
-                        <graphic>
-                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
-                                <Image url="@/images/logout.png"/>
-                            </ImageView>
-                        </graphic>
-                    </Button>
+                    <HBox>
+                        <Button onAction="#handleLogout" text="Đăng xuất" styleClass="menu-btn">
+                            <graphic>
+                                <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                    <Image url="@/images/logout.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button alignment="CENTER" onAction="#handleSwitchTheme" text="" styleClass="menu-btn">
+                            <graphic>
+                                <ImageView fitWidth="30" fitHeight="30" preserveRatio="true">
+                                    <Image url="@/images/moon.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Region prefWidth="60"/>
+                    </HBox>
                 </VBox>
             </center>
 

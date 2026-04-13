@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
-public final class BarcodeScanner {
+public class BarcodeScanner {
     private BarcodeScanner() {}
 
     public static void scan(Consumer<String> onResult) {

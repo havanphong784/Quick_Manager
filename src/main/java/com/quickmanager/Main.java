@@ -14,6 +14,7 @@ import static javafx.stage.StageStyle.UNDECORATED;
 public class Main extends Application {
     public static Stage stage;
     public static LocalDateTime time;
+    public static Boolean isDarkTheme = true;
 
     public static void main(String[] args) {
         System.out.println("App bắt đầu chạy.\n");

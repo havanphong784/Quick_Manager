@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+import static com.quickmanager.Main.isDarkTheme;
+
 public class DashBoardController {
     @FXML
     private AnchorPane contentPane;
@@ -59,6 +61,12 @@ public class DashBoardController {
     public void handleLogout() {
         Main.switchParent("/view/login.fxml","Login - QuickManager",false);
         SessionService.removeUser();
+    }
+
+    public void handleSwitchTheme() {
+        isDarkTheme = !isDarkTheme;
+        Main.stage.getScene().getStylesheets().clear();
+        Main.stage.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource(isDarkTheme ? "/view/index.css" : "/view/light.css")).toExternalForm());
     }
 
     @FXML
