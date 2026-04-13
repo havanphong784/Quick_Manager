@@ -92,7 +92,9 @@
     <center>
         <BorderPane styleClass="mainPane" prefWidth="Infinity">
             <top>
-                <HBox styleClass="header" prefHeight="90" alignment="CENTER" spacing="12">
+                <HBox styleClass="header" prefHeight="90" alignment="CENTER" spacing="12"
+                      onMousePressed="#handleHeaderPressed"
+                      onMouseDragged="#handleHeaderDragged">
                     <VBox spacing="2" alignment="CENTER_LEFT">
                         <Label text="Chào mừng đến QuickManager" styleClass="qm-page-title"/>
                         <Label text="Quản lý bán hàng nhanh và hiệu quả" styleClass="qm-label-muted"/>
@@ -100,7 +102,12 @@
 
                     <Region HBox.hgrow="ALWAYS"/>
 
-                    <VBox spacing="2" alignment="CENTER_RIGHT">
+                    <VBox spacing="2" alignment="TOP_RIGHT">
+                        <HBox spacing="6" alignment="CENTER_RIGHT">
+                            <Button text="_" styleClass="window-control-btn" onAction="#handleMinimize"/>
+                            <Button text="[ ]" styleClass="window-control-btn" onAction="#handleMaximize"/>
+                            <Button text="X" styleClass="window-control-btn window-close-btn" onAction="#handleClose"/>
+                        </HBox>
                         <Label fx:id="accountLabel" styleClass="header-label" text="Phongha"/>
                         <Label fx:id="roleLabel" styleClass="qm-label-muted" text="Admin"/>
                     </VBox>

@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static javafx.stage.StageStyle.UNDECORATED;
+
 public class Main extends Application {
     public static Stage stage;
     public static LocalDateTime time;
@@ -36,6 +38,7 @@ public class Main extends Application {
             stage.setTitle(title);
             stage.centerOnScreen();
             stage.setResizable(reSize);
+            stage.initStyle(UNDECORATED);
         }catch (Exception e){
             System.out.println("Lỗi: " + e.getMessage());
             Address.printAddress();

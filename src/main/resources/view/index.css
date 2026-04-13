@@ -157,6 +157,28 @@
     -fx-padding: 0 14 0 14;
 }
 
+.window-control-btn {
+    -fx-min-width: 30;
+    -fx-pref-width: 30;
+    -fx-min-height: 24;
+    -fx-pref-height: 24;
+    -fx-background-color: transparent;
+    -fx-text-fill: -qm-text-secondary;
+    -fx-background-radius: 6;
+    -fx-font-size: 12;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.window-control-btn:hover {
+    -fx-background-color: -qm-bg-elevated;
+}
+
+.window-close-btn:hover {
+    -fx-background-color: -qm-accent-red;
+    -fx-text-fill: white;
+}
+
 .sidebar-menu {
     -fx-padding: 22 0 22 0;
 }
