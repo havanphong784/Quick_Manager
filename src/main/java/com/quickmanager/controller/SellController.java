@@ -80,11 +80,9 @@ public class SellController {
                 try {
                     txtTimSanPham.setText(code);
                     handleSearch();
-                    // if at least one product, select and add to cart with qty=1
                     if (!dataSanPham.isEmpty()) {
                         tbvSanPham.getSelectionModel().select(0);
                         txtSoLuongNhanh.setText("1");
-                        handleThemGio();
                     }
                 } finally {
                     if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(false);

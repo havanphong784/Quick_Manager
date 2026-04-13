@@ -1,14 +1,20 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.Alerts;
 import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.HoaDon;
 import com.quickmanager.model.KhachHang;
+import com.quickmanager.service.InvoicePdfService;
 import com.quickmanager.service.InvoiceService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -119,6 +125,44 @@ public class InvoiceController {
     }
 
     public void handleInPhieu() {
+        HoaDon hd = tbHoaDon.getSelectionModel().getSelectedItem();
+        if (hd == null) {
+            Alerts.thongBao("Thong bao", "Vui long chon hoa don can in.");
+            return;
+        }
 
+        List<CT_HoaDon> chiTiet = InvoiceService.getCTHD(hd.getMaHoaDon());
+        if (chiTiet == null || chiTiet.isEmpty()) {
+            Alerts.thongBao("Thong bao", "Hoa don khong co chi tiet de xuat.");
+            return;
+        }
+
+        KhachHang infoKH = null;
+        if (hd.getMaKhachHang() != null && hd.getMaKhachHang() > 0) {
+            infoKH = InvoiceService.getInfoKH(hd.getMaKhachHang());
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Luu hoa don PDF");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+        chooser.setInitialFileName("hoa-don-" + hd.getMaHoaDon() + ".pdf");
+        Window owner = btnInPhieu != null && btnInPhieu.getScene() != null ? btnInPhieu.getScene().getWindow() : null;
+        File outFile = chooser.showSaveDialog(owner);
+        if (outFile == null) {
+            return;
+        }
+
+        try {
+            InvoicePdfService.exportInvoicePdf(outFile, hd, chiTiet, infoKH);
+            Alerts.thongBao("Thanh cong", "Da xuat file PDF:\n" + outFile.getAbsolutePath());
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    desktop.open(outFile);
+                }
+            }
+        } catch (Exception e) {
+            Alerts.thongBao("Loi", "Khong the xuat PDF: " + e.getMessage());
+        }
     }
 }

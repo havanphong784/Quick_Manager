@@ -26,7 +26,6 @@
                                    onAction="#loadTbMH"
                                    promptText="Tìm tên/mã sản phẩm..."
                                    styleClass="qm-input"/>
-                        <Button fx:id="btnScanBarcodeImport" onAction="#handleScanBarcodeImport" text="Scan" styleClass="qm-btn"/>
                         <TextField fx:id="txtSoLuongNhap"
                                    promptText="SL"
                                    prefWidth="90"
@@ -35,6 +34,7 @@
                                 onAction="#handleThem"
                                 text="Thêm"
                                 styleClass="qm-btn"/>
+                        <Button fx:id="btnScanBarcodeImport" onAction="#handleScanBarcodeImport" text="Scan" styleClass="qm-btn"/>
                     </HBox>
 
                     <!-- NEW: Form tạo sản phẩm nhanh -->

@@ -21,6 +21,8 @@ public class ProductService {
       AND (
             CAST(sp.MaSanPham AS VARCHAR(20)) LIKE ?
          OR sp.TenSanPham LIKE ?
+         Or sp.Barcode like ?
+          
       )
         AND dm.TenDanhMuc LIKE ?
     """;
@@ -30,11 +32,7 @@ public class ProductService {
             """;
 
     public static final String sqlSearchProducts = """
-        Select sp.MaSanPham,
-               sp.TenSanPham,
-               sp.DonViTinh,
-               sp.SoLuongTon,
-               sp.GiaNhap
+        Select *
         From SAN_PHAM sp
         Where sp.TenSanPham Like ?
             Or CAST(sp.MaSanPham AS VARCHAR(50)) like ?
@@ -51,7 +49,8 @@ public class ProductService {
             ps.setString(1, trangThai == null || trangThai.isEmpty() ? "%" : trangThai);
             ps.setString(2, string);
             ps.setString(3, string);
-            ps.setString(4, dm);
+            ps.setString(4, string);
+            ps.setString(5, dm);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     SanPham sp = new SanPham();
@@ -65,6 +64,7 @@ public class ProductService {
                     sp.setGiaBan(rs.getBigDecimal("GiaBan"));
                     sp.setTenDanhMuc(rs.getString("TenDanhMuc"));
                     sp.setTrangThai(rs.getString("TrangThai"));
+                    sp.setBarcode(rs.getString("Barcode"));
                     ds.add(sp);
                 }
             }catch (Exception e) {

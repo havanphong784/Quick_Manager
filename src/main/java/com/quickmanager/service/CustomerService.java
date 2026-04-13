@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerService {
+public class    CustomerService {
     public static final String sqlAllCustomer = """
             Select * From KHACH_HANG
             """;

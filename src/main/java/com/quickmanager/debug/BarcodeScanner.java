@@ -15,10 +15,6 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
-/**
- * Simple barcode scanner using webcam-capture and ZXing.
- * Opens a Swing window showing camera and returns first decoded code via the callback.
- */
 public final class BarcodeScanner {
     private BarcodeScanner() {}
 
