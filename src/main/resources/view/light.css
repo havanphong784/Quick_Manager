@@ -1,0 +1,41 @@
+@import "index.css";
+
+.root {
+    -qm-bg-app: #f3f6fb;
+    -qm-bg-pane: #ffffff;
+    -qm-bg-elevated: #f8fafc;
+    -qm-bg-control: #edf2f7;
+    -qm-bg-row: #ffffff;
+    -qm-bg-row-alt: #f8fafc;
+    -qm-bg-selected: #dbeafe;
+
+    -qm-border: #d5dee8;
+    -qm-border-soft: #e2e8f0;
+    -qm-border-light: #cbd5e1;
+
+    -qm-text-primary: #0f172a;
+    -qm-text-secondary: #1e293b;
+    -qm-text-muted: #475569;
+    -qm-text-subtle: #64748b;
+    -qm-text-sidebar: #334155;
+    -qm-text-placeholder: #94a3b8;
+
+    -qm-accent-primary: #2563eb;
+    -qm-accent-red: #dc2626;
+    -qm-accent-green: #16a34a;
+    -qm-accent-blue: #2563eb;
+    -qm-accent-success: #059669;
+    -qm-accent-warning: #ea580c;
+    -qm-accent-left: #2563eb;
+    -qm-accent-right: #16a34a;
+    -qm-gradient-menu-start: #0ea5a4;
+    -qm-gradient-menu-end: #3b82f6;
+
+    -qm-login-bg: #e2e8f0;
+    -qm-login-card: rgba(255, 255, 255, 0.95);
+    -qm-login-title: #0f172a;
+    -qm-login-subtitle: #64748b;
+    -qm-login-label: #1e293b;
+    -qm-login-input-border: #cbd5e1;
+}
+

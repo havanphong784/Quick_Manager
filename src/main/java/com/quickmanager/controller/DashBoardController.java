@@ -1,5 +1,6 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
 import com.quickmanager.service.SessionService;
@@ -55,9 +56,14 @@ public class DashBoardController {
     public void switchEmployeePage() { setPage("employee.fxml"); }
     public void switchStatisticsPage() { setPage("statistics.fxml"); }
 
+    public void handleLogout() {
+        Main.switchParent("/view/login.fxml","Login - QuickManager",false);
+        SessionService.removeUser();
+    }
+
     @FXML
     public void handleMinimize() {
-        Stage stage = getStage();
+        Stage stage = Main.stage;
         if (stage != null) {
             stage.setIconified(true);
         }
@@ -65,7 +71,7 @@ public class DashBoardController {
 
     @FXML
     public void handleMaximize() {
-        Stage stage = getStage();
+        Stage stage = Main.stage;
         if (stage != null) {
             stage.setMaximized(!stage.isMaximized());
         }
@@ -73,7 +79,7 @@ public class DashBoardController {
 
     @FXML
     public void handleClose() {
-        Stage stage = getStage();
+        Stage stage = Main.stage;
         if (stage != null) {
             stage.close();
         }
@@ -81,7 +87,7 @@ public class DashBoardController {
 
     @FXML
     public void handleHeaderPressed(MouseEvent event) {
-        Stage stage = getStage();
+        Stage stage = Main.stage;
         if (stage != null) {
             dragOffsetX = event.getSceneX();
             dragOffsetY = event.getSceneY();
@@ -90,17 +96,11 @@ public class DashBoardController {
 
     @FXML
     public void handleHeaderDragged(MouseEvent event) {
-        Stage stage = getStage();
+        Stage stage = Main.stage;
         if (stage != null && !stage.isMaximized()) {
             stage.setX(event.getScreenX() - dragOffsetX);
             stage.setY(event.getScreenY() - dragOffsetY);
         }
     }
 
-    private Stage getStage() {
-        if (contentPane == null || contentPane.getScene() == null || !(contentPane.getScene().getWindow() instanceof Stage)) {
-            return null;
-        }
-        return (Stage) contentPane.getScene().getWindow();
-    }
 }

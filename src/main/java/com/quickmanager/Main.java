@@ -26,6 +26,7 @@ public class Main extends Application {
         stage.setTitle("Quick Manager");
         stage.setMaxWidth(Double.MAX_VALUE);
         stage.setMaxHeight(Double.MAX_VALUE);
+        stage.initStyle(UNDECORATED);
         stage.show();
     }
 
@@ -38,7 +39,6 @@ public class Main extends Application {
             stage.setTitle(title);
             stage.centerOnScreen();
             stage.setResizable(reSize);
-            stage.initStyle(UNDECORATED);
         }catch (Exception e){
             System.out.println("Lỗi: " + e.getMessage());
             Address.printAddress();

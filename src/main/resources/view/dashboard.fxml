@@ -83,6 +83,14 @@
                             </ImageView>
                         </graphic>
                     </ToggleButton>
+                    <Region VBox.vgrow="ALWAYS"/>
+                    <Button onAction="#handleLogout" text="Đăng xuất" styleClass="menu-btn">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                                <Image url="@/images/logout.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
                 </VBox>
             </center>
 
