@@ -4,11 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static javafx.stage.StageStyle.TRANSPARENT;
 import static javafx.stage.StageStyle.UNDECORATED;
 
 public class Main extends Application {
@@ -27,7 +30,7 @@ public class Main extends Application {
         stage.setTitle("Quick Manager");
         stage.setMaxWidth(Double.MAX_VALUE);
         stage.setMaxHeight(Double.MAX_VALUE);
-        stage.initStyle(UNDECORATED);
+        stage.initStyle(TRANSPARENT);
         stage.show();
     }
 
