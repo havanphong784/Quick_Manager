@@ -137,4 +137,25 @@ public class EmployeeService {
             return false;
         }
     }
+
+    public static List<NhanVien> getNhanVienDangLam() {
+        String sql = "SELECT * FROM NHAN_VIEN WHERE TrangThai = N'Đang làm' ORDER BY MaNhanVien";
+        List<NhanVien> ds = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNhanVien(rs.getInt("MaNhanVien"));
+                nv.setTenNhanVien(rs.getString("TenNhanVien"));
+                nv.setTrangThai(rs.getString("TrangThai"));
+                nv.setEmail(rs.getString("Email"));
+                ds.add(nv);
+            }
+        } catch (Exception e) {
+            System.out.println("Loi lay danh sach nhan vien dang lam: " + e.getMessage());
+            Address.printAddress();
+        }
+        return ds;
+    }
 }

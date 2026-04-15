@@ -29,6 +29,11 @@ public class LoginController {
     private Label statusLabel;
 
     @FXML
+    private void handleRegister() {
+        Main.switchParent("/view/register.fxml", "Dang ky - QuickManager", false);
+    }
+
+    @FXML
     private void handleLogin() {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
