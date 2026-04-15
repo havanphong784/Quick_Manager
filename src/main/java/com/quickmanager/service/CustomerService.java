@@ -14,8 +14,8 @@ public class    CustomerService {
             """;
 
     public static final String sqlInsertKH = """
-            Insert into KHACH_HANG (TenKhachHang, SoDienThoai)
-            Values(?,?)
+            Insert into KHACH_HANG (TenKhachHang, SoDienThoai, Email)
+            Values(?,?,?)
             """;
     public static List<KhachHang> loadCustomer() {
         List<KhachHang> ds = new ArrayList<KhachHang>();
@@ -42,12 +42,17 @@ public class    CustomerService {
         return ds;
     }
 
-    public static KhachHang themKhachHang(String name , String sdt) {
+    public static KhachHang themKhachHang(String name, String sdt, String email) {
         try (Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(sqlInsertKH, Statement.RETURN_GENERATED_KEYS);)
             {
             ps.setString(1, name);
             ps.setString(2, sdt);
+            if (email == null || email.isBlank()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, email);
+            }
             int kt = ps.executeUpdate();
             if (kt == 0) throw new SQLException("Tạo khách hàng thất bại");
             try (ResultSet key = ps.getGeneratedKeys()) {
@@ -56,7 +61,7 @@ public class    CustomerService {
                             key.getInt(1),
                             name,
                             sdt,
-                            null,
+                            email,
                             null,
                             0,
                             "Hoạt động"

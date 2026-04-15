@@ -4,6 +4,7 @@ import com.quickmanager.debug.Address;
 import com.quickmanager.debug.Alerts;
 import com.quickmanager.model.*;
 import com.quickmanager.service.CustomerService;
+import com.quickmanager.service.EmailService;
 import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
 import com.quickmanager.service.SessionService;
@@ -17,10 +18,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class SellController {
+    private static final Pattern GMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@gmail\\.com$");
 
     // SP
     @FXML private TableView<SanPham> tbvSanPham;
@@ -50,6 +55,7 @@ public class SellController {
     @FXML private ComboBox<KhachHang> cbKhachHang;
     @FXML private TextField txtKhachDua;
     @FXML private TextField txtSDT;
+    @FXML private TextField txtGmail;
     @FXML private TextField txtKhachHang;
     @FXML private TextField txtGiamGia;
     @FXML private Label lblTongTien;
@@ -190,11 +196,15 @@ public class SellController {
                 txtSDT.setDisable(true);
                 txtKhachHang.setText(kh.getTenKhachHang());
                 txtKhachHang.setDisable(true);
+                txtGmail.setText(kh.getEmail() == null ? "" : kh.getEmail());
+                txtGmail.setDisable(true);
             }else {
                 txtSDT.clear();
                 txtSDT.setDisable(false);
                 txtKhachHang.clear();
                 txtKhachHang.setDisable(false);
+                txtGmail.clear();
+                txtGmail.setDisable(false);
             }
     }
 
@@ -255,11 +265,17 @@ public class SellController {
 
         // KH
         KhachHang kh = cbKhachHang.getValue();
+        String emailKH = normalizeEmail(txtGmail.getText());
+        if (!emailKH.isEmpty() && !isValidGmail(emailKH)) {
+            Alerts.thongBao("Gmail khong hop le.","Vui long nhap dung dinh dang name@gmail.com.");
+            btnThanhToan.setDisable(false);
+            return;
+        }
         if (kh == null) {
             String nameKH = txtKhachHang.getText().trim();
             String sdtKH = txtSDT.getText().trim();
             if (!nameKH.isEmpty() && !sdtKH.isEmpty()) {
-                kh = CustomerService.themKhachHang(nameKH, sdtKH);
+                kh = CustomerService.themKhachHang(nameKH, sdtKH, emailKH.isEmpty() ? null : emailKH);
             }
         }
 
@@ -282,6 +298,8 @@ public class SellController {
         try {
             int maHD = InvoiceService.taoHoaDonNKH(hd, listHD);
             if (maHD >0) {
+                KhachHang customerForEmail = resolveCustomerForEmail(kh, hd.getMaKhachHang());
+                sendInvoiceEmailAsync(customerForEmail, maHD, tongTien, giamGia, khachDua, tienThoi);
                 Alerts.thongBao("Thanh toán thành công.","Mã hóa đơn: " + maHD);
                 reset();
                 loadSanPham();
@@ -305,6 +323,8 @@ public class SellController {
         txtKhachHang.setDisable(false);
         txtSDT.clear();
         txtSDT.setDisable(false);
+        txtGmail.clear();
+        txtGmail.setDisable(false);
         txtGiamGia.clear();
         txtKhachDua.clear();
         lblTamTinh.setText("0");
@@ -313,6 +333,57 @@ public class SellController {
         txtSoLuongNhanh.setText("1");
         tbvSanPham.getSelectionModel().clearSelection();
         btnThanhToan.setDisable(true);
+    }
+
+    private String normalizeEmail(String rawEmail) {
+        if (rawEmail == null) {
+            return "";
+        }
+        return rawEmail.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private boolean isValidGmail(String email) {
+        return GMAIL_PATTERN.matcher(email).matches();
+    }
+
+    private KhachHang resolveCustomerForEmail(KhachHang selectedCustomer, Integer maKhachHang) {
+        if (selectedCustomer != null && selectedCustomer.getEmail() != null && !selectedCustomer.getEmail().isBlank()) {
+            return selectedCustomer;
+        }
+        if (maKhachHang == null) {
+            return selectedCustomer;
+        }
+        KhachHang fromDb = InvoiceService.getInfoKH(maKhachHang);
+        return fromDb != null ? fromDb : selectedCustomer;
+    }
+
+    private void sendInvoiceEmailAsync(
+            KhachHang khachHang,
+            int maHoaDon,
+            BigDecimal tongTien,
+            BigDecimal giamGia,
+            BigDecimal tienKhachDua,
+            BigDecimal tienThoi
+    ) {
+        if (khachHang == null || khachHang.getEmail() == null || khachHang.getEmail().isBlank()) {
+            return;
+        }
+
+        CompletableFuture.runAsync(() -> {
+            List<CT_HoaDon> details = InvoiceService.getCTHD(maHoaDon);
+            boolean sent = EmailService.sendInvoicePaidEmail(
+                    khachHang,
+                    maHoaDon,
+                    tongTien,
+                    giamGia,
+                    tienKhachDua,
+                    tienThoi,
+                    details
+            );
+            if (!sent) {
+                System.out.println("Khong gui duoc email hoa don #" + maHoaDon);
+            }
+        });
     }
 
 
