@@ -30,61 +30,61 @@
                 </StackPane>
             </top>
             <center>
-                <VBox styleClass="sidebar-menu" spacing="10">
+                <VBox fx:id="menu" styleClass="sidebar-menu" spacing="10">
                     <fx:define>
                         <ToggleGroup fx:id="sidebarGroup"/>
                     </fx:define>
-                    <ToggleButton onAction="#switchHomePage" text="  Trang chủ" styleClass="menu-btn" toggleGroup="$sidebarGroup" selected="true">
+                    <ToggleButton fx:id="btnMenuHome" onAction="#switchHomePage" text="  Trang chủ" styleClass="menu-btn" toggleGroup="$sidebarGroup" selected="true">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/home.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton onAction="#switchSellPage" text="  Bán hàng" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton fx:id="btnMenuSell" onAction="#switchSellPage" text="  Bán hàng" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/cart.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton onAction="#switchImportPage" text="  Nhập hàng" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton fx:id="btnMenuImport" onAction="#switchImportPage" text="  Nhập hàng" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/import.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton onAction="#switchInvoicePage" text="  Hóa đơn" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton fx:id="btnMenuInvoice" onAction="#switchInvoicePage" text="  Hóa đơn" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/invoice.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton onAction="#switchProductPage" text="  Quản lí sản phẩm" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton fx:id="btnMenuProduct" onAction="#switchProductPage" text="  Quản lí sản phẩm" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/order.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton onAction="#switchEmployeePage" text="  Quản lí nhân viên" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton fx:id="btnMenuEmployee" onAction="#switchEmployeePage" text="  Quản lí nhân viên" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/employee.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <ToggleButton onAction="#switchStatisticsPage" text="  Thống kê" styleClass="menu-btn" toggleGroup="$sidebarGroup">
+                    <ToggleButton fx:id="btnMenuStatistics" onAction="#switchStatisticsPage" text="  Thống kê" styleClass="menu-btn" toggleGroup="$sidebarGroup">
                         <graphic>
                             <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                                 <Image url="@/images/bar-chart.png"/>
                             </ImageView>
                         </graphic>
                     </ToggleButton>
-                    <Region VBox.vgrow="ALWAYS"/>
-                    <HBox>
+                    <Region fx:id="menuRegion" VBox.vgrow="ALWAYS"/>
+                    <HBox fx:id="menuFooter">
                         <Button onAction="#handleLogout" text="Đăng xuất" styleClass="menu-btn">
                             <graphic>
                                 <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
