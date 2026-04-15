@@ -59,6 +59,7 @@ public class DashBoardController {
         }catch (Exception e){
             System.out.println("Lỗi: " + e.getMessage());
             Address.printAddress();
+            e.printStackTrace();
         }
     }
     public void switchHomePage() { setPage("home.fxml"); }
