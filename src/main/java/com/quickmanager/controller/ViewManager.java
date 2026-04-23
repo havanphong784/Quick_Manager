@@ -2,6 +2,7 @@ package com.quickmanager.controller;
 
 import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
+import com.quickmanager.ui.Animation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,7 @@ public class ViewManager {
             }
         }
         rootPane.getChildren().setAll(view);
+        Animation.duoiLen(view);
         AnchorPane.setTopAnchor(view, 0.0);
         AnchorPane.setRightAnchor(view, 0.0);
         AnchorPane.setBottomAnchor(view, 0.0);

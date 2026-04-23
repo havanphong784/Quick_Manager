@@ -1,12 +1,10 @@
 package com.quickmanager.controller;
 
 import com.quickmanager.Main;
-import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
 import com.quickmanager.service.SessionService;
+import com.quickmanager.ui.Animation;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
@@ -63,52 +61,45 @@ public class DashBoardController {
         show(contentPane, "home", "home.fxml");
     }
 
-    public void setPage(String path) {
-        try {
-            Parent children = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/" + path)));
-            contentPane.getChildren().setAll(children);
-            AnchorPane.setTopAnchor(children, 0.0);
-            AnchorPane.setRightAnchor(children, 0.0);
-            AnchorPane.setBottomAnchor(children, 0.0);
-            AnchorPane.setLeftAnchor(children, 0.0);
-        } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
-            Address.printAddress();
-            e.printStackTrace();
-        }
-    }
-
     public void switchHomePage() {
         show(contentPane, "home", "home.fxml");
+        Animation.traiVao(btnMenuHome);
     }
 
     public void switchSellPage() {
         show(contentPane, "sell", "sell.fxml");
+        Animation.traiVao(btnMenuSell);
     }
 
     public void switchImportPage() {
         show(contentPane, "import", "import.fxml");
+        Animation.traiVao(btnMenuImport);
     }
 
     public void switchInvoicePage() {
         show(contentPane, "invoice", "invoice.fxml");
+        Animation.traiVao(btnMenuInvoice);
     }
 
     public void switchProductPage() {
         show(contentPane, "product", "product.fxml");
+        Animation.traiVao(btnMenuProduct);
     }
 
     public void switchEmployeePage() {
         show(contentPane, "employee", "employee.fxml");
+        Animation.traiVao(btnMenuEmployee);
     }
 
     public void switchStatisticsPage() {
         show(contentPane, "statistics", "statistics.fxml");
+        Animation.traiVao(btnMenuStatistics);
     }
 
     public void handleLogout() {
         Main.switchParent("/view/login.fxml", "Login - QuickManager", false);
         SessionService.removeUser();
+        ViewManager.clearCache();
     }
 
     public void handleSwitchTheme() {
