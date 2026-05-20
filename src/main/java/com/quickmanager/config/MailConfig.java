@@ -1,11 +1,16 @@
 package com.quickmanager.config;
 
+import com.quickmanager.debug.AppLogger;
+
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MailConfig {
+    private static final Logger logger = AppLogger.getLogger(MailConfig.class);
     private static final Properties PROPERTIES = new Properties();
 
     static {
@@ -14,7 +19,7 @@ public class MailConfig {
                 PROPERTIES.load(input);
             }
         } catch (Exception e) {
-            System.out.println("Khong the doc cau hinh mail: " + e.getMessage());
+            logger.log(Level.WARNING, "Không thể đọc cấu hình mail", e);
         }
     }
 
@@ -102,19 +107,19 @@ public class MailConfig {
             String decoded = new String(Base64.getDecoder().decode(authCode), StandardCharsets.UTF_8);
             int splitIndex = decoded.indexOf(':');
             if (splitIndex <= 0 || splitIndex >= decoded.length() - 1) {
-                System.out.println("Mail auth code khong dung dinh dang. Dung base64 cua username:password.");
+                logger.warning("Mail auth code không đúng định dạng. Dùng base64 của username:password.");
                 return null;
             }
 
             String username = decoded.substring(0, splitIndex).trim();
             String password = decoded.substring(splitIndex + 1).trim();
             if (username.isEmpty() || password.isEmpty()) {
-                System.out.println("Mail auth code khong hop le vi thieu username hoac password.");
+                logger.warning("Mail auth code không hợp lệ vì thiếu username hoặc password.");
                 return null;
             }
             return new Credential(username, password);
         } catch (IllegalArgumentException e) {
-            System.out.println("Mail auth code khong phai base64 hop le: " + e.getMessage());
+            logger.log(Level.WARNING, "Mail auth code không phải base64 hợp lệ", e);
             return null;
         }
     }

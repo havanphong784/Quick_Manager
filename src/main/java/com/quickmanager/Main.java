@@ -1,6 +1,6 @@
 package com.quickmanager;
 
-import com.quickmanager.debug.Address;
+import com.quickmanager.debug.AppLogger;
 import com.quickmanager.ui.Animation;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -11,16 +11,20 @@ import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static javafx.stage.StageStyle.TRANSPARENT;
 
 public class Main extends Application {
+    private static final Logger logger = AppLogger.getLogger(Main.class);
+
     public static Stage stage;
     public static LocalDateTime time;
     public static Boolean isDarkTheme = true;
 
     static void main(String[] args) {
-        System.out.println("App bắt đầu chạy.\n");
+        logger.info("App bắt đầu chạy.");
         Application.launch(args);
     }
 
@@ -48,8 +52,7 @@ public class Main extends Application {
                 Animation.phongTo(scene.getRoot());
             });
         } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
-            Address.printAddress();
+            logger.log(Level.SEVERE, "Lỗi chuyển màn hình: " + path, e);
         }
     }
 }
