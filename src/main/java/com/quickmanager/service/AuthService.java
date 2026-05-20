@@ -1,14 +1,17 @@
 package com.quickmanager.service;
 
 import com.quickmanager.config.DBConnection;
-import com.quickmanager.debug.Address;
+import com.quickmanager.debug.AppLogger;
 import com.quickmanager.model.TaiKhoan;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AuthService {
+    private static final Logger logger = AppLogger.getLogger(AuthService.class);
 
     public static TaiKhoan login(String username, String password) {
         String sql = """
@@ -39,8 +42,7 @@ public class AuthService {
                 return tk;
             }
         } catch (Exception e) {
-            System.out.println("Lỗi đăng nhập: " + e.getMessage());
-            Address.printAddress();
+            logger.log(Level.SEVERE, "Lỗi đăng nhập", e);
             return null;
         }
     }
@@ -54,8 +56,7 @@ public class AuthService {
                 return rs.next();
             }
         } catch (Exception e) {
-            System.out.println("Loi kiem tra ten dang nhap: " + e.getMessage());
-            Address.printAddress();
+            logger.log(Level.SEVERE, "Lỗi kiểm tra tên đăng nhập", e);
             return true;
         }
     }
@@ -74,8 +75,7 @@ public class AuthService {
             st.setString(5, "Đang làm");
             return st.executeUpdate() > 0;
         } catch (Exception e) {
-            System.out.println("Loi dang ky: " + e.getMessage());
-            Address.printAddress();
+            logger.log(Level.SEVERE, "Lỗi đăng ký tài khoản", e);
             return false;
         }
     }

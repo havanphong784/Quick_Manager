@@ -1,6 +1,7 @@
 package com.quickmanager.service;
 
 import com.quickmanager.config.MailConfig;
+import com.quickmanager.debug.AppLogger;
 import com.quickmanager.model.CT_HoaDon;
 import com.quickmanager.model.KhachHang;
 
@@ -12,8 +13,11 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EmailService {
+    private static final Logger logger = AppLogger.getLogger(EmailService.class);
     private static final Locale DEFAULT_LOCALE = Locale.forLanguageTag("vi-VN");
 
     private EmailService() {
