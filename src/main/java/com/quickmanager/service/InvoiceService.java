@@ -237,11 +237,10 @@ public class InvoiceService {
         """;
     public static List<CT_HoaDon> getCTHD(int maHD) {
         List<CT_HoaDon> ds = new ArrayList<>();
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlGetCTHD);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlGetCTHD)) {
             ps.setInt(1, maHD);
-            try {
-                ResultSet rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     ds.add( new CT_HoaDon(
                             rs.getInt("STT"),
@@ -269,8 +268,8 @@ public class InvoiceService {
             """;
 
     public static KhachHang getInfoKH(int id) {
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlKH);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlKH)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

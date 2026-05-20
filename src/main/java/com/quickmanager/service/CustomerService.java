@@ -19,9 +19,9 @@ public class    CustomerService {
             """;
     public static List<KhachHang> loadCustomer() {
         List<KhachHang> ds = new ArrayList<KhachHang>();
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlAllCustomer);
-            try (ResultSet rs = ps.executeQuery()) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlAllCustomer);
+             ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     KhachHang kh = new KhachHang(
                             rs.getInt("MaKhachHang"),
@@ -34,7 +34,6 @@ public class    CustomerService {
                     );
                     ds.add(kh);
                 }
-            }
         }catch (Exception e) {
             System.out.println("Loi connect");
             Address.printAddress();

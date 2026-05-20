@@ -44,8 +44,8 @@ public class ProductService {
         List<SanPham> ds = new ArrayList<>();
         String string = "%" + ( key == null ? "" : key.trim()) + "%";
         String dm =  "%" + ( danhMuc == null ? "" : danhMuc.trim()) + "%";
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, trangThai == null || trangThai.isEmpty() ? "%" : trangThai);
             ps.setString(2, string);
             ps.setString(3, string);
@@ -99,8 +99,8 @@ public class ProductService {
 
     public static List<SanPham> searchProducts(String key) {
         List<SanPham> ds = new ArrayList<SanPham>();
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlSearchProducts);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlSearchProducts)) {
             String q = (key == null) ? "" : "%"+key+"%";
             ps.setString(1, q);
             ps.setString(2, q);
@@ -139,8 +139,8 @@ public class ProductService {
         WHERE MaSanPham = ?
         """;
 
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlUpdate);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
             ps.setString(1, sp.getTenSanPham());
             ps.setInt(2, sp.getMaDanhMuc());
             ps.setBigDecimal(3, sp.getGiaNhap());

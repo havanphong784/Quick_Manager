@@ -25,8 +25,8 @@ public class EmployeeService {
 
     public static List<NhanVien> getNhanVien(String key,String trangThai) {
         List<NhanVien> ds = new ArrayList<>();
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sqlGetNv);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlGetNv)) {
             ps.setString(1, "%" + key + "%");
             ps.setString(2, "%" + key + "%");
             ps.setString(3, "%" + key + "%");

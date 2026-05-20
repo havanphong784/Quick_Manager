@@ -36,8 +36,8 @@ public class SupplierService {
            """;
 
     public static NhaCungCap taoNCC(String name,String sdt,String email,String diaChi) throws SQLException {
-        try (Connection con = DBConnection.getConnection()) {
-            PreparedStatement psTaoNCC = con.prepareStatement(sqlTaoNCC, Statement.RETURN_GENERATED_KEYS);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement psTaoNCC = con.prepareStatement(sqlTaoNCC, Statement.RETURN_GENERATED_KEYS)) {
             psTaoNCC.setString(1, name);
             psTaoNCC.setString(2, sdt);
             psTaoNCC.setString(3, email);
@@ -62,23 +62,17 @@ public class SupplierService {
     public static List<NhaCungCap> getNCC() {
         List<NhaCungCap> ds = new ArrayList<NhaCungCap>();
          try (Connection con = DBConnection.getConnection();
-              PreparedStatement ps = con.prepareStatement(sqlGetNCC)
-         ) {
-             try {
-                 ResultSet rs = ps.executeQuery();
-                 while (rs.next()) {
-                     NhaCungCap ncc = new NhaCungCap(
-                             rs.getInt("MaNCC"),
-                             rs.getString("TenNCC"),
-                             rs.getString("SoDienThoai"),
-                             rs.getString("Email"),
-                             rs.getString("DiaChi")
-                     );
-                     ds.add(ncc);
-                 }
-             }catch (Exception e) {
-                 System.out.println("Loi connect");
-                 Address.printAddress();
+              PreparedStatement ps = con.prepareStatement(sqlGetNCC);
+              ResultSet rs = ps.executeQuery()) {
+             while (rs.next()) {
+                 NhaCungCap ncc = new NhaCungCap(
+                         rs.getInt("MaNCC"),
+                         rs.getString("TenNCC"),
+                         rs.getString("SoDienThoai"),
+                         rs.getString("Email"),
+                         rs.getString("DiaChi")
+                 );
+                 ds.add(ncc);
              }
          }catch (Exception e) {
              System.out.println("Loi connect");
