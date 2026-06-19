@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -137,10 +139,9 @@ public class InvoiceController {
             return;
         }
 
-        KhachHang infoKH = null;
-        if (hd.getMaKhachHang() != null && hd.getMaKhachHang() > 0) {
-            infoKH = InvoiceService.getInfoKH(hd.getMaKhachHang());
-        }
+        final KhachHang infoKH = (hd.getMaKhachHang() != null && hd.getMaKhachHang() > 0) 
+            ? InvoiceService.getInfoKH(hd.getMaKhachHang()) 
+            : null;
 
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Luu hoa don PDF");
@@ -152,17 +153,27 @@ public class InvoiceController {
             return;
         }
 
-        try {
-            InvoicePdfService.exportInvoicePdf(outFile, hd, chiTiet, infoKH);
-            Alerts.thongBao("Thanh cong", "Da xuat file PDF:\n" + outFile.getAbsolutePath());
-            if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                if (desktop.isSupported(Desktop.Action.OPEN)) {
-                    desktop.open(outFile);
-                }
+        CompletableFuture.runAsync(() -> {
+            try {
+                InvoicePdfService.exportInvoicePdf(outFile, hd, chiTiet, infoKH);
+                Platform.runLater(() -> {
+                    Alerts.thongBao("Thanh cong", "Da xuat file PDF:\n" + outFile.getAbsolutePath());
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop desktop = Desktop.getDesktop();
+                        if (desktop.isSupported(Desktop.Action.OPEN)) {
+                            try {
+                                desktop.open(outFile);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    Alerts.thongBao("Loi", "Khong the xuat PDF: " + e.getMessage());
+                });
             }
-        } catch (Exception e) {
-            Alerts.thongBao("Loi", "Khong the xuat PDF: " + e.getMessage());
-        }
+        });
     }
 }
