@@ -1,5 +1,9 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
 import com.quickmanager.ui.Animation;
@@ -12,6 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ViewManager {
+    private static final Logger logger = AppLogger.getLogger(ViewManager.class);
     private static final Map<String, Parent> viewCache = new HashMap<>();
 
     public static void show(AnchorPane rootPane, String title, String path) {
@@ -21,7 +26,7 @@ public class ViewManager {
                 view = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/view/" + path)));
                 viewCache.put(title, view);
             } catch (Exception e) {
-                System.out.println("Lỗi: " + e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi", e);
                 Address.printAddress();
                 return;
             }

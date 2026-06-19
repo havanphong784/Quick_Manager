@@ -1,5 +1,9 @@
 package com.quickmanager.service;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.CT_PhieuNhap;
@@ -10,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierService {
+    private static final Logger logger = AppLogger.getLogger(SupplierService.class);
     public static final String sqlGetNCC = """
             Select * From NHA_CUNG_CAP
             """;
@@ -75,7 +80,7 @@ public class SupplierService {
                  ds.add(ncc);
              }
          }catch (Exception e) {
-             System.out.println("Loi connect");
+             logger.info("Loi connect");
              Address.printAddress();
          }
          return ds;

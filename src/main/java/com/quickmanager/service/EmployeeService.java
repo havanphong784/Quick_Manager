@@ -1,5 +1,9 @@
 package com.quickmanager.service;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.NhanVien;
@@ -10,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeService {
+    private static final Logger logger = AppLogger.getLogger(EmployeeService.class);
     public static final String sqlGetNv = """
     SELECT * FROM NHAN_VIEN
     WHERE (
@@ -47,11 +52,11 @@ public class EmployeeService {
                     ds.add(nv);
                 }
             }catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
                 Address.printAddress();
             }
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return ds;
@@ -90,7 +95,7 @@ public class EmployeeService {
             int rows = ps.executeUpdate();
             return rows > 0;
         } catch (Exception e) {
-            System.out.println("Lỗi updateNhanVien: " + e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi updateNhanVien", e);
             Address.printAddress();
             return false;
         }
@@ -125,14 +130,14 @@ public class EmployeeService {
                         nv.setMaNhanVien(keys.getInt(1));
                     }
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.log(Level.SEVERE, "Lỗi ngoại lệ", ex);
                     Address.printAddress();
                 }
                 return true;
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Lỗi addNhanVien: " + e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi addNhanVien", e);
             Address.printAddress();
             return false;
         }
@@ -153,7 +158,7 @@ public class EmployeeService {
                 ds.add(nv);
             }
         } catch (Exception e) {
-            System.out.println("Loi lay danh sach nhan vien dang lam: " + e.getMessage());
+            logger.log(Level.SEVERE, "Loi lay danh sach nhan vien dang lam", e);
             Address.printAddress();
         }
         return ds;

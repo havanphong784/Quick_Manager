@@ -1,5 +1,9 @@
 package com.quickmanager.service;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.CT_HoaDon;
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceService {
+    private static final Logger logger = AppLogger.getLogger(InvoiceService.class);
     public static final String sqlInsertHD = """
     Insert Into HOA_DON ( MaNhanVien,MaKhachHang,TongTien,GiamGia,TienKhachDua,TienThoi)
     Values(?,?,?,?,?,?);
@@ -116,7 +121,7 @@ public class InvoiceService {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return ds;
@@ -134,7 +139,7 @@ public class InvoiceService {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) total = rs.getBigDecimal("Total") == null ? java.math.BigDecimal.ZERO : rs.getBigDecimal("Total");
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return total;
     }
 
@@ -149,7 +154,7 @@ public class InvoiceService {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) cnt = rs.getInt("Cnt");
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return cnt;
     }
 
@@ -164,7 +169,7 @@ public class InvoiceService {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) cnt = rs.getInt("TotalQty");
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return cnt;
     }
 
@@ -182,7 +187,7 @@ public class InvoiceService {
                     ds.add(new com.quickmanager.model.DoanhThuNgay(d.toLocalDate(), rs.getInt("SoHoaDon"), rs.getBigDecimal("DoanhThu")));
                 }
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return ds;
     }
 
@@ -202,7 +207,7 @@ public class InvoiceService {
                     ds.add(new com.quickmanager.model.DoanhThuNgay(d.toLocalDate(), soLuong, doanhThu));
                 }
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return ds;
     }
 
@@ -221,7 +226,7 @@ public class InvoiceService {
                     count++; if (count >= limit) break;
                 }
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return ds;
     }
 
@@ -252,11 +257,11 @@ public class InvoiceService {
                     ));
                 }
             }catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
                 Address.printAddress();
             }
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return ds;
@@ -282,11 +287,11 @@ public class InvoiceService {
                     );
                 }
             }catch (SQLException e) {
-                System.out.println(e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
                 Address.printAddress();
             }
         }catch (SQLException e ) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return null;

@@ -44,11 +44,11 @@ public class EmailService {
         String password = MailConfig.getPassword();
         String host = MailConfig.getHost();
         if (host.isBlank()) {
-            System.out.println("Mail host chua duoc cau hinh.");
+            logger.info("Mail host chua duoc cau hinh.");
             return false;
         }
         if (MailConfig.isAuth() && (username == null || username.isBlank() || password == null || password.isBlank())) {
-            System.out.println("Thieu thong tin dang nhap mail. Hay dung mail.auth.code hoac mail.username/mail.password.");
+            logger.info("Thieu thong tin dang nhap mail. Hay dung mail.auth.code hoac mail.username/mail.password.");
             return false;
         }
 
@@ -75,10 +75,10 @@ public class EmailService {
             send(session, message, host, username, password);
             return true;
         } catch (ClassNotFoundException e) {
-            System.out.println("Thieu thu vien jakarta.mail. Vui long dong bo Maven de gui mail.");
+            logger.info("Thieu thu vien jakarta.mail. Vui long dong bo Maven de gui mail.");
             return false;
         } catch (Exception e) {
-            System.out.println("Gui mail that bai: " + e.getMessage());
+            logger.log(Level.SEVERE, "Gui mail that bai", e);
             return false;
         }
     }

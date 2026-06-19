@@ -1,5 +1,9 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.TaiKhoan;
@@ -12,6 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController {
+    private static final Logger logger = AppLogger.getLogger(LoginController.class);
 
     @FXML
     private TextField usernameField;
@@ -41,7 +46,7 @@ public class LoginController {
         statusLabel.setText("");
         if (username.isEmpty() || password.isEmpty()) {
             statusLabel.setText("Vui lòng nhập đầy đủ thông tin.");
-            System.out.println("Nhap thiếu thông tin.");
+            logger.info("Nhap thiếu thông tin.");
             Address.printAddress();
             return;
         }
@@ -49,11 +54,11 @@ public class LoginController {
         TaiKhoan tk = AuthService.login(username, password);
         if (tk == null) {
             statusLabel.setText("Sai mật khẩu.");
-            System.out.println("Sai mật khẩu");
+            logger.info("Sai mật khẩu");
             Address.printAddress();
             return;
         }
-        System.out.println("Đăng nhập thành công.\n");
+        logger.info("Đăng nhập thành công.\n");
         SessionService.setUser(tk);
         statusLabel.setStyle("-fx-text-fill: green;");
         statusLabel.setText("Đăng nhập thành công. Xin chào " + tk.getTenDangNhap());

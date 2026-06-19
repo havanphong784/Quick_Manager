@@ -1,5 +1,9 @@
 package com.quickmanager.service;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.KhachHang;
@@ -9,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class    CustomerService {
+    private static final Logger logger = AppLogger.getLogger(CustomerService.class);
     public static final String sqlAllCustomer = """
             Select * From KHACH_HANG
             """;
@@ -35,7 +40,7 @@ public class    CustomerService {
                     ds.add(kh);
                 }
         }catch (Exception e) {
-            System.out.println("Loi connect");
+            logger.info("Loi connect");
             Address.printAddress();
         }
         return ds;
@@ -68,8 +73,8 @@ public class    CustomerService {
                 } else throw new SQLException("Lấy mã khách hàng thất bại");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Lỗi tạo khách hàng");
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
+            logger.info("Lỗi tạo khách hàng");
             Address.printAddress();
             return null;
         }

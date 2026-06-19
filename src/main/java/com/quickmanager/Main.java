@@ -38,6 +38,13 @@ public class Main extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        com.quickmanager.config.DBConnection.closePool();
+        super.stop();
+    }
+
+
     public static void switchParent(String path, String title, Boolean reSize) {
         try {
             Parent p = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(path)));

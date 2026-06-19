@@ -1,5 +1,9 @@
 package com.quickmanager.service;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.model.DanhMuc;
@@ -13,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
+    private static final Logger logger = AppLogger.getLogger(ProductService.class);
     private static final String sqlGetProducts = """
     SELECT *
     FROM SAN_PHAM sp
@@ -68,11 +73,11 @@ public class ProductService {
                     ds.add(sp);
                 }
             }catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
                 Address.printAddress();
             }
         }catch(Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return ds;
@@ -87,11 +92,11 @@ public class ProductService {
                     ds.add(new DanhMuc(rs.getInt("MaDanhMuc"),rs.getString("TenDanhMuc")));
                 }
             }catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
                 Address.printAddress();
             }
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return ds;
@@ -116,11 +121,11 @@ public class ProductService {
                     ds.add(sp);
                 }
             }catch(Exception e) {
-                System.out.println(e.getMessage());
+                logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
                 Address.printAddress();
             }
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi ngoại lệ", e);
             Address.printAddress();
         }
         return ds;
@@ -153,7 +158,7 @@ public class ProductService {
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
-            System.out.println("Lỗi cập nhật sản phẩm: " + e.getMessage());
+            logger.log(Level.SEVERE, "Lỗi cập nhật sản phẩm", e);
             Address.printAddress();
             return false;
         }
@@ -170,7 +175,7 @@ public class ProductService {
                     ds.add(new com.quickmanager.model.CanhBaoTonKho(rs.getInt("MaSanPham"), rs.getString("TenSanPham"), rs.getInt("SoLuongTon"), threshold, rs.getString("TrangThai")));
                 }
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return ds;
     }
 
@@ -205,7 +210,7 @@ public class ProductService {
                     return sp;
                 }
             }
-        }catch (Exception e){ System.out.println(e.getMessage()); Address.printAddress(); }
+        }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return null;
     }
 
@@ -229,7 +234,7 @@ public class ProductService {
                     return sp;
                 }
             }
-        } catch (Exception e) { System.out.println(e.getMessage()); Address.printAddress(); }
+        } catch (Exception e) { logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return null;
     }
 

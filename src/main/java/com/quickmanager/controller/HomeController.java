@@ -1,5 +1,9 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
 import javafx.fxml.FXML;
@@ -12,6 +16,7 @@ import javafx.scene.control.Label;
 import java.time.LocalDate;
 
 public class HomeController {
+    private static final Logger logger = AppLogger.getLogger(HomeController.class);
 	@FXML private Label lblDoanhThuHomNay;
 	@FXML private Label lblDonHangHomNay;
 	@FXML private Label lblSPBanRa;
@@ -85,7 +90,7 @@ public class HomeController {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Lỗi loadCharts: " + e.getMessage());
+			logger.log(Level.SEVERE, "Lỗi loadCharts", e);
 		}
 	}
 }

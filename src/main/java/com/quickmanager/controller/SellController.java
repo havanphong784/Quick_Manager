@@ -1,5 +1,9 @@
 package com.quickmanager.controller;
 
+import com.quickmanager.debug.AppLogger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import com.quickmanager.debug.Address;
 import com.quickmanager.debug.Alerts;
 import com.quickmanager.model.*;
@@ -25,6 +29,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class SellController {
+    private static final Logger logger = AppLogger.getLogger(SellController.class);
     private static final Pattern GMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@gmail\\.com$");
 
     // SP
@@ -381,7 +386,7 @@ public class SellController {
                     details
             );
             if (!sent) {
-                System.out.println("Khong gui duoc email hoa don #" + maHoaDon);
+                logger.info("Khong gui duoc email hoa don #" + maHoaDon);
             }
         });
     }
