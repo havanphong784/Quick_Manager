@@ -122,6 +122,8 @@ public class DashBoardController {
             menu.getChildren().add(btnMenuHome);
             menu.getChildren().add(btnMenuSell);
             menu.getChildren().add(btnMenuImport);
+            menu.getChildren().add(btnMenuInvoice);
+            menu.getChildren().add(btnMenuProduct);
         }
         menu.getChildren().add(menuRegion);
         menu.getChildren().add(menuFooter);
