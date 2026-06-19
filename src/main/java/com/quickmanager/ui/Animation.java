@@ -6,134 +6,46 @@ import javafx.util.Duration;
 
 public final class Animation {
     public static void phongTo(Node node) {
-        ScaleTransition scale = new ScaleTransition(Duration.millis(200), node);
-        scale.setFromX(0.85);
-        scale.setFromY(0.85);
+        ScaleTransition scale = new ScaleTransition(Duration.millis(250), node);
+        scale.setFromX(0.9);
+        scale.setFromY(0.9);
         scale.setToX(1);
         scale.setToY(1);
+        scale.setInterpolator(Interpolator.EASE_OUT);
 
-        FadeTransition fade = new FadeTransition(Duration.millis(200), node);
+        FadeTransition fade = new FadeTransition(Duration.millis(250), node);
         fade.setFromValue(0);
         fade.setToValue(1);
+        fade.setInterpolator(Interpolator.EASE_OUT);
 
         new ParallelTransition(scale, fade).playFromStart();
     }
 
     public static void traiVao(Node node) {
-        double duration = 700;
-        double startX = -node.getLayoutBounds().getWidth();
+        TranslateTransition translate = new TranslateTransition(Duration.millis(350), node);
+        translate.setFromX(-50);
+        translate.setToX(0);
+        translate.setInterpolator(Interpolator.EASE_OUT);
 
-        Timeline tl = new Timeline(
-                new KeyFrame(Duration.millis(0),
-                        new KeyValue(node.translateXProperty(), startX)
-                ),
+        FadeTransition fade = new FadeTransition(Duration.millis(350), node);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.setInterpolator(Interpolator.EASE_OUT);
 
-                new KeyFrame(Duration.millis(duration * 0.013),
-                        new KeyValue(node.translateXProperty(), startX * 0.97)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.028),
-                        new KeyValue(node.translateXProperty(), startX * 0.88)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.087),
-                        new KeyValue(node.translateXProperty(), startX * 0.34)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.116),
-                        new KeyValue(node.translateXProperty(), startX * 0.13)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.146),
-                        new KeyValue(node.translateXProperty(), 10)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.162),
-                        new KeyValue(node.translateXProperty(), 20)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.179),
-                        new KeyValue(node.translateXProperty(), 25)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.197),
-                        new KeyValue(node.translateXProperty(), 28)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.217),
-                        new KeyValue(node.translateXProperty(), 25)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.314),
-                        new KeyValue(node.translateXProperty(), 5)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.38),
-                        new KeyValue(node.translateXProperty(), -2)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.576),
-                        new KeyValue(node.translateXProperty(), 1)
-                ),
-
-                new KeyFrame(Duration.millis(duration),
-                        new KeyValue(node.translateXProperty(), 0)
-                )
-        );
-
-        tl.playFromStart();
+        new ParallelTransition(translate, fade).playFromStart();
     }
 
     public static void duoiLen(Node node) {
-        double duration = 600;
+        TranslateTransition translate = new TranslateTransition(Duration.millis(400), node);
+        translate.setFromY(50);
+        translate.setToY(0);
+        translate.setInterpolator(Interpolator.EASE_OUT);
 
-        Timeline tl = new Timeline(
-                new KeyFrame(Duration.millis(0),
-                        new KeyValue(node.translateYProperty(), 200),
-                        new KeyValue(node.opacityProperty(), 0)
-                ),
+        FadeTransition fade = new FadeTransition(Duration.millis(400), node);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.setInterpolator(Interpolator.EASE_OUT);
 
-                new KeyFrame(Duration.millis(duration * 0.447),
-                        new KeyValue(node.translateYProperty(), 0),
-                        new KeyValue(node.opacityProperty(), 1)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.518),
-                        new KeyValue(node.translateYProperty(), 10),
-                        new KeyValue(node.opacityProperty(), 0.898)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.551),
-                        new KeyValue(node.translateYProperty(), 15),
-                        new KeyValue(node.opacityProperty(), 0.874)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.584),
-                        new KeyValue(node.translateYProperty(), 18),
-                        new KeyValue(node.opacityProperty(), 0.866)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.643),
-                        new KeyValue(node.translateYProperty(), 10),
-                        new KeyValue(node.opacityProperty(), 0.888)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.774),
-                        new KeyValue(node.translateYProperty(), 0),
-                        new KeyValue(node.opacityProperty(), 1)
-                ),
-
-                new KeyFrame(Duration.millis(duration * 0.845),
-                        new KeyValue(node.translateYProperty(), 3),
-                        new KeyValue(node.opacityProperty(), 0.98)
-                ),
-
-                new KeyFrame(Duration.millis(duration),
-                        new KeyValue(node.translateYProperty(), 0),
-                        new KeyValue(node.opacityProperty(), 1)
-                )
-        );
-
-        tl.playFromStart();
+        new ParallelTransition(translate, fade).playFromStart();
     }
 }
