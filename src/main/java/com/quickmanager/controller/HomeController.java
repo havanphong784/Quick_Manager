@@ -36,14 +36,17 @@ public class HomeController {
     private PieChart pcTopSP;
 
     public void initialize() {
-        loadHomeSummary();
         if (bcDoanhThu != null) {
             bcDoanhThu.sceneProperty().addListener((obs, oldScene, newScene) -> {
                 if (newScene != null) {
-                    Platform.runLater(this::loadCharts);
+                    Platform.runLater(() -> {
+                        loadHomeSummary();
+                        loadCharts();
+                    });
                 }
             });
         } else {
+            loadHomeSummary();
             loadCharts();
         }
     }

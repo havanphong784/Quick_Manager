@@ -63,10 +63,22 @@ public class ImportController {
     @FXML private Button btnCreateProduct;
 
     public void initialize() {
-        loadTbMHDT();
-        loadCbNCC();
-        loadNewProductForm();
-    };
+        if (tbSanPhamDT != null) {
+            tbSanPhamDT.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    javafx.application.Platform.runLater(() -> {
+                        loadTbMHDT();
+                        loadCbNCC();
+                        loadNewProductForm();
+                    });
+                }
+            });
+        } else {
+            loadTbMHDT();
+            loadCbNCC();
+            loadNewProductForm();
+        }
+    }
 
     public void loadNewProductForm() {
         cbNewDanhMuc.getItems().setAll(ProductService.getDanhMuc());

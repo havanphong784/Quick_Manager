@@ -84,7 +84,16 @@ public class StatisticsController {
     public void initialize() {
         initTables();
         initFilters();
-        loadStatistics();
+
+        if (tblDoanhThuNgay != null) {
+            tblDoanhThuNgay.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    javafx.application.Platform.runLater(this::loadStatistics);
+                }
+            });
+        } else {
+            loadStatistics();
+        }
     }
 
     private void initTables() {

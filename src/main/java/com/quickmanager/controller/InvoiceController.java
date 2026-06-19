@@ -41,11 +41,20 @@ public class InvoiceController {
 
     public void initialize() {
         initTbHoaDon();
-        loadTbHoaDon();
         intTbCTHD();
         tbHoaDon.getSelectionModel().selectedItemProperty().addListener((obs,hdc,hdm) -> {
             handleSelectTbHD();
         });
+
+        if (tbHoaDon != null) {
+            tbHoaDon.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    javafx.application.Platform.runLater(this::loadTbHoaDon);
+                }
+            });
+        } else {
+            loadTbHoaDon();
+        }
     }
 
     public void initTbHoaDon() {

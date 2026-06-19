@@ -41,13 +41,24 @@ public class ProductController {
     @FXML private ComboBox<String> cbFormTrangThai;
 
     public void initialize() {
-        loadDanhMuc();
-        loadTrangThai();
         initDSSP();
-        handleTimKiem();
-        loadDSSP();
-
         tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> handleSelectTB());
+
+        if (tbSanPham != null) {
+            tbSanPham.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    javafx.application.Platform.runLater(() -> {
+                        loadDanhMuc();
+                        loadTrangThai();
+                        handleTimKiem();
+                    });
+                }
+            });
+        } else {
+            loadDanhMuc();
+            loadTrangThai();
+            handleTimKiem();
+        }
     }
 
     // DSSP

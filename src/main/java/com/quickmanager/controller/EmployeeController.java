@@ -40,10 +40,23 @@ public class EmployeeController {
 
     public void initialize() {
         initTBNV();
-        loadTrangThai();
-        loadTBNhanVien();
-        loadGioiTinh();
         tbNhanVien.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> handleSelectTBNV());
+
+        if (tbNhanVien != null) {
+            tbNhanVien.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    javafx.application.Platform.runLater(() -> {
+                        loadTrangThai();
+                        loadTBNhanVien();
+                        loadGioiTinh();
+                    });
+                }
+            });
+        } else {
+            loadTrangThai();
+            loadTBNhanVien();
+            loadGioiTinh();
+        }
     }
 
     // DSNV

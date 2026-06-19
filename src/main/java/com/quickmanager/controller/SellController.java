@@ -71,15 +71,27 @@ public class SellController {
     @FXML private Button btnThanhToan;
 
     // Khỏi tạo
-    @FXML
     public void initialize() {
         initTable();
         initTableGH();
-        loadDanhMuc();
         tbvSanPham.setItems(dataSanPham);
-        loadSanPham();
-        initKhachHang();
         btnThanhToan.setDisable(true);
+
+        if (tbvSanPham != null) {
+            tbvSanPham.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    javafx.application.Platform.runLater(() -> {
+                        loadDanhMuc();
+                        loadSanPham();
+                        initKhachHang();
+                    });
+                }
+            });
+        } else {
+            loadDanhMuc();
+            loadSanPham();
+            initKhachHang();
+        }
     }
 
     @FXML private Button btnScanBarcodeSell;
