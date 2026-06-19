@@ -160,7 +160,7 @@ public class ImportController {
                     btnScanBarcodeImport.setDisable(false);
                 }
             });
-        });
+        }, () -> btnScanBarcodeImport.setDisable(false));
     }
 
     // MH

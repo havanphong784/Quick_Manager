@@ -99,6 +99,8 @@ public class SellController {
                     if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(false);
                 }
             });
+        }, () -> {
+            if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(false);
         });
     }
 

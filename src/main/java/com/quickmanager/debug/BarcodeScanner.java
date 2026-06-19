@@ -4,25 +4,29 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.MultiFormatReader;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.MultiFormatReader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class BarcodeScanner {
     private BarcodeScanner() {}
 
-    public static void scan(Consumer<String> onResult) {
+    public static void scan(Consumer<String> onResult, Runnable onCancel) {
         new Thread(() -> {
             Webcam webcam = Webcam.getDefault();
             if (webcam == null) {
                 System.out.println("No webcam detected");
+                if (onCancel != null) javafx.application.Platform.runLater(onCancel);
                 return;
             }
             webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -46,6 +50,7 @@ public class BarcodeScanner {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     running.set(false);
                     webcam.close();
+                    if (onCancel != null) javafx.application.Platform.runLater(onCancel);
                 }
             });
 
@@ -57,11 +62,15 @@ public class BarcodeScanner {
                         running.set(false);
                         window.dispose();
                         webcam.close();
+                        if (onCancel != null) javafx.application.Platform.runLater(onCancel);
                     }
                 }
             });
 
             MultiFormatReader reader = new MultiFormatReader();
+            Map<DecodeHintType, Object> hints = new EnumMap<>(DecodeHintType.class);
+            hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+            reader.setHints(hints);
             try {
                 while (running.get() && webcam.isOpen()) {
                     BufferedImage img = webcam.getImage();
