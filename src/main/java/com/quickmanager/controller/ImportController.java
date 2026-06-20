@@ -2,65 +2,92 @@ package com.quickmanager.controller;
 
 import com.quickmanager.debug.Address;
 import com.quickmanager.debug.Alerts;
-import com.quickmanager.model.CT_PhieuNhap;
-import com.quickmanager.model.NhaCungCap;
-import com.quickmanager.model.PhieuNhap;
-import com.quickmanager.model.SanPham;
+import com.quickmanager.debug.BarcodeScanner;
+import com.quickmanager.model.*;
 import com.quickmanager.service.ProductService;
 import com.quickmanager.service.SupplierService;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Platform;
-import com.quickmanager.debug.BarcodeScanner;
 
 public class ImportController {
-
     //MH
-    @FXML private TextField txtTimSanPham;
-    @FXML private TextField txtSoLuongNhap;
-    @FXML private Button btnThemMH;
-    @FXML private TableView<SanPham> tbSanPham;
-    @FXML private TableColumn<SanPham,Integer> clMaSP;
-    @FXML private TableColumn<SanPham,String> clTenSP;
-    @FXML private TableColumn<SanPham,String> clDVT;
-    @FXML private TableColumn<SanPham,Integer> clTonKho;
-    @FXML private TableColumn<SanPham, BigDecimal> clGiaNhap;
+    @FXML
+    private TextField txtTimSanPham;
+    @FXML
+    private TextField txtSoLuongNhap;
+    @FXML
+    private Button btnThemMH;
+    @FXML
+    private TableView<SanPham> tbSanPham;
+    @FXML
+    private TableColumn<SanPham, Integer> clMaSP;
+    @FXML
+    private TableColumn<SanPham, String> clTenSP;
+    @FXML
+    private TableColumn<SanPham, String> clDVT;
+    @FXML
+    private TableColumn<SanPham, Integer> clTonKho;
+    @FXML
+    private TableColumn<SanPham, BigDecimal> clGiaNhap;
     private List<SanPham> mangMH;
 
 
     // MHDT
-    @FXML private TableView<CT_PhieuNhap> tbSanPhamDT;
-    @FXML private TableColumn<CT_PhieuNhap,Integer> colMaSP;
-    @FXML private TableColumn<CT_PhieuNhap,BigDecimal> colThanhTien;
-    @FXML private TableColumn<CT_PhieuNhap, BigDecimal> colGiaNhap;
-    @FXML private TableColumn<CT_PhieuNhap, BigDecimal> colSLNhap;
-    private List<CT_PhieuNhap> mangMHDT = new ArrayList<>();
-    @FXML private Label lblTongTien;
+    @FXML
+    private TableView<CT_PhieuNhap> tbSanPhamDT;
+    @FXML
+    private TableColumn<CT_PhieuNhap, Integer> colMaSP;
+    @FXML
+    private TableColumn<CT_PhieuNhap, BigDecimal> colThanhTien;
+    @FXML
+    private TableColumn<CT_PhieuNhap, BigDecimal> colGiaNhap;
+    @FXML
+    private TableColumn<CT_PhieuNhap, BigDecimal> colSLNhap;
+    private final List<CT_PhieuNhap> mangMHDT = new ArrayList<>();
+    @FXML
+    private Label lblTongTien;
 
     // TT
-    @FXML private Button btnXacNhan;
-    @FXML private ComboBox<NhaCungCap> cbNCC;
-    @FXML private TextField txtDiaChiNCC;
-    @FXML private TextField txtLienHeNCC;
-    @FXML private TextField txtTenNCC;
-    @FXML private TextField txtEmail;
-    @FXML private Label lblTongCong;
+    @FXML
+    private Button btnXacNhan;
+    @FXML
+    private ComboBox<NhaCungCap> cbNCC;
+    @FXML
+    private TextField txtDiaChiNCC;
+    @FXML
+    private TextField txtLienHeNCC;
+    @FXML
+    private TextField txtTenNCC;
+    @FXML
+    private TextField txtEmail;
+    @FXML
+    private Label lblTongCong;
 
-    // Create product quick form
-    @FXML private TextField txtNewTenSP;
-    @FXML private ComboBox<com.quickmanager.model.DanhMuc> cbNewDanhMuc;
-    @FXML private TextField txtNewDVT;
-    @FXML private TextField txtNewGiaNhap;
-    @FXML private TextField txtNewGiaBan;
-    @FXML private TextField txtNewSoLuong;
-    @FXML private TextField txtNewBarcode;
-    @FXML private TextField txtNewMucToiThieu;
-    @FXML private Button btnCreateProduct;
+    @FXML
+    private TextField txtNewTenSP;
+    @FXML
+    private ComboBox<DanhMuc> cbNewDanhMuc;
+    @FXML
+    private TextField txtNewDVT;
+    @FXML
+    private TextField txtNewGiaNhap;
+    @FXML
+    private TextField txtNewGiaBan;
+    @FXML
+    private TextField txtNewSoLuong;
+    @FXML
+    private TextField txtNewBarcode;
+    @FXML
+    private TextField txtNewMucToiThieu;
+    @FXML
+    private Button btnCreateProduct;
 
     public void initialize() {
         if (tbSanPhamDT != null) {
@@ -78,6 +105,45 @@ public class ImportController {
             loadCbNCC();
             loadNewProductForm();
         }
+
+        if (tbSanPham != null) {
+            tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    txtNewTenSP.setText(newSelection.getTenSanPham());
+                    if (newSelection.getMaDanhMuc() != 0) {
+                        for (com.quickmanager.model.DanhMuc dm : cbNewDanhMuc.getItems()) {
+                            if (dm != null && dm.getMaDanhMuc() == newSelection.getMaDanhMuc()) {
+                                cbNewDanhMuc.getSelectionModel().select(dm);
+                                break;
+                            }
+                        }
+                    }
+                    txtNewDVT.setText(newSelection.getDonViTinh());
+                    txtNewGiaNhap.setText(newSelection.getGiaNhap() == null ? "0" : newSelection.getGiaNhap().toString());
+                    txtNewGiaBan.setText(newSelection.getGiaBan() == null ? "0" : newSelection.getGiaBan().toString());
+                    txtNewSoLuong.setText(String.valueOf(newSelection.getSoLuongTon()));
+                    txtNewMucToiThieu.setText(String.valueOf(newSelection.getMucToiThieu()));
+                    txtNewBarcode.setText(newSelection.getBarcode());
+                    if (btnCreateProduct != null) {
+                        btnCreateProduct.setDisable(true);
+                    }
+                } else {
+                    clearNewProductForm();
+                }
+            });
+        }
+    }
+
+    private void clearNewProductForm() {
+        if (txtNewTenSP != null) txtNewTenSP.clear();
+        if (cbNewDanhMuc != null) cbNewDanhMuc.getSelectionModel().clearSelection();
+        if (txtNewDVT != null) txtNewDVT.clear();
+        if (txtNewGiaNhap != null) txtNewGiaNhap.clear();
+        if (txtNewGiaBan != null) txtNewGiaBan.clear();
+        if (txtNewSoLuong != null) txtNewSoLuong.clear();
+        if (txtNewBarcode != null) txtNewBarcode.clear();
+        if (txtNewMucToiThieu != null) txtNewMucToiThieu.clear();
+        if (btnCreateProduct != null) btnCreateProduct.setDisable(false);
     }
 
     public void loadNewProductForm() {
@@ -95,8 +161,14 @@ public class ImportController {
         String barcode = txtNewBarcode.getText().trim();
         String sMucToiThieu = txtNewMucToiThieu.getText().trim();
 
-        if (ten.isEmpty()) { Alerts.thongBao("Tên sản phẩm không được để trống", ""); return; }
-        if (dm == null) { Alerts.thongBao("Vui lòng chọn danh mục", ""); return; }
+        if (ten.isEmpty()) {
+            Alerts.thongBao("Tên sản phẩm không được để trống", "");
+            return;
+        }
+        if (dm == null) {
+            Alerts.thongBao("Vui lòng chọn danh mục", "");
+            return;
+        }
         try {
             java.math.BigDecimal giaNhap = sGiaNhap.isEmpty() ? java.math.BigDecimal.ZERO : new java.math.BigDecimal(sGiaNhap);
             java.math.BigDecimal giaBan = sGiaBan.isEmpty() ? java.math.BigDecimal.ZERO : new java.math.BigDecimal(sGiaBan);
@@ -127,7 +199,8 @@ public class ImportController {
         }
     }
 
-    @FXML private Button btnScanBarcodeImport;
+    @FXML
+    private Button btnScanBarcodeImport;
 
     public void handleScanBarcodeImport() {
         btnScanBarcodeImport.setDisable(true);
@@ -154,7 +227,9 @@ public class ImportController {
                         txtNewSoLuong.setText(String.valueOf(found.getSoLuongTon()));
                         txtNewMucToiThieu.setText(String.valueOf(found.getMucToiThieu()));
                         txtNewBarcode.setText(found.getBarcode());
-                        // also select in product list
+                        if (btnCreateProduct != null) {
+                            btnCreateProduct.setDisable(true);
+                        }
                         txtTimSanPham.setText(found.getTenSanPham());
                         loadTbMH();
                         for (int i = 0; i < mangMH.size(); i++) {
@@ -164,7 +239,8 @@ public class ImportController {
                             }
                         }
                     } else {
-                        // not found -> prefill barcode in create form and focus name
+                        tbSanPham.getSelectionModel().clearSelection();
+                        clearNewProductForm();
                         txtNewBarcode.setText(code);
                         txtNewTenSP.requestFocus();
                     }
@@ -188,26 +264,24 @@ public class ImportController {
 
     public void handleThem() {
         SanPham sp = tbSanPham.getSelectionModel().getSelectedItem();
-        // Fix: kiểm tra sp null trước
         if (sp == null) {
-            Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập","");
+            Alerts.thongBao("Vui lòng chọn sản phẩm để thêm vào phiếu nhập", "");
             return;
         }
         int sl;
         try {
             sl = Integer.parseInt(txtSoLuongNhap.getText().trim());
             if (sl <= 0) throw new NumberFormatException();
-        }catch (NumberFormatException e) {
-            Alerts.thongBao("Vui lòng nhập số lượng hợp lệ (số nguyên dương)","");
+        } catch (NumberFormatException e) {
+            Alerts.thongBao("Vui lòng nhập số lượng hợp lệ (số nguyên dương)", "");
             return;
         }
         for (CT_PhieuNhap ct : mangMHDT) {
             if (ct.getMaSanPham() == sp.getMaSanPham()) {
-                Alerts.thongBao("Sản phẩm đã có trong phiếu nhập.","");
+                Alerts.thongBao("Sản phẩm đã có trong phiếu nhập.", "");
                 return;
             }
         }
-        // Fix: giaNhap có thể null nếu chưa nhập
         BigDecimal giaNhap = sp.getGiaNhap() != null ? sp.getGiaNhap() : BigDecimal.ZERO;
         CT_PhieuNhap ctPH = new CT_PhieuNhap();
         ctPH.setMaSanPham(sp.getMaSanPham());
@@ -217,6 +291,11 @@ public class ImportController {
         mangMHDT.add(ctPH);
         loadTbMHDT();
         loadTongTien();
+
+        tbSanPham.getSelectionModel().clearSelection();
+        txtSoLuongNhap.clear();
+        txtTimSanPham.clear();
+        loadTbMH();
     }
 
     // MHDT
@@ -231,8 +310,8 @@ public class ImportController {
     public void xoaDong() {
         CT_PhieuNhap ctPH = tbSanPhamDT.getSelectionModel().getSelectedItem();
         if (ctPH == null) {
-            Alerts.thongBao("Vui lòng chọn sản phẩm để xóa khỏi phiếu nhập","");
-        }else {
+            Alerts.thongBao("Vui lòng chọn sản phẩm để xóa khỏi phiếu nhập", "");
+        } else {
             mangMHDT.removeIf(ct -> ct.getMaSanPham() == ctPH.getMaSanPham());
             loadTbMHDT();
             loadTongTien();
@@ -241,8 +320,8 @@ public class ImportController {
 
     public void xoaHet() {
         if (mangMHDT.isEmpty()) {
-            Alerts.thongBao("Không có sản phẩm nào trong phiếu nhập để xóa","");
-        }else {
+            Alerts.thongBao("Không có sản phẩm nào trong phiếu nhập để xóa", "");
+        } else {
             mangMHDT.clear();
             loadTbMHDT();
             loadTongTien();
@@ -254,8 +333,8 @@ public class ImportController {
         for (CT_PhieuNhap ct : mangMHDT) {
             tongTien = tongTien.add(ct.getThanhTien());
         }
-        lblTongTien.setText("Tổng tiền: " + tongTien.toString());
-        lblTongCong.setText(tongTien.toString() + " VNĐ");
+        lblTongTien.setText("Tổng tiền: " + tongTien);
+        lblTongCong.setText(tongTien + " VNĐ");
     }
 
     public void loadCbNCC() {
@@ -279,7 +358,7 @@ public class ImportController {
             txtLienHeNCC.clear();
             txtEmail.clear();
             setLockTF(false);
-        }else {
+        } else {
             txtLienHeNCC.setText(ncc.getSoDienThoai());
             txtDiaChiNCC.setText(ncc.getDiaChi());
             txtTenNCC.setText(ncc.getTenNCC());
@@ -308,17 +387,16 @@ public class ImportController {
                         Alerts.thongBao("Tạo nhà cung cấp thất bại", "");
                         return;
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Alerts.thongBao("Tạo nhà cung cấp thất bại", "");
                     return;
                 }
-            }else {
+            } else {
                 Alerts.thongBao("Vui lòng nhập đầy đủ thông tin nhà cung cấp", "");
                 return;
             }
         }
 
-        // Fix: tính tổng tiền trực tiếp từ danh sách thay vì parse label
         BigDecimal tongTien = BigDecimal.ZERO;
         for (CT_PhieuNhap ct : mangMHDT) {
             tongTien = tongTien.add(ct.getThanhTien());
@@ -329,7 +407,7 @@ public class ImportController {
         int maPhieuNhap;
         try {
             maPhieuNhap = SupplierService.taoPhieuNhap(pn, mangMHDT);
-        }catch (Exception e) {
+        } catch (Exception e) {
             Alerts.thongBao("Tạo phiếu nhập thất bại", "");
             Address.printAddress();
             return;
@@ -348,5 +426,11 @@ public class ImportController {
         mangMHDT.clear();
         loadTbMHDT();
         loadTongTien();
+
+        txtTimSanPham.clear();
+        loadTbMH();
+        tbSanPham.getSelectionModel().clearSelection();
+        txtSoLuongNhap.clear();
+        clearNewProductForm();
     }
 }
