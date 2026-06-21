@@ -1,11 +1,8 @@
 package com.quickmanager.controller;
 
-import com.quickmanager.debug.AppLogger;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 import com.quickmanager.Main;
 import com.quickmanager.debug.Address;
+import com.quickmanager.debug.AppLogger;
 import com.quickmanager.model.TaiKhoan;
 import com.quickmanager.service.AuthService;
 import com.quickmanager.service.SessionService;
@@ -14,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.util.logging.Logger;
 
 public class LoginController {
     private static final Logger logger = AppLogger.getLogger(LoginController.class);
@@ -26,9 +25,6 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
-
-    @FXML
-    private Button registerButton;
 
     @FXML
     private Label statusLabel;
@@ -62,6 +58,6 @@ public class LoginController {
         SessionService.setUser(tk);
         statusLabel.setStyle("-fx-text-fill: green;");
         statusLabel.setText("Đăng nhập thành công. Xin chào " + tk.getTenDangNhap());
-        Main.switchParent("/view/dashboard.fxml","Dashboard",true);
+        Main.switchParent("/view/dashboard.fxml", "Dashboard", true);
     }
 }

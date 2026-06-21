@@ -2,8 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
@@ -14,59 +15,51 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600" prefWidth="900"
-            styleClass="login-pane"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.quickmanager.controller.RegisterController">
-    <ImageView fitHeight="600" fitWidth="900" pickOnBounds="true" preserveRatio="false" smooth="false"
-               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               AnchorPane.topAnchor="0.0">
-        <Image url="@../images/background.jpg"/>
-    </ImageView>
+<HBox prefHeight="600" prefWidth="900" styleClass="qm-page"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.quickmanager.controller.RegisterController">
 
-    <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <VBox maxWidth="420.0" prefWidth="420.0" spacing="16.0"
-              styleClass="login-card">
-            <padding>
-                <Insets bottom="30.0" left="30.0" right="30.0" top="28.0"/>
-            </padding>
+    <Region HBox.hgrow="ALWAYS" styleClass="auth-background" />
 
-            <Label text="Quick Manager" styleClass="title-label"/>
-            <Label text="Tao tai khoan moi." styleClass="subtitle-label"/>
-            <Separator/>
+    <VBox alignment="CENTER_LEFT" prefWidth="440.0" spacing="16.0" styleClass="qm-content" style="-fx-padding: 0 60 0 60;">
+        <HBox alignment="CENTER_LEFT" spacing="12.0">
+            <ImageView fitHeight="32.0" fitWidth="32.0" preserveRatio="true">
+                <Image url="@../images/logo.png"/>
+            </ImageView>
+            <Label text="Quick Manager" styleClass="logo"/>
+        </HBox>
+        
+        <Label text="Tạo tài khoản mới" styleClass="qm-page-title" style="-fx-font-size: 28; -fx-padding: 8 0 16 0;"/>
 
-            <VBox spacing="8.0">
-                <Label text="Tai khoan" styleClass="field-label"/>
-                <TextField fx:id="usernameField" promptText="Nhap ten dang nhap" styleClass="input-field qm-input"/>
+            <VBox spacing="6.0">
+                <Label text="Tên đăng nhập" styleClass="qm-label-muted" style="-fx-font-weight: bold; -fx-font-size: 12;"/>
+                <TextField fx:id="usernameField" promptText="Nhập tên đăng nhập" styleClass="qm-input" prefHeight="36.0"/>
             </VBox>
 
-            <VBox spacing="8.0">
-                <Label text="Nhan vien" styleClass="field-label"/>
-                <ComboBox fx:id="cbNhanVien" promptText="Chon ma nhan vien" styleClass="input-field qm-combo"/>
+            <VBox spacing="6.0">
+                <Label text="Nhân viên" styleClass="qm-label-muted" style="-fx-font-weight: bold; -fx-font-size: 12;"/>
+                <ComboBox fx:id="cbNhanVien" promptText="Chọn mã nhân viên" styleClass="qm-combo" prefHeight="36.0" maxWidth="Infinity"/>
             </VBox>
 
-            <VBox spacing="8.0">
-                <Label text="Mat khau" styleClass="field-label"/>
-                <PasswordField fx:id="passwordField" promptText="Nhap mat khau" styleClass="input-field qm-input"/>
+            <VBox spacing="6.0">
+                <Label text="Mật khẩu" styleClass="qm-label-muted" style="-fx-font-weight: bold; -fx-font-size: 12;"/>
+                <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" styleClass="qm-input" prefHeight="36.0"/>
             </VBox>
 
-            <VBox spacing="8.0">
-                <Label text="Xac nhan mat khau" styleClass="field-label"/>
-                <PasswordField fx:id="confirmPasswordField" promptText="Nhap lai mat khau" styleClass="input-field qm-input"/>
+            <VBox spacing="6.0">
+                <Label text="Xác nhận mật khẩu" styleClass="qm-label-muted" style="-fx-font-weight: bold; -fx-font-size: 12;"/>
+                <PasswordField fx:id="confirmPasswordField" promptText="Nhập lại mật khẩu" styleClass="qm-input" prefHeight="36.0"/>
             </VBox>
 
-            <HBox>
-                <Button styleClass="btn qm-btn" fx:id="backButton" onAction="#handleBackToLogin" mnemonicParsing="false" prefHeight="42.0"
-                        text="Quay lai"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button styleClass="btn qm-btn" fx:id="registerButton" onAction="#handleRegister" defaultButton="true" mnemonicParsing="false" prefHeight="42.0"
-                        text="Dang ky"/>
+            <Button styleClass="btn-blue" fx:id="registerButton" onAction="#handleRegister" defaultButton="true" prefHeight="42.0" maxWidth="Infinity" text="Đăng ký">
+                 <VBox.margin><Insets top="10.0"/></VBox.margin>
+            </Button>
+
+            <HBox alignment="CENTER" spacing="4.0">
+                <Label text="Đã có tài khoản?" styleClass="qm-label-muted"/>
+                <Hyperlink onAction="#handleBackToLogin" text="Đăng nhập ngay" styleClass="qm-hint" style="-fx-text-fill: -qm-accent-blue;"/>
             </HBox>
 
-            <Label fx:id="statusLabel" text="" styleClass="status-label"/>
+            <Label fx:id="statusLabel" text="" styleClass="qm-warning-value"/>
         </VBox>
-    </VBox>
-</AnchorPane>
-
-
+</HBox>
