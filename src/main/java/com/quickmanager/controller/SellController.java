@@ -239,12 +239,14 @@ public class SellController {
             String strGiamGia = txtGiamGia.getText().trim();
             giamGia = (strGiamGia.isEmpty()) ? BigDecimal.ZERO : (new BigDecimal(strGiamGia));
         }catch (NumberFormatException e) {
-            txtGiamGia.clear();
             giamGia = BigDecimal.ZERO;
         }
+
         if (giamGia.compareTo(tamTinh) > 0 || giamGia.compareTo(BigDecimal.ZERO) < 0) {
-            txtGiamGia.clear();
-            giamGia = BigDecimal.ZERO;
+            lblTongTien.setText("Giảm giá sai");
+            lblTienThoi.setText("");
+            btnThanhToan.setDisable(true);
+            return;
         }
 
         BigDecimal tongTien = tamTinh.subtract(giamGia);
@@ -253,15 +255,18 @@ public class SellController {
         BigDecimal khachDua;
         try {
             String strKhachDua = txtKhachDua.getText().trim();
-            khachDua = new BigDecimal(strKhachDua);
+            khachDua = (strKhachDua.isEmpty()) ? BigDecimal.ZERO : new BigDecimal(strKhachDua);
         }catch (NumberFormatException e) {
-            txtKhachDua.clear();
             khachDua = BigDecimal.ZERO;
         }
-        if (khachDua.compareTo(tongTien) >= 0) {
+
+        if (mangGioHang.isEmpty()) {
+            lblTienThoi.setText("0");
+            btnThanhToan.setDisable(true);
+        } else if (khachDua.compareTo(tongTien) >= 0) {
             BigDecimal tienThoi = khachDua.subtract(tongTien);
             lblTienThoi.setText(tienThoi.toString());
-            btnThanhToan.setDisable(mangGioHang.isEmpty());
+            btnThanhToan.setDisable(false);
         }else {
             lblTienThoi.setText("Tiền khách đưa không đủ.");
             btnThanhToan.setDisable(true);
@@ -308,6 +313,13 @@ public class SellController {
         }
         String strGiamGia = txtGiamGia.getText().trim();
         BigDecimal giamGia = (strGiamGia.isEmpty()) ? BigDecimal.ZERO : (new BigDecimal(strGiamGia));
+        
+        if (giamGia.compareTo(tamTinh) > 0 || giamGia.compareTo(BigDecimal.ZERO) < 0) {
+            Alerts.thongBao("Lỗi giảm giá", "Giảm giá không hợp lệ (nhỏ hơn 0 hoặc lớn hơn tổng tiền hàng).");
+            btnThanhToan.setDisable(false);
+            return;
+        }
+        
         BigDecimal tongTien = tamTinh.subtract(giamGia);
         String strKhachDua = txtKhachDua.getText().trim();
         BigDecimal khachDua = (strKhachDua.isEmpty()) ? BigDecimal.ZERO : new BigDecimal(strKhachDua);

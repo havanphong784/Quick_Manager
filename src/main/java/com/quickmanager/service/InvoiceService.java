@@ -67,7 +67,7 @@ public class InvoiceService {
                     psUDSP.setInt(3, items.getMaSanPham());
                     psUDSP.setInt(4, items.getSoLuong());
                     int ktUDSP = psUDSP.executeUpdate();
-                    if (ktUDSP != 1) throw new SQLException("Cập nhật sản phẩm thất bại");
+                    if (ktUDSP != 1) throw new SQLException("Tồn kho không đủ hoặc cập nhật sản phẩm thất bại cho mã SP: " + items.getMaSanPham());
 
                     psCTHD.setInt(1, maHoaDon);
                     psCTHD.setInt(2, items.getMaSanPham());
