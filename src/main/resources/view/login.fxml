@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.*?>
 <HBox prefHeight="600" prefWidth="900" styleClass="qm-page"
       xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.quickmanager.controller.LoginController">
 
-    <Region HBox.hgrow="ALWAYS" styleClass="auth-background" />
+    <Region HBox.hgrow="ALWAYS" styleClass="auth-background"/>
 
-    <VBox alignment="CENTER_LEFT" prefWidth="440.0" spacing="16.0" styleClass="qm-content" style="-fx-padding: 0 60 0 60;">
+    <VBox fx:id="loginPanel" alignment="CENTER_LEFT" prefWidth="440.0" spacing="16.0" styleClass="qm-content"
+          style="-fx-padding: 0 60 0 60;">
         <HBox alignment="CENTER_LEFT" spacing="12.0">
             <ImageView fitHeight="32.0" fitWidth="32.0" preserveRatio="true">
                 <Image url="@../images/logo.png"/>
             </ImageView>
             <Label text="Quick Manager" styleClass="logo"/>
         </HBox>
-        
-        <Label text="Rất vui được gặp lại" styleClass="qm-page-title" style="-fx-font-size: 28; -fx-padding: 8 0 16 0;"/>
+
+        <Label text="Rất vui được gặp lại" styleClass="qm-page-title"
+               style="-fx-font-size: 28; -fx-padding: 8 0 16 0;"/>
 
         <VBox spacing="8.0">
             <Label text="Tên đăng nhập" styleClass="qm-label-muted" style="-fx-font-weight: bold; -fx-font-size: 12;"/>
@@ -42,14 +33,14 @@
         </VBox>
 
 
-
-        <Button fx:id="loginButton" onAction="#handleLogin" defaultButton="true" prefHeight="42.0" maxWidth="Infinity" text="Đăng nhập" styleClass="btn-blue"/>
-
+        <Button fx:id="loginButton" onAction="#handleLogin" defaultButton="true" prefHeight="42.0" maxWidth="Infinity"
+                text="Đăng nhập" styleClass="btn-blue"/>
 
 
         <HBox alignment="CENTER" spacing="4.0">
             <Label text="Chưa có tài khoản?" styleClass="qm-label-muted"/>
-            <Hyperlink onAction="#handleRegister" text="Đăng ký ngay" styleClass="qm-hint" style="-fx-text-fill: -qm-accent-blue;"/>
+            <Hyperlink onAction="#handleRegister" text="Đăng ký ngay" styleClass="qm-hint"
+                       style="-fx-text-fill: -qm-accent-blue;"/>
         </HBox>
 
         <Label fx:id="statusLabel" text="" styleClass="qm-warning-value"/>

@@ -11,8 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import com.quickmanager.ui.Animation;
 
 public class RegisterController {
+
+    @FXML
+    private VBox registerPanel;
 
     @FXML
     private TextField usernameField;
@@ -31,6 +36,7 @@ public class RegisterController {
 
     @FXML
     public void initialize() {
+        Animation.phongTo(registerPanel);
         cbNhanVien.setItems(FXCollections.observableArrayList(EmployeeService.getNhanVienDangLam()));
         cbNhanVien.setCellFactory(listView -> new ListCell<>() {
             @Override

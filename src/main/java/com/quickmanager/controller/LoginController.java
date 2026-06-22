@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import com.quickmanager.ui.Animation;
 
 import java.util.logging.Logger;
 
@@ -18,7 +20,15 @@ public class LoginController {
     private static final Logger logger = AppLogger.getLogger(LoginController.class);
 
     @FXML
+    private VBox loginPanel;
+
+    @FXML
     private TextField usernameField;
+
+    @FXML
+    public void initialize() {
+        Animation.phongTo(loginPanel);
+    }
 
     @FXML
     private PasswordField passwordField;
