@@ -44,6 +44,16 @@ public class ProductController {
         initDSSP();
         tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> handleSelectTB());
 
+        if (txtTuKhoa != null) {
+            txtTuKhoa.textProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
+        }
+        if (cbDanhMuc != null) {
+            cbDanhMuc.valueProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
+        }
+        if (cbTrangThai != null) {
+            cbTrangThai.valueProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
+        }
+
         if (tbSanPham != null) {
             tbSanPham.sceneProperty().addListener((obs, oldScene, newScene) -> {
                 if (newScene != null) {

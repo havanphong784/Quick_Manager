@@ -1,17 +1,16 @@
 package com.quickmanager.service;
 
-import com.quickmanager.debug.AppLogger;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
+import com.quickmanager.debug.AppLogger;
 import com.quickmanager.model.CT_PhieuNhap;
 import com.quickmanager.model.NhaCungCap;
 import com.quickmanager.model.PhieuNhap;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class SupplierService {
     private static final Logger logger = AppLogger.getLogger(SupplierService.class);
@@ -20,27 +19,27 @@ public class SupplierService {
             """;
 
     public static final String sqlPhieuNhap = """
-           Insert into PHIEU_NHAP (MaNCC, TongTien, MaNhanVien)
-           Values(?,?,?)
-           """;
+            Insert into PHIEU_NHAP (MaNCC, TongTien, MaNhanVien)
+            Values(?,?,?)
+            """;
 
     public static final String sqlCTPhieuNhap = """
-           Insert into CT_PHIEU_NHAP (MaPhieuNhap, MaSanPham, SoLuong, GiaNhap, ThanhTien)
-           Values(?,?,?,?,?)
-           """;
+            Insert into CT_PHIEU_NHAP (MaPhieuNhap, MaSanPham, SoLuong, GiaNhap, ThanhTien)
+            Values(?,?,?,?,?)
+            """;
 
     public static final String sqlUpdateSP = """
-           Update SAN_PHAM Set SoLuongTon = SoLuongTon + ?,
-                           TrangThai = N'Đang bán'
-           Where MaSanPham = ?
-           """;
+            Update SAN_PHAM Set SoLuongTon = SoLuongTon + ?,
+                            TrangThai = N'Đang bán'
+            Where MaSanPham = ?
+            """;
 
     public static final String sqlTaoNCC = """
-           Insert into NHA_CUNG_CAP (TenNCC, SoDienThoai, Email, DiaChi)
-           Values(?,?,?,?)
-           """;
+            Insert into NHA_CUNG_CAP (TenNCC, SoDienThoai, Email, DiaChi)
+            Values(?,?,?,?)
+            """;
 
-    public static NhaCungCap taoNCC(String name,String sdt,String email,String diaChi) throws SQLException {
+    public static NhaCungCap taoNCC(String name, String sdt, String email, String diaChi) throws SQLException {
         try (Connection con = DBConnection.getConnection();
              PreparedStatement psTaoNCC = con.prepareStatement(sqlTaoNCC, Statement.RETURN_GENERATED_KEYS)) {
             psTaoNCC.setString(1, name);
@@ -66,27 +65,27 @@ public class SupplierService {
 
     public static List<NhaCungCap> getNCC() {
         List<NhaCungCap> ds = new ArrayList<NhaCungCap>();
-         try (Connection con = DBConnection.getConnection();
-              PreparedStatement ps = con.prepareStatement(sqlGetNCC);
-              ResultSet rs = ps.executeQuery()) {
-             while (rs.next()) {
-                 NhaCungCap ncc = new NhaCungCap(
-                         rs.getInt("MaNCC"),
-                         rs.getString("TenNCC"),
-                         rs.getString("SoDienThoai"),
-                         rs.getString("Email"),
-                         rs.getString("DiaChi")
-                 );
-                 ds.add(ncc);
-             }
-         }catch (Exception e) {
-             logger.info("Loi connect");
-             Address.printAddress();
-         }
-         return ds;
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sqlGetNCC);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                NhaCungCap ncc = new NhaCungCap(
+                        rs.getInt("MaNCC"),
+                        rs.getString("TenNCC"),
+                        rs.getString("SoDienThoai"),
+                        rs.getString("Email"),
+                        rs.getString("DiaChi")
+                );
+                ds.add(ncc);
+            }
+        } catch (Exception e) {
+            logger.info("Loi connect");
+            Address.printAddress();
+        }
+        return ds;
     }
 
-    public static int taoPhieuNhap(PhieuNhap pn , List<CT_PhieuNhap> ds) throws SQLException {
+    public static int taoPhieuNhap(PhieuNhap pn, List<CT_PhieuNhap> ds) throws SQLException {
         try (Connection con = DBConnection.getConnection()) {
             con.setAutoCommit(false);
             try (PreparedStatement psPN = con.prepareStatement(sqlPhieuNhap, Statement.RETURN_GENERATED_KEYS);
@@ -122,8 +121,9 @@ public class SupplierService {
                     psCTPN.executeUpdate();
                 }
                 con.commit();
+                ProductService.refreshProductCache();
                 return maPhieuNhap;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 con.rollback();
                 throw e;
             }

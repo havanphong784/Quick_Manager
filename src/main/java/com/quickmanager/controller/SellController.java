@@ -1,31 +1,25 @@
 package com.quickmanager.controller;
 
-import com.quickmanager.debug.AppLogger;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 import com.quickmanager.debug.Address;
 import com.quickmanager.debug.Alerts;
+import com.quickmanager.debug.AppLogger;
+import com.quickmanager.debug.BarcodeScanner;
 import com.quickmanager.model.*;
-import com.quickmanager.service.CustomerService;
-import com.quickmanager.service.EmailService;
-import com.quickmanager.service.InvoiceService;
-import com.quickmanager.service.ProductService;
-import com.quickmanager.service.SessionService;
+import com.quickmanager.service.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.application.Platform;
-import com.quickmanager.debug.BarcodeScanner;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class SellController {
@@ -33,42 +27,66 @@ public class SellController {
     private static final Pattern GMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@gmail\\.com$");
 
     // SP
-    @FXML private TableView<SanPham> tbvSanPham;
-    @FXML private TableColumn<SanPham, Integer> colMaSP;
-    @FXML private TableColumn<SanPham, String> colTenSP;
-    @FXML private TableColumn<SanPham, String> colDVT;
-    @FXML private TableColumn<SanPham, Integer> colTonKho;
-    @FXML private TableColumn<SanPham, BigDecimal> colGiaBan;
-    @FXML private TextField txtTimSanPham;
+    @FXML
+    private TableView<SanPham> tbvSanPham;
+    @FXML
+    private TableColumn<SanPham, Integer> colMaSP;
+    @FXML
+    private TableColumn<SanPham, String> colTenSP;
+    @FXML
+    private TableColumn<SanPham, String> colDVT;
+    @FXML
+    private TableColumn<SanPham, Integer> colTonKho;
+    @FXML
+    private TableColumn<SanPham, BigDecimal> colGiaBan;
+    @FXML
+    private TextField txtTimSanPham;
     private final ObservableList<SanPham> dataSanPham = FXCollections.observableArrayList();
 
     // GH
-    @FXML private TableView<GioHangItem> tbvGioHang;
-    @FXML private TableColumn<GioHangItem, String> colSanPhamGH;
-    @FXML private TableColumn<GioHangItem, Integer> colSoLuongGH;
-    @FXML private TableColumn<GioHangItem, BigDecimal> colDonGiaGH;
-    @FXML private TableColumn<GioHangItem, BigDecimal> colThanhTienGH;
+    @FXML
+    private TableView<GioHangItem> tbvGioHang;
+    @FXML
+    private TableColumn<GioHangItem, String> colSanPhamGH;
+    @FXML
+    private TableColumn<GioHangItem, Integer> colSoLuongGH;
+    @FXML
+    private TableColumn<GioHangItem, BigDecimal> colDonGiaGH;
+    @FXML
+    private TableColumn<GioHangItem, BigDecimal> colThanhTienGH;
     private final ObservableList<GioHangItem> dataGioHang = FXCollections.observableArrayList();
     private final List<GioHangItem> mangGioHang = new ArrayList<>();
-    @FXML private TextField txtSoLuongNhanh;
+    @FXML
+    private TextField txtSoLuongNhanh;
 
     // DM
-    @FXML private ComboBox<DanhMuc> cbDanhMuc;
-    private static String stringDanhMuc= "";
+    @FXML
+    private ComboBox<DanhMuc> cbDanhMuc;
+    private static String stringDanhMuc = "";
 
     // KH
-    @FXML private ComboBox<KhachHang> cbKhachHang;
-    @FXML private TextField txtKhachDua;
-    @FXML private TextField txtSDT;
-    @FXML private TextField txtGmail;
-    @FXML private TextField txtKhachHang;
-    @FXML private TextField txtGiamGia;
-    @FXML private Label lblTongTien;
-    @FXML private Label lblTamTinh;
-    @FXML private Label lblTienThoi;
+    @FXML
+    private ComboBox<KhachHang> cbKhachHang;
+    @FXML
+    private TextField txtKhachDua;
+    @FXML
+    private TextField txtSDT;
+    @FXML
+    private TextField txtGmail;
+    @FXML
+    private TextField txtKhachHang;
+    @FXML
+    private TextField txtGiamGia;
+    @FXML
+    private Label lblTongTien;
+    @FXML
+    private Label lblTamTinh;
+    @FXML
+    private Label lblTienThoi;
 
     // TT
-    @FXML private Button btnThanhToan;
+    @FXML
+    private Button btnThanhToan;
 
     // Khỏi tạo
     public void initialize() {
@@ -92,9 +110,14 @@ public class SellController {
             loadSanPham();
             initKhachHang();
         }
+
+        if (txtTimSanPham != null) {
+            txtTimSanPham.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
+        }
     }
 
-    @FXML private Button btnScanBarcodeSell;
+    @FXML
+    private Button btnScanBarcodeSell;
 
     public void handleScanBarcodeSell() {
         if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(true);
@@ -126,7 +149,7 @@ public class SellController {
     }
 
     public void loadSanPham() {
-        dataSanPham.setAll(ProductService.getProduct(txtTimSanPham.getText(),stringDanhMuc,"Đang bán",true));
+        dataSanPham.setAll(ProductService.getProduct(txtTimSanPham.getText(), stringDanhMuc, "Đang bán", true));
     }
 
     public void handleSearch() {
@@ -156,8 +179,8 @@ public class SellController {
 
     public void handleThemGio() {
         SanPham sp = tbvSanPham.getSelectionModel().getSelectedItem();
-        if (sp ==  null) {
-            Alerts.thongBao("Chưa chọn sản phẩm.","Vui lòng chọn sản phẩm cần thêm vào giỏ hàng.");
+        if (sp == null) {
+            Alerts.thongBao("Chưa chọn sản phẩm.", "Vui lòng chọn sản phẩm cần thêm vào giỏ hàng.");
             return;
         }
         String stringSL = txtSoLuongNhanh.getText().trim();
@@ -165,30 +188,29 @@ public class SellController {
         try {
             sl = Integer.parseInt(stringSL);
             if (sl > 0 && sp.getSoLuongTon() >= sl) {
-                GioHangItem gh = new GioHangItem(sp.getMaSanPham(),sp.getTenSanPham(),sl,sp.getGiaBan());
+                GioHangItem gh = new GioHangItem(sp.getMaSanPham(), sp.getTenSanPham(), sl, sp.getGiaBan());
                 for (GioHangItem it : mangGioHang) {
                     if (gh.getMaSanPham() == it.getMaSanPham()) {
-                        Alerts.thongBao("Đã tồn tại sản phẩm trong giỏ hàng.","Vui lòng chỉnh sửa số lượng trong giỏ hàng.");
+                        Alerts.thongBao("Đã tồn tại sản phẩm trong giỏ hàng.", "Vui lòng chỉnh sửa số lượng trong giỏ hàng.");
                         return;
                     }
                 }
                 mangGioHang.add(gh);
                 dataGioHang.setAll(mangGioHang);
                 handleTinhTien();   // goi lai pt tinh tien
-            }else {
-                Alerts.thongBao("Không thể thêm sản phẩm.","Vượt quá số lượng tồn kho.");
+            } else {
+                Alerts.thongBao("Không thể thêm sản phẩm.", "Vượt quá số lượng tồn kho.");
             }
-        }catch (NumberFormatException e) {
-            Alerts.thongBao("Số lượng không hợp lệ.","Vui lòng nhập số nguyên dương.");
-            return;
+        } catch (NumberFormatException e) {
+            Alerts.thongBao("Số lượng không hợp lệ.", "Vui lòng nhập số nguyên dương.");
         }
     }
 
     public void handleXoaDong() {
         GioHangItem selected = tbvGioHang.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.thongBao("Chưa chọn sản phẩm.","Vui lòng chọn sản phẩm cần xóa.");
-        }else {
+            Alerts.thongBao("Chưa chọn sản phẩm.", "Vui lòng chọn sản phẩm cần xóa.");
+        } else {
             mangGioHang.removeIf(it -> it.getMaSanPham() == selected.getMaSanPham());
             dataGioHang.setAll(mangGioHang);
             handleTinhTien();   // goi lai pt tinh tien
@@ -209,22 +231,22 @@ public class SellController {
     }
 
     public void handleSelectKH() {
-            KhachHang kh = cbKhachHang.getValue();
-            if (kh != null) {
-                txtSDT.setText(kh.getSoDienThoai());
-                txtSDT.setDisable(true);
-                txtKhachHang.setText(kh.getTenKhachHang());
-                txtKhachHang.setDisable(true);
-                txtGmail.setText(kh.getEmail() == null ? "" : kh.getEmail());
-                txtGmail.setDisable(true);
-            }else {
-                txtSDT.clear();
-                txtSDT.setDisable(false);
-                txtKhachHang.clear();
-                txtKhachHang.setDisable(false);
-                txtGmail.clear();
-                txtGmail.setDisable(false);
-            }
+        KhachHang kh = cbKhachHang.getValue();
+        if (kh != null) {
+            txtSDT.setText(kh.getSoDienThoai());
+            txtSDT.setDisable(true);
+            txtKhachHang.setText(kh.getTenKhachHang());
+            txtKhachHang.setDisable(true);
+            txtGmail.setText(kh.getEmail() == null ? "" : kh.getEmail());
+            txtGmail.setDisable(true);
+        } else {
+            txtSDT.clear();
+            txtSDT.setDisable(false);
+            txtKhachHang.clear();
+            txtKhachHang.setDisable(false);
+            txtGmail.clear();
+            txtGmail.setDisable(false);
+        }
     }
 
     public void handleTinhTien() {
@@ -238,7 +260,7 @@ public class SellController {
         try {
             String strGiamGia = txtGiamGia.getText().trim();
             giamGia = (strGiamGia.isEmpty()) ? BigDecimal.ZERO : (new BigDecimal(strGiamGia));
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             giamGia = BigDecimal.ZERO;
         }
 
@@ -256,7 +278,7 @@ public class SellController {
         try {
             String strKhachDua = txtKhachDua.getText().trim();
             khachDua = (strKhachDua.isEmpty()) ? BigDecimal.ZERO : new BigDecimal(strKhachDua);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             khachDua = BigDecimal.ZERO;
         }
 
@@ -267,7 +289,7 @@ public class SellController {
             BigDecimal tienThoi = khachDua.subtract(tongTien);
             lblTienThoi.setText(tienThoi.toString());
             btnThanhToan.setDisable(false);
-        }else {
+        } else {
             lblTienThoi.setText("Tiền khách đưa không đủ.");
             btnThanhToan.setDisable(true);
         }
@@ -291,7 +313,7 @@ public class SellController {
         KhachHang kh = cbKhachHang.getValue();
         String emailKH = normalizeEmail(txtGmail.getText());
         if (!emailKH.isEmpty() && !isValidGmail(emailKH)) {
-            Alerts.thongBao("Gmail khong hop le.","Vui long nhap dung dinh dang name@gmail.com.");
+            Alerts.thongBao("Gmail khong hop le.", "Vui long nhap dung dinh dang name@gmail.com.");
             btnThanhToan.setDisable(false);
             return;
         }
@@ -313,34 +335,34 @@ public class SellController {
         }
         String strGiamGia = txtGiamGia.getText().trim();
         BigDecimal giamGia = (strGiamGia.isEmpty()) ? BigDecimal.ZERO : (new BigDecimal(strGiamGia));
-        
+
         if (giamGia.compareTo(tamTinh) > 0 || giamGia.compareTo(BigDecimal.ZERO) < 0) {
             Alerts.thongBao("Lỗi giảm giá", "Giảm giá không hợp lệ (nhỏ hơn 0 hoặc lớn hơn tổng tiền hàng).");
             btnThanhToan.setDisable(false);
             return;
         }
-        
+
         BigDecimal tongTien = tamTinh.subtract(giamGia);
         String strKhachDua = txtKhachDua.getText().trim();
         BigDecimal khachDua = (strKhachDua.isEmpty()) ? BigDecimal.ZERO : new BigDecimal(strKhachDua);
         BigDecimal tienThoi = khachDua.subtract(tongTien);
 
-        HoaDon hd = new HoaDon(SessionService.getUser().getMaNhanVien(),(kh == null) ? null :kh.getMaKhachHang(),tongTien,giamGia,khachDua,tienThoi);
+        HoaDon hd = new HoaDon(SessionService.getUser().getMaNhanVien(), (kh == null) ? null : kh.getMaKhachHang(), tongTien, giamGia, khachDua, tienThoi);
         try {
             int maHD = InvoiceService.taoHoaDonNKH(hd, listHD);
-            if (maHD >0) {
+            if (maHD > 0) {
                 KhachHang customerForEmail = resolveCustomerForEmail(kh, hd.getMaKhachHang());
                 sendInvoiceEmailAsync(customerForEmail, maHD, tongTien, giamGia, khachDua, tienThoi);
-                Alerts.thongBao("Thanh toán thành công.","Mã hóa đơn: " + maHD);
+                Alerts.thongBao("Thanh toán thành công.", "Mã hóa đơn: " + maHD);
                 reset();
                 loadSanPham();
-            }else {
-                Alerts.thongBao("Lỗi thanh toán.","Không thể tạo hóa đơn. Vui lòng thử lại.");
+            } else {
+                Alerts.thongBao("Lỗi thanh toán.", "Không thể tạo hóa đơn. Vui lòng thử lại.");
             }
-        }catch (Exception e) {
-            Alerts.thongBao("Lỗi thanh toán.","Không thể tạo hóa đơn. Vui lòng thử lại.");
+        } catch (Exception e) {
+            Alerts.thongBao("Lỗi thanh toán.", "Không thể tạo hóa đơn. Vui lòng thử lại.");
             Address.printAddress();
-        }finally {
+        } finally {
             btnThanhToan.setDisable(false);
         }
     }

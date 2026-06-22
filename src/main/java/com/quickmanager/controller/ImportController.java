@@ -106,6 +106,10 @@ public class ImportController {
             loadNewProductForm();
         }
 
+        if (txtTimSanPham != null) {
+            txtTimSanPham.textProperty().addListener((observable, oldValue, newValue) -> loadTbMH());
+        }
+
         if (tbSanPham != null) {
             tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {

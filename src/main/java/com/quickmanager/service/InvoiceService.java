@@ -77,6 +77,7 @@ public class InvoiceService {
                     psCTHD.executeUpdate();
                 }
                 con.commit();
+                ProductService.refreshProductCache();
                 return maHoaDon;
             }catch (Exception e) {
                 con.rollback();
