@@ -15,60 +15,62 @@ import java.util.List;
 
 public class ProductController {
     // DSSP
-    @FXML private ComboBox<DanhMuc> cbDanhMuc;
-    @FXML private ComboBox<String> cbTrangThai;
-    @FXML private TextField txtTuKhoa;
-    @FXML private TableView<SanPham> tbSanPham;
-    @FXML private TableColumn<SanPham, String> colMaSP;
-    @FXML private TableColumn<SanPham, String> colTenSP;
-    @FXML private TableColumn<SanPham, String> colDanhMuc;
-    @FXML private TableColumn<SanPham, Integer> colTonKho;
-    @FXML private TableColumn<SanPham, BigDecimal> colGiaNhap;
-    @FXML private TableColumn<SanPham, BigDecimal> colGiaBan;
-    @FXML private TableColumn<SanPham, String> colTrangThai;
+    @FXML
+    private ComboBox<DanhMuc> cbDanhMuc;
+    @FXML
+    private ComboBox<String> cbTrangThai;
+    @FXML
+    private TextField txtTuKhoa;
+    @FXML
+    private TableView<SanPham> tbSanPham;
+    @FXML
+    private TableColumn<SanPham, String> colMaSP;
+    @FXML
+    private TableColumn<SanPham, String> colTenSP;
+    @FXML
+    private TableColumn<SanPham, String> colDanhMuc;
+    @FXML
+    private TableColumn<SanPham, Integer> colTonKho;
+    @FXML
+    private TableColumn<SanPham, BigDecimal> colGiaNhap;
+    @FXML
+    private TableColumn<SanPham, BigDecimal> colGiaBan;
+    @FXML
+    private TableColumn<SanPham, String> colTrangThai;
     private List<SanPham> mangSanPham = new ArrayList<>();
-    @FXML private Label lblTongSoSP;
+    @FXML
+    private Label lblTongSoSP;
 
     // TTSP
-    @FXML private TextField txtFormMaSP;
-    @FXML private TextField txtFormTenSP;
-    @FXML private TextField txtFormDVT;
-    @FXML private TextField txtFormTonKho;
-    @FXML private TextField txtFormGiaNhap;
-    @FXML private TextField txtFormGiaBan;
-    @FXML private TextField txtFormTrangThai;
-    @FXML private ComboBox<DanhMuc> cbFormDanhMuc;
-    @FXML private ComboBox<String> cbFormTrangThai;
+    @FXML
+    private TextField txtFormMaSP;
+    @FXML
+    private TextField txtFormTenSP;
+    @FXML
+    private TextField txtFormDVT;
+    @FXML
+    private TextField txtFormTonKho;
+    @FXML
+    private TextField txtFormGiaNhap;
+    @FXML
+    private TextField txtFormGiaBan;
+    @FXML
+    private TextField txtFormTrangThai;
+    @FXML
+    private ComboBox<DanhMuc> cbFormDanhMuc;
+    @FXML
+    private ComboBox<String> cbFormTrangThai;
 
     public void initialize() {
         initDSSP();
         tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> handleSelectTB());
 
-        if (txtTuKhoa != null) {
-            txtTuKhoa.textProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
-        }
-        if (cbDanhMuc != null) {
-            cbDanhMuc.valueProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
-        }
-        if (cbTrangThai != null) {
-            cbTrangThai.valueProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
-        }
-
-        if (tbSanPham != null) {
-            tbSanPham.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    javafx.application.Platform.runLater(() -> {
-                        loadDanhMuc();
-                        loadTrangThai();
-                        handleTimKiem();
-                    });
-                }
-            });
-        } else {
-            loadDanhMuc();
-            loadTrangThai();
-            handleTimKiem();
-        }
+        txtTuKhoa.textProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
+        cbDanhMuc.valueProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
+        cbTrangThai.valueProperty().addListener((observable, oldValue, newValue) -> handleTimKiem());
+        loadDanhMuc();
+        loadTrangThai();
+        handleTimKiem();
     }
 
     // DSSP

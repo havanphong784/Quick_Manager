@@ -1,5 +1,9 @@
 package com.quickmanager.service;
 
+import com.quickmanager.model.DoanhThuNgay;
+import com.quickmanager.model.TopSanPham;
+import java.math.BigDecimal;
+
 import com.quickmanager.debug.AppLogger;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -92,7 +96,7 @@ public class InvoiceService {
         From HOA_DON as hd
         Left Join KHACH_HANG as kh on kh.MaKhachHang = hd.MaKhachHang
         Where hd.NgayLap >= ? and hd.NgayLap < ?
-        And (kh.TenKhachHang Like ? or kh.TenKhachHang is null)
+        And COALESCE(kh.TenKhachHang, '') Like ?
         And CAST(hd.MaHoaDon AS VARCHAR(20)) Like ?
         """;
 
@@ -129,8 +133,8 @@ public class InvoiceService {
     }
 
     // Statistics helpers
-    public static java.math.BigDecimal getTotalRevenue(LocalDate start, LocalDate end) {
-        java.math.BigDecimal total = java.math.BigDecimal.ZERO;
+    public static BigDecimal getTotalRevenue(LocalDate start, LocalDate end) {
+        BigDecimal total = BigDecimal.ZERO;
         String sql = "SELECT SUM(TongTien) as Total FROM HOA_DON WHERE NgayLap >= ? AND NgayLap < ?";
         LocalDate fromDate = (start != null) ? start : LocalDate.of(2020,1,1);
         LocalDate toDateExclusive = ((end != null) ? end : LocalDate.now()).plusDays(1);
@@ -138,7 +142,7 @@ public class InvoiceService {
             ps.setDate(1, Date.valueOf(fromDate));
             ps.setDate(2, Date.valueOf(toDateExclusive));
             try (ResultSet rs = ps.executeQuery()){
-                if (rs.next()) total = rs.getBigDecimal("Total") == null ? java.math.BigDecimal.ZERO : rs.getBigDecimal("Total");
+                if (rs.next()) total = rs.getBigDecimal("Total") == null ? BigDecimal.ZERO : rs.getBigDecimal("Total");
             }
         }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
         return total;
@@ -174,46 +178,70 @@ public class InvoiceService {
         return cnt;
     }
 
-    public static java.util.List<com.quickmanager.model.DoanhThuNgay> getDoanhThuTheoNgay(LocalDate start, LocalDate end) {
-        java.util.List<com.quickmanager.model.DoanhThuNgay> ds = new java.util.ArrayList<>();
+    public static List<DoanhThuNgay> getDoanhThuTheoNgay(LocalDate start, LocalDate end) {
+        List<DoanhThuNgay> ds = new ArrayList<>();
         String sql = "SELECT CAST(NgayLap AS DATE) AS Ngay, COUNT(*) AS SoHoaDon, SUM(TongTien) AS DoanhThu FROM HOA_DON WHERE NgayLap >= ? AND NgayLap < ? GROUP BY CAST(NgayLap AS DATE) ORDER BY Ngay";
         LocalDate fromDate = (start != null) ? start : LocalDate.of(2020,1,1);
         LocalDate toDateExclusive = ((end != null) ? end : LocalDate.now()).plusDays(1);
+        java.util.Map<LocalDate, DoanhThuNgay> map = new java.util.HashMap<>();
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
             ps.setDate(1, Date.valueOf(fromDate));
             ps.setDate(2, Date.valueOf(toDateExclusive));
             try (ResultSet rs = ps.executeQuery()){
                 while (rs.next()) {
-                    java.sql.Date d = rs.getDate("Ngay");
-                    ds.add(new com.quickmanager.model.DoanhThuNgay(d.toLocalDate(), rs.getInt("SoHoaDon"), rs.getBigDecimal("DoanhThu")));
+                    Date d = rs.getDate("Ngay");
+                    map.put(d.toLocalDate(), new DoanhThuNgay(d.toLocalDate(), rs.getInt("SoHoaDon"), rs.getBigDecimal("DoanhThu")));
                 }
             }
         }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
+        
+        LocalDate current = fromDate;
+        LocalDate toDate = toDateExclusive.minusDays(1);
+        while (!current.isAfter(toDate)) {
+            if (map.containsKey(current)) {
+                ds.add(map.get(current));
+            } else {
+                ds.add(new DoanhThuNgay(current, 0, BigDecimal.ZERO));
+            }
+            current = current.plusDays(1);
+        }
         return ds;
     }
 
-    public static java.util.List<com.quickmanager.model.DoanhThuNgay> getSoLuongTheoNgay(LocalDate start, LocalDate end) {
-        java.util.List<com.quickmanager.model.DoanhThuNgay> ds = new java.util.ArrayList<>();
+    public static List<DoanhThuNgay> getSoLuongTheoNgay(LocalDate start, LocalDate end) {
+        List<DoanhThuNgay> ds = new ArrayList<>();
         String sql = "SELECT CAST(hd.NgayLap AS DATE) AS Ngay, SUM(ct.SoLuong) AS SoLuong, SUM(ct.ThanhTien) AS DoanhThu FROM CT_HOA_DON ct JOIN HOA_DON hd ON ct.MaHoaDon = hd.MaHoaDon WHERE hd.NgayLap >= ? AND hd.NgayLap < ? GROUP BY CAST(hd.NgayLap AS DATE) ORDER BY Ngay";
         LocalDate fromDate = (start != null) ? start : LocalDate.of(2020,1,1);
         LocalDate toDateExclusive = ((end != null) ? end : LocalDate.now()).plusDays(1);
+        java.util.Map<LocalDate, DoanhThuNgay> map = new java.util.HashMap<>();
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
             ps.setDate(1, Date.valueOf(fromDate));
             ps.setDate(2, Date.valueOf(toDateExclusive));
             try (ResultSet rs = ps.executeQuery()){
                 while (rs.next()) {
-                    java.sql.Date d = rs.getDate("Ngay");
+                    Date d = rs.getDate("Ngay");
                     int soLuong = rs.getInt("SoLuong");
-                    java.math.BigDecimal doanhThu = rs.getBigDecimal("DoanhThu");
-                    ds.add(new com.quickmanager.model.DoanhThuNgay(d.toLocalDate(), soLuong, doanhThu));
+                    BigDecimal doanhThu = rs.getBigDecimal("DoanhThu");
+                    map.put(d.toLocalDate(), new DoanhThuNgay(d.toLocalDate(), soLuong, doanhThu));
                 }
             }
         }catch (Exception e){ logger.log(Level.SEVERE, "Lỗi ngoại lệ", e); Address.printAddress(); }
+        
+        LocalDate current = fromDate;
+        LocalDate toDate = toDateExclusive.minusDays(1);
+        while (!current.isAfter(toDate)) {
+            if (map.containsKey(current)) {
+                ds.add(map.get(current));
+            } else {
+                ds.add(new DoanhThuNgay(current, 0, BigDecimal.ZERO));
+            }
+            current = current.plusDays(1);
+        }
         return ds;
     }
 
-    public static java.util.List<com.quickmanager.model.TopSanPham> getTopSanPham(LocalDate start, LocalDate end, int limit) {
-        java.util.List<com.quickmanager.model.TopSanPham> ds = new java.util.ArrayList<>();
+    public static List<TopSanPham> getTopSanPham(LocalDate start, LocalDate end, int limit) {
+        List<TopSanPham> ds = new ArrayList<>();
         String sql = "SELECT sp.TenSanPham, SUM(ct.SoLuong) AS SoLuong, SUM(ct.ThanhTien) AS DoanhThu FROM CT_HOA_DON ct JOIN HOA_DON hd ON ct.MaHoaDon = hd.MaHoaDon JOIN SAN_PHAM sp ON ct.MaSanPham = sp.MaSanPham WHERE hd.NgayLap >= ? AND hd.NgayLap < ? GROUP BY sp.TenSanPham ORDER BY SUM(ct.SoLuong) DESC";
         LocalDate fromDate = (start != null) ? start : LocalDate.of(2020,1,1);
         LocalDate toDateExclusive = ((end != null) ? end : LocalDate.now()).plusDays(1);
@@ -223,7 +251,7 @@ public class InvoiceService {
             try (ResultSet rs = ps.executeQuery()){
                 int count = 0;
                 while (rs.next()) {
-                    ds.add(new com.quickmanager.model.TopSanPham(rs.getString("TenSanPham"), rs.getInt("SoLuong"), rs.getBigDecimal("DoanhThu")));
+                    ds.add(new TopSanPham(rs.getString("TenSanPham"), rs.getInt("SoLuong"), rs.getBigDecimal("DoanhThu")));
                     count++; if (count >= limit) break;
                 }
             }

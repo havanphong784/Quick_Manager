@@ -7,56 +7,66 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeController {
     //DSNV
-    @FXML private TextField txtTuKhoa;
-    @FXML private ComboBox<String> cbTrangThai;
-    @FXML private Button btnTimKiem;
-    @FXML private TableView<NhanVien> tbNhanVien;
-    @FXML private TableColumn<NhanVien, Integer> colMaNV;
-    @FXML private TableColumn<NhanVien, String> colHoTen;
-    @FXML private TableColumn<NhanVien, String> colDiaChi;
-    @FXML private TableColumn<NhanVien, String> colTrangThai;
-    @FXML private TableColumn<NhanVien, String> colSdt;
-    @FXML private Label lblTongNhanVien;
+    @FXML
+    private TextField txtTuKhoa;
+    @FXML
+    private ComboBox<String> cbTrangThai;
+    @FXML
+    private Button btnTimKiem;
+    @FXML
+    private TableView<NhanVien> tbNhanVien;
+    @FXML
+    private TableColumn<NhanVien, Integer> colMaNV;
+    @FXML
+    private TableColumn<NhanVien, String> colHoTen;
+    @FXML
+    private TableColumn<NhanVien, String> colDiaChi;
+    @FXML
+    private TableColumn<NhanVien, String> colTrangThai;
+    @FXML
+    private TableColumn<NhanVien, String> colSdt;
+    @FXML
+    private Label lblTongNhanVien;
     private List<NhanVien> mangNhanVien = new ArrayList<>();
 
     // TTNV
-    @FXML private TextField txtMaNV;
-    @FXML private TextField txtTenNV;
-    @FXML private DatePicker dpNgaySinh;
-    @FXML private ComboBox<String> cbGioiTinh;
-    @FXML private TextField txtSdt;
-    @FXML private TextField txtEmail;
-    @FXML private TextField txtDiaChi;
-    @FXML private ComboBox<String> cbFormTrangThai;
-    @FXML private Button btnCapNhat;
-    @FXML private Button btnThem;
-    @FXML private Button btnMoi;
+    @FXML
+    private TextField txtMaNV;
+    @FXML
+    private TextField txtTenNV;
+    @FXML
+    private DatePicker dpNgaySinh;
+    @FXML
+    private ComboBox<String> cbGioiTinh;
+    @FXML
+    private TextField txtSdt;
+    @FXML
+    private TextField txtEmail;
+    @FXML
+    private TextField txtDiaChi;
+    @FXML
+    private ComboBox<String> cbFormTrangThai;
+    @FXML
+    private Button btnCapNhat;
+    @FXML
+    private Button btnThem;
+    @FXML
+    private Button btnMoi;
 
     public void initialize() {
         initTBNV();
         tbNhanVien.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> handleSelectTBNV());
-
-        if (tbNhanVien != null) {
-            tbNhanVien.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    javafx.application.Platform.runLater(() -> {
-                        loadTrangThai();
-                        loadTBNhanVien();
-                        loadGioiTinh();
-                    });
-                }
-            });
-        } else {
-            loadTrangThai();
-            loadTBNhanVien();
-            loadGioiTinh();
-        }
+        loadTrangThai();
+        loadTBNhanVien();
+        loadGioiTinh();
     }
 
     // DSNV
@@ -82,7 +92,7 @@ public class EmployeeController {
         String trangThai = cbTrangThai.getValue() == null ? "" : cbTrangThai.getValue();
         mangNhanVien = EmployeeService.getNhanVien(key, trangThai);
         tbNhanVien.setItems(FXCollections.observableArrayList(mangNhanVien));
-        lblTongNhanVien.setText("Tổng nhân viên: "+mangNhanVien.size());
+        lblTongNhanVien.setText("Tổng nhân viên: " + mangNhanVien.size());
     }
 
     public void handleTimKiem() {
@@ -99,7 +109,7 @@ public class EmployeeController {
             txtTenNV.setText(nv.getTenNhanVien());
             cbFormTrangThai.setValue(nv.getTrangThai());
             cbGioiTinh.setValue(nv.getGioiTinh());
-            java.sql.Date sqlDate = nv.getNgaySinh();
+            Date sqlDate = nv.getNgaySinh();
             if (sqlDate != null) {
                 dpNgaySinh.setValue(sqlDate.toLocalDate());
             } else {
@@ -152,10 +162,10 @@ public class EmployeeController {
             return;
         }
 
-        java.sql.Date sqlDate = null;
+        Date sqlDate = null;
         LocalDate ld = dpNgaySinh.getValue();
         if (ld != null) {
-            sqlDate = java.sql.Date.valueOf(ld);
+            sqlDate = Date.valueOf(ld);
         }
 
         double luong = 0d;
@@ -204,9 +214,9 @@ public class EmployeeController {
             return;
         }
 
-        java.sql.Date sqlDate = null;
+        Date sqlDate = null;
         LocalDate ld = dpNgaySinh.getValue();
-        if (ld != null) sqlDate = java.sql.Date.valueOf(ld);
+        if (ld != null) sqlDate = Date.valueOf(ld);
 
         NhanVien nv = new NhanVien();
         nv.setTenNhanVien(ten);
@@ -233,7 +243,7 @@ public class EmployeeController {
                 for (int i = 0; i < mangNhanVien.size(); i++) {
                     NhanVien a = mangNhanVien.get(i);
                     if (a.getTenNhanVien().equals(nv.getTenNhanVien()) &&
-                        ((a.getEmail() == null && nv.getEmail() == null) || (a.getEmail() != null && a.getEmail().equals(nv.getEmail())))) {
+                            ((a.getEmail() == null && nv.getEmail() == null) || (a.getEmail() != null && a.getEmail().equals(nv.getEmail())))) {
                         tbNhanVien.getSelectionModel().clearAndSelect(i);
                         break;
                     }

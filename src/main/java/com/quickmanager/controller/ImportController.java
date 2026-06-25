@@ -90,52 +90,36 @@ public class ImportController {
     private Button btnCreateProduct;
 
     public void initialize() {
-        if (tbSanPhamDT != null) {
-            tbSanPhamDT.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    javafx.application.Platform.runLater(() -> {
-                        loadTbMHDT();
-                        loadCbNCC();
-                        loadNewProductForm();
-                    });
-                }
-            });
-        } else {
-            loadTbMHDT();
-            loadCbNCC();
-            loadNewProductForm();
-        }
+        loadTbMHDT();
+        loadCbNCC();
+        loadNewProductForm();
+        loadTbMH();
+        txtTimSanPham.textProperty().addListener((observable, oldValue, newValue) -> loadTbMH());
 
-        if (txtTimSanPham != null) {
-            txtTimSanPham.textProperty().addListener((observable, oldValue, newValue) -> loadTbMH());
-        }
-
-        if (tbSanPham != null) {
-            tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                    txtNewTenSP.setText(newSelection.getTenSanPham());
-                    if (newSelection.getMaDanhMuc() != 0) {
-                        for (com.quickmanager.model.DanhMuc dm : cbNewDanhMuc.getItems()) {
-                            if (dm != null && dm.getMaDanhMuc() == newSelection.getMaDanhMuc()) {
-                                cbNewDanhMuc.getSelectionModel().select(dm);
-                                break;
-                            }
+        tbSanPham.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                txtNewTenSP.setText(newSelection.getTenSanPham());
+                if (newSelection.getMaDanhMuc() != 0) {
+                    for (DanhMuc dm : cbNewDanhMuc.getItems()) {
+                        if (dm != null && dm.getMaDanhMuc() == newSelection.getMaDanhMuc()) {
+                            cbNewDanhMuc.getSelectionModel().select(dm);
+                            break;
                         }
                     }
-                    txtNewDVT.setText(newSelection.getDonViTinh());
-                    txtNewGiaNhap.setText(newSelection.getGiaNhap() == null ? "0" : newSelection.getGiaNhap().toString());
-                    txtNewGiaBan.setText(newSelection.getGiaBan() == null ? "0" : newSelection.getGiaBan().toString());
-                    txtNewSoLuong.setText(String.valueOf(newSelection.getSoLuongTon()));
-                    txtNewMucToiThieu.setText(String.valueOf(newSelection.getMucToiThieu()));
-                    txtNewBarcode.setText(newSelection.getBarcode());
-                    if (btnCreateProduct != null) {
-                        btnCreateProduct.setDisable(true);
-                    }
-                } else {
-                    clearNewProductForm();
                 }
-            });
-        }
+                txtNewDVT.setText(newSelection.getDonViTinh());
+                txtNewGiaNhap.setText(newSelection.getGiaNhap() == null ? "0" : newSelection.getGiaNhap().toString());
+                txtNewGiaBan.setText(newSelection.getGiaBan() == null ? "0" : newSelection.getGiaBan().toString());
+                txtNewSoLuong.setText(String.valueOf(newSelection.getSoLuongTon()));
+                txtNewMucToiThieu.setText(String.valueOf(newSelection.getMucToiThieu()));
+                txtNewBarcode.setText(newSelection.getBarcode());
+                if (btnCreateProduct != null) {
+                    btnCreateProduct.setDisable(true);
+                }
+            } else {
+                clearNewProductForm();
+            }
+        });
     }
 
     private void clearNewProductForm() {
@@ -157,7 +141,7 @@ public class ImportController {
 
     public void handleCreateProduct() {
         String ten = txtNewTenSP.getText().trim();
-        com.quickmanager.model.DanhMuc dm = cbNewDanhMuc.getValue();
+        DanhMuc dm = cbNewDanhMuc.getValue();
         String dvt = txtNewDVT.getText().trim();
         String sGiaNhap = txtNewGiaNhap.getText().trim();
         String sGiaBan = txtNewGiaBan.getText().trim();
@@ -174,12 +158,12 @@ public class ImportController {
             return;
         }
         try {
-            java.math.BigDecimal giaNhap = sGiaNhap.isEmpty() ? java.math.BigDecimal.ZERO : new java.math.BigDecimal(sGiaNhap);
-            java.math.BigDecimal giaBan = sGiaBan.isEmpty() ? java.math.BigDecimal.ZERO : new java.math.BigDecimal(sGiaBan);
+            BigDecimal giaNhap = sGiaNhap.isEmpty() ? BigDecimal.ZERO : new BigDecimal(sGiaNhap);
+            BigDecimal giaBan = sGiaBan.isEmpty() ? BigDecimal.ZERO : new BigDecimal(sGiaBan);
             int soLuong = sSoLuong.isEmpty() ? 0 : Integer.parseInt(sSoLuong);
             int mucToiThieu = sMucToiThieu.isEmpty() ? 0 : Integer.parseInt(sMucToiThieu);
 
-            com.quickmanager.model.SanPham sp = com.quickmanager.service.ProductService.createProduct(ten, dm.getMaDanhMuc(), giaNhap, giaBan, soLuong, dvt, barcode, mucToiThieu);
+            SanPham sp = ProductService.createProduct(ten, dm.getMaDanhMuc(), giaNhap, giaBan, soLuong, dvt, barcode, mucToiThieu);
             if (sp != null) {
                 Alerts.thongBao("Tạo sản phẩm thành công", "Mã: " + sp.getMaSanPham());
                 // refresh product search results
@@ -212,13 +196,13 @@ public class ImportController {
             Platform.runLater(() -> {
                 try {
                     // Try to find existing product by barcode
-                    com.quickmanager.model.SanPham found = ProductService.getByBarcode(code);
+                    SanPham found = ProductService.getByBarcode(code);
                     if (found != null) {
                         // populate create form with existing product details for quick edit/view
                         txtNewTenSP.setText(found.getTenSanPham());
                         // select category
                         if (found.getMaDanhMuc() != 0) {
-                            for (com.quickmanager.model.DanhMuc dm : cbNewDanhMuc.getItems()) {
+                            for (DanhMuc dm : cbNewDanhMuc.getItems()) {
                                 if (dm != null && dm.getMaDanhMuc() == found.getMaDanhMuc()) {
                                     cbNewDanhMuc.getSelectionModel().select(dm);
                                     break;

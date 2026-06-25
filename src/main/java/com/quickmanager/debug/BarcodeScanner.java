@@ -9,9 +9,9 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import javafx.application.Platform;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.EnumMap;
 import java.util.Map;
@@ -19,14 +19,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class BarcodeScanner {
-    private BarcodeScanner() {}
+    private BarcodeScanner() {
+    }
 
     public static void scan(Consumer<String> onResult, Runnable onCancel) {
         new Thread(() -> {
             Webcam webcam = Webcam.getDefault();
             if (webcam == null) {
                 System.out.println("No webcam detected");
-                if (onCancel != null) javafx.application.Platform.runLater(onCancel);
+                if (onCancel != null) Platform.runLater(onCancel);
                 return;
             }
             webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -50,7 +51,7 @@ public class BarcodeScanner {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     running.set(false);
                     webcam.close();
-                    if (onCancel != null) javafx.application.Platform.runLater(onCancel);
+                    if (onCancel != null) Platform.runLater(onCancel);
                 }
             });
 
@@ -62,7 +63,7 @@ public class BarcodeScanner {
                         running.set(false);
                         window.dispose();
                         webcam.close();
-                        if (onCancel != null) javafx.application.Platform.runLater(onCancel);
+                        if (onCancel != null) Platform.runLater(onCancel);
                     }
                 }
             });
@@ -94,7 +95,10 @@ public class BarcodeScanner {
                     } catch (Exception e) {
                         System.out.println("Barcode decode error: " + e.getMessage());
                     }
-                    try { Thread.sleep(100); } catch (InterruptedException ignored) {}
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ignored) {
+                    }
                 }
             } finally {
                 if (webcam.isOpen()) webcam.close();

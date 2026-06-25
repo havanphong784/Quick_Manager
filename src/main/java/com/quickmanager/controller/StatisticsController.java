@@ -7,11 +7,7 @@ import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
@@ -84,16 +80,17 @@ public class StatisticsController {
     public void initialize() {
         initTables();
         initFilters();
-
-        if (tblDoanhThuNgay != null) {
-            tblDoanhThuNgay.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    javafx.application.Platform.runLater(this::loadStatistics);
-                }
-            });
-        } else {
+        loadStatistics();
+        cbKieuThongKe.valueProperty().addListener((obs, oldValue, newValue) -> {
             loadStatistics();
-        }
+            if (newValue.equals("Tuy chinh")) {
+                dpTuNgay.setDisable(false);
+                dpDenNgay.setDisable(false);
+            } else {
+                dpTuNgay.setDisable(true);
+                dpDenNgay.setDisable(true);
+            }
+        });
     }
 
     private void initTables() {

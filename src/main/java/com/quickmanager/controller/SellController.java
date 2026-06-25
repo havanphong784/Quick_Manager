@@ -92,35 +92,18 @@ public class SellController {
     public void initialize() {
         initTable();
         initTableGH();
-        tbvSanPham.setItems(dataSanPham);
+        loadDanhMuc();
+        loadSanPham();
+        initKhachHang();
         btnThanhToan.setDisable(true);
-
-        if (tbvSanPham != null) {
-            tbvSanPham.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    javafx.application.Platform.runLater(() -> {
-                        loadDanhMuc();
-                        loadSanPham();
-                        initKhachHang();
-                    });
-                }
-            });
-        } else {
-            loadDanhMuc();
-            loadSanPham();
-            initKhachHang();
-        }
-
-        if (txtTimSanPham != null) {
-            txtTimSanPham.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
-        }
+        txtTimSanPham.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
     }
 
     @FXML
     private Button btnScanBarcodeSell;
 
     public void handleScanBarcodeSell() {
-        if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(true);
+        btnScanBarcodeSell.setDisable(true);
         BarcodeScanner.scan(code -> {
             Platform.runLater(() -> {
                 try {
@@ -131,11 +114,11 @@ public class SellController {
                         txtSoLuongNhanh.setText("1");
                     }
                 } finally {
-                    if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(false);
+                    btnScanBarcodeSell.setDisable(false);
                 }
             });
         }, () -> {
-            if (btnScanBarcodeSell != null) btnScanBarcodeSell.setDisable(false);
+            btnScanBarcodeSell.setDisable(false);
         });
     }
 
@@ -146,6 +129,7 @@ public class SellController {
         colDVT.setCellValueFactory(new PropertyValueFactory<>("donViTinh"));
         colTonKho.setCellValueFactory(new PropertyValueFactory<>("soLuongTon"));
         colGiaBan.setCellValueFactory(new PropertyValueFactory<>("giaBan"));
+        tbvSanPham.setItems(dataSanPham);
     }
 
     public void loadSanPham() {

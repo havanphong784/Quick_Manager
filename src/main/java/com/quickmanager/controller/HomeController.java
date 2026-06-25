@@ -1,17 +1,18 @@
 package com.quickmanager.controller;
 
 import com.quickmanager.debug.AppLogger;
+import com.quickmanager.model.CanhBaoTonKho;
+import com.quickmanager.model.DoanhThuNgay;
+import com.quickmanager.model.TopSanPham;
 import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,27 +37,16 @@ public class HomeController {
     private PieChart pcTopSP;
 
     public void initialize() {
-        if (bcDoanhThu != null) {
-            bcDoanhThu.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    Platform.runLater(() -> {
-                        loadHomeSummary();
-                        loadCharts();
-                    });
-                }
-            });
-        } else {
-            loadHomeSummary();
-            loadCharts();
-        }
+        loadHomeSummary();
+        loadCharts();
     }
 
     private void loadHomeSummary() {
         LocalDate today = LocalDate.now();
-        java.math.BigDecimal doanhThu = InvoiceService.getTotalRevenue(today, today);
+        BigDecimal doanhThu = InvoiceService.getTotalRevenue(today, today);
         int soHoaDon = InvoiceService.getOrderCount(today, today);
         int soSpBan = InvoiceService.getProductsSold(today, today);
-        java.util.List<com.quickmanager.model.CanhBaoTonKho> low = ProductService.getLowStock(10);
+        List<CanhBaoTonKho> low = ProductService.getLowStock(10);
 
         lblDoanhThuHomNay.setText(String.format("%,d VNĐ", doanhThu.longValue()));
         lblDonHangHomNay.setText(String.valueOf(soHoaDon));
@@ -68,43 +58,43 @@ public class HomeController {
         try {
             LocalDate today = LocalDate.now();
             LocalDate from = today.minusDays(6); // 7 days
-            java.util.List<com.quickmanager.model.DoanhThuNgay> list = InvoiceService.getDoanhThuTheoNgay(from, today);
-            java.util.List<com.quickmanager.model.DoanhThuNgay> qtyList = InvoiceService.getSoLuongTheoNgay(from, today);
+            List<DoanhThuNgay> list = InvoiceService.getDoanhThuTheoNgay(from, today);
+            List<DoanhThuNgay> qtyList = InvoiceService.getSoLuongTheoNgay(from, today);
 
             if (bcDoanhThu != null) {
                 bcDoanhThu.getData().clear();
-                javafx.scene.chart.XYChart.Series<String, Number> series = new javafx.scene.chart.XYChart.Series<>();
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
                 series.setName("Doanh thu");
-                for (com.quickmanager.model.DoanhThuNgay d : list) {
-                    series.getData().add(new javafx.scene.chart.XYChart.Data<>(d.getNgay().toString(), d.getDoanhThu().longValue()));
+                for (DoanhThuNgay d : list) {
+                    series.getData().add(new XYChart.Data<>(d.getNgay().toString(), d.getDoanhThu().longValue()));
                 }
                 bcDoanhThu.getData().add(series);
             }
 
             if (lcDonHang != null) {
                 lcDonHang.getData().clear();
-                javafx.scene.chart.XYChart.Series<String, Number> s2 = new javafx.scene.chart.XYChart.Series<>();
+                XYChart.Series<String, Number> s2 = new XYChart.Series<>();
                 s2.setName("Số hóa đơn");
-                for (com.quickmanager.model.DoanhThuNgay d : list) {
-                    s2.getData().add(new javafx.scene.chart.XYChart.Data<>(d.getNgay().toString(), d.getSoHoaDon()));
+                for (DoanhThuNgay d : list) {
+                    s2.getData().add(new XYChart.Data<>(d.getNgay().toString(), d.getSoHoaDon()));
                 }
                 lcDonHang.getData().add(s2);
             }
 
             if (acSPBan != null) {
                 acSPBan.getData().clear();
-                javafx.scene.chart.XYChart.Series<String, Number> s3 = new javafx.scene.chart.XYChart.Series<>();
+                XYChart.Series<String, Number> s3 = new XYChart.Series<>();
                 s3.setName("Sản phẩm bán ra");
-                for (com.quickmanager.model.DoanhThuNgay d : qtyList) {
-                    s3.getData().add(new javafx.scene.chart.XYChart.Data<>(d.getNgay().toString(), d.getSoHoaDon()));
+                for (DoanhThuNgay d : qtyList) {
+                    s3.getData().add(new XYChart.Data<>(d.getNgay().toString(), d.getSoHoaDon()));
                 }
                 acSPBan.getData().add(s3);
             }
 
             if (pcTopSP != null) {
                 pcTopSP.getData().clear();
-                java.util.List<com.quickmanager.model.TopSanPham> top = InvoiceService.getTopSanPham(today.minusDays(30), today, 5);
-                for (com.quickmanager.model.TopSanPham t : top) {
+                List<TopSanPham> top = InvoiceService.getTopSanPham(today.minusDays(30), today, 5);
+                for (TopSanPham t : top) {
                     pcTopSP.getData().add(new PieChart.Data(t.getTenSanPham(), t.getSoLuong()));
                 }
             }

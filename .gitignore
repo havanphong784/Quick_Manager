@@ -40,3 +40,6 @@ build/
 /.understand-anything/
 /docs/
 /.github/
+/graphify-out/
+/.agents/
+/raw/

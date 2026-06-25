@@ -1,5 +1,8 @@
 package com.quickmanager.service;
 
+import com.quickmanager.model.CanhBaoTonKho;
+import java.math.BigDecimal;
+
 import com.quickmanager.config.DBConnection;
 import com.quickmanager.debug.Address;
 import com.quickmanager.debug.AppLogger;
@@ -11,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -82,11 +86,11 @@ public class ProductService {
         String filterKey = key == null ? "" : key.trim().toLowerCase();
         String filterDanhMuc = danhMuc == null ? "" : danhMuc.trim().toLowerCase();
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
-        cal.set(java.util.Calendar.MINUTE, 0);
-        cal.set(java.util.Calendar.SECOND, 0);
-        cal.set(java.util.Calendar.MILLISECOND, 0);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         java.util.Date today = cal.getTime();
 
         for (SanPham sp : allProducts) {
@@ -204,14 +208,14 @@ public class ProductService {
         }
     }
 
-    public static java.util.List<com.quickmanager.model.CanhBaoTonKho> getLowStock(int threshold) {
-        java.util.List<com.quickmanager.model.CanhBaoTonKho> ds = new java.util.ArrayList<>();
+    public static List<CanhBaoTonKho> getLowStock(int threshold) {
+        List<CanhBaoTonKho> ds = new ArrayList<>();
         String sql = "SELECT MaSanPham, TenSanPham, SoLuongTon, TrangThai FROM SAN_PHAM WHERE SoLuongTon <= ? ORDER BY SoLuongTon ASC";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, threshold);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ds.add(new com.quickmanager.model.CanhBaoTonKho(rs.getInt("MaSanPham"), rs.getString("TenSanPham"), rs.getInt("SoLuongTon"), threshold, rs.getString("TrangThai")));
+                    ds.add(new CanhBaoTonKho(rs.getInt("MaSanPham"), rs.getString("TenSanPham"), rs.getInt("SoLuongTon"), threshold, rs.getString("TrangThai")));
                 }
             }
         } catch (Exception e) {
@@ -221,7 +225,7 @@ public class ProductService {
         return ds;
     }
 
-    public static SanPham createProduct(String tenSanPham, int maDanhMuc, java.math.BigDecimal giaNhap, java.math.BigDecimal giaBan, int soLuongTon, String donViTinh, String barcode, int mucToiThieu) {
+    public static SanPham createProduct(String tenSanPham, int maDanhMuc, BigDecimal giaNhap, BigDecimal giaBan, int soLuongTon, String donViTinh, String barcode, int mucToiThieu) {
         String sql = "INSERT INTO SAN_PHAM (TenSanPham, MaDanhMuc, GiaNhap, GiaBan, SoLuongTon, DonViTinh, TrangThai, Barcode, MucToiThieu) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, tenSanPham);

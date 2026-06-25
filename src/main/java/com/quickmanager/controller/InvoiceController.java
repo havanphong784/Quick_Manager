@@ -46,15 +46,12 @@ public class InvoiceController {
             handleSelectTbHD();
         });
 
-        if (tbHoaDon != null) {
-            tbHoaDon.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    javafx.application.Platform.runLater(this::loadTbHoaDon);
-                }
-            });
-        } else {
-            loadTbHoaDon();
-        }
+        txtMaHoaDon.textProperty().addListener((obs, oldV, newV) -> loadTbHoaDon());
+        txtTimKhachHang.textProperty().addListener((obs, oldV, newV) -> loadTbHoaDon());
+        dpTuNgay.valueProperty().addListener((obs, oldV, newV) -> loadTbHoaDon());
+        dpDenNgay.valueProperty().addListener((obs, oldV, newV) -> loadTbHoaDon());
+
+        loadTbHoaDon();
     }
 
     public void initTbHoaDon() {

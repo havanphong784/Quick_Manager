@@ -10,6 +10,8 @@ import com.quickmanager.model.NhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +84,7 @@ public class EmployeeService {
             if (nv.getNgaySinh() != null) {
                 ps.setDate(2, nv.getNgaySinh());
             } else {
-                ps.setNull(2, java.sql.Types.DATE);
+                ps.setNull(2, Types.DATE);
             }
             ps.setString(3, nv.getGioiTinh());
             ps.setString(4, nv.getSoDienThoai());
@@ -109,12 +111,12 @@ public class EmployeeService {
         """;
 
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, nv.getTenNhanVien());
             if (nv.getNgaySinh() != null) {
                 ps.setDate(2, nv.getNgaySinh());
             } else {
-                ps.setNull(2, java.sql.Types.DATE);
+                ps.setNull(2, Types.DATE);
             }
             ps.setString(3, nv.getGioiTinh());
             ps.setString(4, nv.getSoDienThoai());
