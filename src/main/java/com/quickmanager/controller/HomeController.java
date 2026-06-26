@@ -6,6 +6,7 @@ import com.quickmanager.model.DoanhThuNgay;
 import com.quickmanager.model.TopSanPham;
 import com.quickmanager.service.InvoiceService;
 import com.quickmanager.service.ProductService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
@@ -39,6 +40,15 @@ public class HomeController {
     public void initialize() {
         loadHomeSummary();
         loadCharts();
+        if (bcDoanhThu != null) {
+            bcDoanhThu.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    Platform.runLater(this::loadCharts);
+                }
+            });
+        } else {
+            loadCharts();
+        }
     }
 
     private void loadHomeSummary() {
